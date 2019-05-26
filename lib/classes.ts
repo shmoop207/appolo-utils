@@ -9,7 +9,7 @@ export class Classes {
         return fn.name.charAt(0).toLowerCase() + fn.name.slice(1)
     }
 
-    public static functionArgsNames(func: (...args: any[]) => any) {
+    public static functionArgsNames(func: ((...args: any[]) => any) | (new(...args: any[])=> any)) {
 
         const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
         const ARGUMENT_NAMES = /([^\s,]+)/g;
