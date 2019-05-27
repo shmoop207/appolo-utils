@@ -38,4 +38,20 @@ export class Arrays {
             }
         }
     }
+
+    public static groupBy<T>(arr: T[], key: string | number | ((item: T) => string | number)) {
+
+        let output = {};
+
+        for (let i = 0, len = arr.length; i < len; i++) {
+            let item = arr[i],
+                value = (typeof key === "function") ? key(item) : item[key],
+                dto = output[value] || (output[value] = []);
+
+            dto.push(item);
+        }
+
+        return output;
+    }
+
 }

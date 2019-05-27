@@ -16,6 +16,36 @@ describe("Utils", function () {
             arr.length.should.be.eq(1);
             arr[0].should.be.eq("b");
         });
+        it('should group by array', async () => {
+            let arr = [{ "a": 1, b: 2, c: 3 }, { "a": 2, b: 2, c: 3 }, { "a": 1, b: 2, c: 3 }, { "a": 3, b: 2, c: 3 }, {
+                    "a": 3,
+                    b: 2,
+                    c: 3
+                }, { "a": 5, b: 2, c: 3 }, { "a": 2, b: 2, c: 3 }];
+            let result = index_1.Util.arrays.groupBy(arr, "a");
+            result.should.be.deep.equals({
+                "1": [{ "a": 1, "b": 2, "c": 3 }, { "a": 1, "b": 2, "c": 3 }],
+                "2": [{ "a": 2, "b": 2, "c": 3 }, { "a": 2, "b": 2, "c": 3 }],
+                "3": [{ "a": 3, "b": 2, "c": 3 }, { "a": 3, "b": 2, "c": 3 }],
+                "5": [{ "a": 5, "b": 2, "c": 3 }
+                ]
+            });
+        });
+        it('should group by array by fn', async () => {
+            let arr = [{ "a": 1, b: 2, c: 3 }, { "a": 2, b: 2, c: 3 }, { "a": 1, b: 2, c: 3 }, { "a": 3, b: 2, c: 3 }, {
+                    "a": 3,
+                    b: 2,
+                    c: 3
+                }, { "a": 5, b: 2, c: 3 }, { "a": 2, b: 2, c: 3 }];
+            let result = index_1.Util.arrays.groupBy(arr, (item) => item.a);
+            result.should.be.deep.equals({
+                "1": [{ "a": 1, "b": 2, "c": 3 }, { "a": 1, "b": 2, "c": 3 }],
+                "2": [{ "a": 2, "b": 2, "c": 3 }, { "a": 2, "b": 2, "c": 3 }],
+                "3": [{ "a": 3, "b": 2, "c": 3 }, { "a": 3, "b": 2, "c": 3 }],
+                "5": [{ "a": 5, "b": 2, "c": 3 }
+                ]
+            });
+        });
     });
     describe("time", function () {
         it('should pretty ms', async () => {
@@ -27,7 +57,8 @@ describe("Utils", function () {
         it('should isClass', async () => {
             index_1.Util.classes.isClass(class A {
             }).should.be.eq(true);
-            index_1.Util.classes.isClass(function B() { }).should.be.eq(false);
+            index_1.Util.classes.isClass(function B() {
+            }).should.be.eq(false);
         });
         it('should className', async () => {
             index_1.Util.classes.className(class A {
@@ -35,7 +66,8 @@ describe("Utils", function () {
         });
         it('should functionArgsNames', async () => {
             index_1.Util.classes.functionArgsNames(class C {
-                constructor(a, b, c) { }
+                constructor(a, b, c) {
+                }
             }).should.be.deep.equals(['a', 'b', 'c']);
         });
     });
