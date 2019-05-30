@@ -39,9 +39,9 @@ export class Arrays {
         }
     }
 
-    public static groupBy<T>(arr: T[], key: string | number | ((item: T) => string | number)) {
+    public static groupBy<T>(arr: T[], key: string | number | ((item: T) => string | number)): { [index: string]: T[] } {
 
-        let output = {};
+        let output: { [index: string]: T[] } = {};
 
         for (let i = 0, len = arr.length; i < len; i++) {
             let item = arr[i],
