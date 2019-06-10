@@ -14,7 +14,7 @@
     "test": "mocha test --exit"
   },
   "main": "./index.js",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -30,11 +30,15 @@
     "@types/lodash": "^4.14.116",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.11.3",
+    "aes256": "^1.0.4",
     "benchmark": "^2.1.4",
     "bluebird": "^3.5.2",
     "chai": "^4.2.0",
+    "crypto-js": "^3.1.9-1",
+    "install": "^0.12.2",
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
+    "npm": "^6.9.0",
     "tslib": "^1.9.3",
     "typescript": "^3.1.1"
   }
