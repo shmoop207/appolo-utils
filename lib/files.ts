@@ -11,6 +11,11 @@ let mkdir = promisify(fs.mkdir);
 export class Files {
     public static async removeDir(dirPath: string, removeSelf: boolean = true): Promise<void> {
 
+        let isExists = await exists(dirPath);
+
+        if (!isExists) {
+            return;
+        }
 
         let status = await stat(dirPath);
 
@@ -43,6 +48,13 @@ export class Files {
     }
 
     public static async removeFile(filePath: string): Promise<void> {
+
+        let isExists = await exists(filePath);
+
+        if (!isExists) {
+            return;
+        }
+
         let status = await stat(filePath);
 
         if (status.isDirectory()) {
@@ -58,9 +70,11 @@ export class Files {
 
         let isExists = await exists(dirPath);
 
-        if (!isExists) {
-            await mkdir(dirPath);
+        if (isExists) {
+            return;
         }
+
+        await mkdir(dirPath);
     }
 
     public static async reCreateDir(dirPath: string): Promise<void> {
