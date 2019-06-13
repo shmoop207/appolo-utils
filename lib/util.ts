@@ -7,6 +7,7 @@ import {Objects} from "./objects";
 import {Promises} from "./promises";
 import {Strings} from "./strings";
 import {Time} from "./time";
+import {Files} from "./files";
 
 export class Util {
     public static get numbers(): typeof Numbers {
@@ -43,5 +44,9 @@ export class Util {
 
     public static get time(): typeof Time {
         return Time
+    }
+
+    public static get files(): typeof Files {
+        return Files
     }
 }
