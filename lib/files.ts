@@ -63,7 +63,7 @@ export class Files {
         }
     }
 
-    public static async rerCeateDir(dirPath: string): Promise<void> {
+    public static async reCreateDir(dirPath: string): Promise<void> {
         await Files.removeDir(dirPath, true);
 
         await Files.createDir(dirPath);
