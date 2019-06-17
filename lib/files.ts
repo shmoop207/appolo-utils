@@ -1,29 +1,15 @@
-import * as fs from "fs";
-import {promisify} from "util";
-
-let readdir = promisify(fs.readdir);
-let stat = promisify(fs.stat);
-let unlink = promisify(fs.unlink);
-let rmdir = promisify(fs.rmdir);
-let exists = promisify(fs.exists);
-let mkdir = promisify(fs.mkdir);
+import {promises, Stats} from "fs";
 
 export class Files {
     public static async removeDir(dirPath: string, removeSelf: boolean = true): Promise<void> {
 
-        let isExists = await exists(dirPath);
+        let status = await Files.pathStats(dirPath);
 
-        if (!isExists) {
+        if (!status || !status.isDirectory()) {
             return;
         }
 
-        let status = await stat(dirPath);
-
-        if (!status.isDirectory()) {
-            return;
-        }
-
-        let files = await readdir(dirPath);
+        let files = await promises.readdir(dirPath);
 
         let len = files.length;
 
@@ -43,38 +29,55 @@ export class Files {
         }
 
         if (removeSelf) {
-            await rmdir(dirPath);
+            await promises.rmdir(dirPath);
         }
     }
 
     public static async removeFile(filePath: string): Promise<void> {
 
-        let isExists = await exists(filePath);
+        let status = await Files.pathStats(filePath);
 
-        if (!isExists) {
+        if (!status) {
             return;
         }
-
-        let status = await stat(filePath);
 
         if (status.isDirectory()) {
             return Files.removeDir(filePath);
         }
 
         if (status.isFile()) {
-            await unlink(filePath)
+            await promises.unlink(filePath)
+        }
+    }
+
+    public static async pathStats(filePath: string): Promise<Stats> {
+
+        let status: Stats;
+
+        try {
+            status = await promises.stat(filePath);
+
+            return status;
+
+        } catch (e) {
+
+            if (e.code === "ENOENT") {
+                return null;
+            } else {
+                throw e;
+            }
         }
     }
 
     public static async createDir(dirPath: string): Promise<void> {
 
-        let isExists = await exists(dirPath);
+        let status = await Files.pathStats(dirPath);
 
-        if (isExists) {
+        if (status) {
             return;
         }
 
-        await mkdir(dirPath);
+        await promises.mkdir(dirPath, {recursive: true});
     }
 
     public static async reCreateDir(dirPath: string): Promise<void> {
