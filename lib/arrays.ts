@@ -39,6 +39,15 @@ export class Arrays {
         }
     }
 
+    public static splitToChunks(array: any[], chunkSize: number): any[] {
+
+        return [].concat.apply([],
+            array.map(function (elem, i) {
+                return i % chunkSize ? [] : [array.slice(i, i + chunkSize)];
+            })
+        )
+    }
+
     public static groupBy<T>(arr: T[], key: string | number | ((item: T) => string | number)): { [index: string]: T[] } {
 
         let output: { [index: string]: T[] } = {};

@@ -114,5 +114,18 @@ describe("Utils", function () {
             index_1.Util.objects.tryParseJSON('{"a":1}').should.be.deep.equals({ a: 1 });
         });
     });
+    describe("Enums", function () {
+        it('should get enum names and values', async () => {
+            let Test;
+            (function (Test) {
+                Test["A"] = "aaa";
+                Test["B"] = "bbb";
+                Test[Test["C"] = 0] = "C";
+                Test[Test["D"] = 1] = "D";
+            })(Test || (Test = {}));
+            index_1.Util.enums.enumValues(Test).should.be.deep.equals([0, 1, 'aaa', 'bbb']);
+            index_1.Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
+        });
+    });
 });
 //# sourceMappingURL=unit.js.map

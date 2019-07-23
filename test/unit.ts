@@ -79,10 +79,10 @@ describe("Utils", function () {
     describe("Promise", function () {
         it('should run with map', async () => {
 
-            let result  = await Util.promises.map([1, 2], item => Promise.resolve(item));
+            let result = await Util.promises.map([1, 2], item => Promise.resolve(item));
 
 
-            result.should.be.deep.equals([1,2]);
+            result.should.be.deep.equals([1, 2]);
         });
     });
 
@@ -169,8 +169,23 @@ describe("Utils", function () {
 
         });
 
+    });
 
-    })
+    describe("Enums", function () {
+        it('should get enum names and values', async () => {
+
+            enum Test {
+                A = "aaa",
+                B = "bbb",
+                C = 0,
+                D
+            }
+
+            Util.enums.enumValues(Test).should.be.deep.equals([0, 1, 'aaa', 'bbb']);
+            Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
+
+        });
+    });
 
 
 });
