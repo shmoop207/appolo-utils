@@ -76,6 +76,17 @@ describe("Utils", function () {
         });
     });
 
+    describe("Promise", function () {
+        it('should run with map', async () => {
+
+            let result  = await Util.promises.map([1, 2], item => Promise.resolve(item));
+
+
+            result.should.be.deep.equals([1,2]);
+        });
+    });
+
+
     describe("Classes", function () {
         it('should isClass', async () => {
 

@@ -53,6 +53,12 @@ describe("Utils", function () {
             index_1.Util.time.milisecPretty(1000 * 5 * 60 * 60).should.be.eq("5h");
         });
     });
+    describe("Promise", function () {
+        it('should run with map', async () => {
+            let result = await index_1.Util.promises.map([1, 2], item => Promise.resolve(item));
+            result.should.be.deep.equals([1, 2]);
+        });
+    });
     describe("Classes", function () {
         it('should isClass', async () => {
             index_1.Util.classes.isClass(class A {
