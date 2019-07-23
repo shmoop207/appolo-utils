@@ -182,7 +182,7 @@ describe("Utils", function () {
             }
 
             Util.enums.enumValues(Test).should.be.deep.equals([0, 1, 'aaa', 'bbb']);
-            Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
+            Util.enums.enumNames(Test)[0].should.be.deep.equals(['A', 'B', 'C', 'D']);
 
         });
     });

@@ -124,7 +124,7 @@ describe("Utils", function () {
                 Test[Test["D"] = 1] = "D";
             })(Test || (Test = {}));
             index_1.Util.enums.enumValues(Test).should.be.deep.equals([0, 1, 'aaa', 'bbb']);
-            index_1.Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
+            index_1.Util.enums.enumNames(Test)[0].should.be.deep.equals(['A', 'B', 'C', 'D']);
         });
     });
 });
