@@ -1,6 +1,6 @@
 export class Enums {
 
-    public static enumNames<T>(enm: T): string[] {
+    public static enumNames(enm: any): string[] {
         let res = [], keys = Object.keys(enm), i = 0, len = keys.length;
 
         for (; i < len; i++) {
@@ -13,7 +13,7 @@ export class Enums {
         return res;
     }
 
-    public static enumValues<T>(enm: T): T[] {
+    public static enumValues<T>(enm: any): T[] {
         let res = [], keys = Object.keys(enm), i = 0, len = keys.length;
 
         for (; i < len; i++) {
