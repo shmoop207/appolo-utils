@@ -58,6 +58,13 @@ describe("Utils", function () {
             let result = await index_1.Util.promises.map([1, 2], item => Promise.resolve(item));
             result.should.be.deep.equals([1, 2]);
         });
+        it('should run from callback', async () => {
+            function test(callback) {
+                process.nextTick(() => callback(null, 1));
+            }
+            let result = await index_1.Util.promises.fromCallback((c) => test(c));
+            result.should.be.eq(1);
+        });
     });
     describe("Classes", function () {
         it('should isClass', async () => {
@@ -124,7 +131,7 @@ describe("Utils", function () {
                 Test[Test["D"] = 1] = "D";
             })(Test || (Test = {}));
             index_1.Util.enums.enumValues(Test).should.be.deep.equals([0, 1, 'aaa', 'bbb']);
-            index_1.Util.enums.enumNames(Test)[0].should.be.deep.equals(['A', 'B', 'C', 'D']);
+            index_1.Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
         });
     });
 });

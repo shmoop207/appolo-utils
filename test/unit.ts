@@ -84,6 +84,17 @@ describe("Utils", function () {
 
             result.should.be.deep.equals([1, 2]);
         });
+
+        it('should run from callback', async () => {
+            function test(callback: (err, data) => void) {
+                process.nextTick(() => callback(null, 1))
+            }
+
+            let result = await Util.promises.fromCallback<number>((c)=>test(c));
+
+            result.should.be.eq(1);
+
+        })
     });
 
 
@@ -182,7 +193,7 @@ describe("Utils", function () {
             }
 
             Util.enums.enumValues(Test).should.be.deep.equals([0, 1, 'aaa', 'bbb']);
-            Util.enums.enumNames(Test)[0].should.be.deep.equals(['A', 'B', 'C', 'D']);
+            Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
 
         });
     });

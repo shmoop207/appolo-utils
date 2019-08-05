@@ -10,7 +10,7 @@ export class Promises {
 
         let concurrency = options.concurrency || Infinity;
 
-        let params = {index:0}, results = [], iterator = iterable[Symbol.iterator](), promises = [];
+        let params = {index: 0}, results = [], iterator = iterable[Symbol.iterator](), promises = [];
 
         while (concurrency-- > 0) {
             let promise = Promises._mapWrapper(mapper, iterator, results, params);
@@ -46,7 +46,7 @@ export class Promises {
     public static filter<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, filterer: IterateFunction<R, U>, options: { concurrency: number } = {concurrency: Infinity}) {
         let concurrency = options.concurrency || Infinity;
 
-        let params = {index:0}, results = [], predicates = [], iterator = iterable[Symbol.iterator](), promises = [];
+        let params = {index: 0}, results = [], predicates = [], iterator = iterable[Symbol.iterator](), promises = [];
 
         while (concurrency-- > 0) {
             let promise = Promises._filterWrapper(filterer, iterator, results, predicates, params);
@@ -78,4 +78,48 @@ export class Promises {
             return Promises._filterWrapper(filterer, iterator, results, predicates, params)
         })
     }
+
+    public static fromCallback<T>(resolver: (callback: (err: any, result?: T) => void) => void): Promise<T> {
+        return new Promise((resolve, reject) => {
+            resolver((err, data) => {
+                if (err !== null) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            })
+        })
+    }
+
+    private static defer<T>(): Deferred<T> {
+        return new Deferred();
+    }
+}
+
+
+export class Deferred<T> {
+
+    private _resolveSelf;
+    private _rejectSelf;
+    private readonly _promise: Promise<T>;
+
+    constructor() {
+        this._promise = new Promise((resolve, reject) => {
+            this._resolveSelf = resolve;
+            this._rejectSelf = reject;
+        })
+    }
+
+    public get promise(): Promise<T> {
+        return this._promise;
+    }
+
+    public resolve(val: T): void {
+        this._resolveSelf(val)
+    }
+
+    public reject(reason: any): void {
+        this._rejectSelf(reason)
+    }
+
 }
