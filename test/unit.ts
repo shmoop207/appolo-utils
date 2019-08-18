@@ -146,6 +146,18 @@ describe("Utils", function () {
         it('should toFixed', async () => {
             Util.numbers.toFixed(1.22344566778, 2).should.be.eq(1.22);
         });
+
+        it('should random', async () => {
+            let num  = Util.numbers.random(1.22344566778, 4)
+
+            Number.isInteger(num).should.be.not.ok;
+
+            num  = Util.numbers.random(1, 4);
+
+            Number.isInteger(num).should.be.ok;
+
+            num.should.be.within(1,4);
+        });
     });
 
     describe("Objects", function () {
