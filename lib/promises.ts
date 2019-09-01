@@ -91,7 +91,7 @@ export class Promises {
         })
     }
 
-    private static defer<T>(): Deferred<T> {
+    public static defer<T>(): Deferred<T> {
         return new Deferred();
     }
 }

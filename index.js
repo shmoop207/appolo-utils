@@ -15,6 +15,7 @@ exports.Guid = guid_1.Guid;
 const hash_1 = require("./lib/hash");
 exports.Hash = hash_1.Hash;
 const promises_1 = require("./lib/promises");
+exports.Deferred = promises_1.Deferred;
 exports.Promises = promises_1.Promises;
 const time_1 = require("./lib/time");
 exports.Time = time_1.Time;
