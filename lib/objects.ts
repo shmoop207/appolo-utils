@@ -7,8 +7,23 @@ export class Objects {
         return Object.keys(obj).length === 0
     }
 
-    public static cloneFast(obj: any): any {
+    public static cloneFast<T>(obj: T): T {
         return JSON.parse(JSON.stringify(obj))
+    }
+
+    public static closeDeep<T>(obj: T): T {
+
+        let output = Array.isArray(obj) ? [] : {};
+
+        let keys = Object.keys(obj);
+
+        for (let i = 0, len = keys.length; i < len; i++) {
+
+            let key = keys[i],value = obj[key];
+            output[key] = (value == null || typeof value != "object") ?value : Objects.closeDeep(value)
+        }
+
+        return output as any;
     }
 
     public static compact(obj: any): any {

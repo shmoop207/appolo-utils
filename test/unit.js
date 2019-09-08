@@ -127,6 +127,24 @@ describe("Utils", function () {
             should.not.exist(index_1.Util.objects.tryParseJSON("{a:1"));
             index_1.Util.objects.tryParseJSON('{"a":1}').should.be.deep.equals({ a: 1 });
         });
+        it('should clone deep', async () => {
+            let obj = { a: 1, b: { c: 2 }, d: [1, 2] };
+            let cloned = index_1.Util.objects.closeDeep(obj);
+            (obj.a === cloned.a).should.be.ok;
+            (obj.b === cloned.b).should.be.not.ok;
+            (obj.b.c === cloned.b.c).should.be.ok;
+            (obj.d[1] === cloned.d[1]).should.be.ok;
+            (obj.d === cloned.d).should.be.not.ok;
+        });
+        it('should clone fast', async () => {
+            let obj = { a: 1, b: { c: 2 }, d: [1, 2] };
+            let cloned = index_1.Util.objects.cloneFast(obj);
+            (obj.a === cloned.a).should.be.ok;
+            (obj.b === cloned.b).should.be.not.ok;
+            (obj.b.c === cloned.b.c).should.be.ok;
+            (obj.d[1] === cloned.d[1]).should.be.ok;
+            (obj.d === cloned.d).should.be.not.ok;
+        });
     });
     describe("Enums", function () {
         it('should get enum names and values', async () => {

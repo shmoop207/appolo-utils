@@ -90,7 +90,7 @@ describe("Utils", function () {
                 process.nextTick(() => callback(null, 1))
             }
 
-            let result = await Util.promises.fromCallback<number>((c)=>test(c));
+            let result = await Util.promises.fromCallback<number>((c) => test(c));
 
             result.should.be.eq(1);
 
@@ -148,15 +148,15 @@ describe("Utils", function () {
         });
 
         it('should random', async () => {
-            let num  = Util.numbers.random(1.22344566778, 4)
+            let num = Util.numbers.random(1.22344566778, 4)
 
             Number.isInteger(num).should.be.not.ok;
 
-            num  = Util.numbers.random(1, 4);
+            num = Util.numbers.random(1, 4);
 
             Number.isInteger(num).should.be.ok;
 
-            num.should.be.within(1,4);
+            num.should.be.within(1, 4);
         });
     });
 
@@ -189,6 +189,30 @@ describe("Utils", function () {
         it('should try parse json', async () => {
             should.not.exist(Util.objects.tryParseJSON("{a:1"));
             Util.objects.tryParseJSON('{"a":1}').should.be.deep.equals({a: 1});
+
+        });
+
+        it('should clone deep', async () => {
+            let obj = {a: 1, b: {c: 2}, d: [1, 2]};
+            let cloned = Util.objects.closeDeep(obj);
+
+            (obj.a === cloned.a).should.be.ok;
+            (obj.b === cloned.b).should.be.not.ok;
+            (obj.b.c === cloned.b.c).should.be.ok;
+            (obj.d[1] === cloned.d[1]).should.be.ok;
+            (obj.d === cloned.d).should.be.not.ok;
+
+        });
+
+        it('should clone fast', async () => {
+            let obj = {a: 1, b: {c: 2}, d: [1, 2]};
+            let cloned = Util.objects.cloneFast(obj);
+
+            (obj.a === cloned.a).should.be.ok;
+            (obj.b === cloned.b).should.be.not.ok;
+            (obj.b.c === cloned.b.c).should.be.ok;
+            (obj.d[1] === cloned.d[1]).should.be.ok;
+            (obj.d === cloned.d).should.be.not.ok;
 
         });
 
