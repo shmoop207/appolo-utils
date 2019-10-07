@@ -6,7 +6,7 @@ export class Promises {
         return new Promise(resolve => setTimeout(resolve, delay));
     }
 
-    public static map<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, mapper: IterateFunction<R, U>, options: { concurrency: number } = {concurrency: Infinity}) {
+    public static map<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, mapper: IterateFunction<R, U>, options: { concurrency: number } = {concurrency: Infinity}): Promise<U[]> {
 
         let concurrency = options.concurrency || Infinity;
 
@@ -24,8 +24,36 @@ export class Promises {
 
         return Promise.all(promises).then(() => results);
 
-
     }
+
+    public static props<T>(props: object & { [K in keyof T]: Resolvable<T[K]> }, options: { concurrency: number } = {concurrency: Infinity}): Promise<T> {
+        const keys = Object.keys(props);
+        const values = Object.values(props);
+
+        return Promises.map(values, (item) => item, {concurrency: options.concurrency})
+            .then(resolved => {
+                const res: { [K in keyof T]: T[K] } = {} as any;
+
+                for (let i = 0, len = keys.length; i < len; i++) {
+                    res[keys[i]] = resolved[i];
+                }
+
+                return res
+            })
+    }
+
+    // public static propsMap<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, mapper: (output: { [index: string]: Resolvable<U> }, item: R, index: number | string) => void, options: { concurrency: number } = {concurrency: Infinity}): Promise<{ [index: string]: U }> {
+    //
+    //     let dto = {},index=0;
+    //
+    //     for (let item of iterable[Symbol.iterator]()) {
+    //         mapper(dto, item,index)
+    //         index++;
+    //     }
+    //
+    //
+    //     return Promises.props(dto, {concurrency: options.concurrency})
+    // }
 
     private static _mapWrapper<R, U>(mapper: IterateFunction<R, U>, iterator: IterableIterator<R>, results: any[], params: { index: number }) {
 
@@ -43,7 +71,7 @@ export class Promises {
         })
     }
 
-    public static filter<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, filterer: IterateFunction<R, U>, options: { concurrency: number } = {concurrency: Infinity}) {
+    public static filter<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, filterer: IterateFunction<R, U>, options: { concurrency: number } = {concurrency: Infinity}): Promise<U[]> {
         let concurrency = options.concurrency || Infinity;
 
         let params = {index: 0}, results = [], predicates = [], iterator = iterable[Symbol.iterator](), promises = [];

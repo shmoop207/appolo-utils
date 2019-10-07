@@ -97,6 +97,17 @@ describe("Utils", function () {
         })
     });
 
+    it('should run with props', async () => {
+
+        let result = await Util.promises.props({a: Promise.resolve(1), b: Promise.resolve(2)});
+
+
+        result.should.be.deep.equals({
+            "a": 1,
+            "b": 2
+        });
+    });
+
 
     describe("Classes", function () {
         it('should isClass', async () => {
