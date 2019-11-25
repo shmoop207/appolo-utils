@@ -11,7 +11,7 @@ export class Objects {
         return JSON.parse(JSON.stringify(obj))
     }
 
-    public static closeDeep<T>(obj: T): T {
+    public static cloneDeep<T>(obj: T): T {
 
         let output = Array.isArray(obj) ? [] : {};
 
@@ -20,7 +20,7 @@ export class Objects {
         for (let i = 0, len = keys.length; i < len; i++) {
 
             let key = keys[i],value = obj[key];
-            output[key] = (value == null || typeof value != "object") ?value : Objects.closeDeep(value)
+            output[key] = (value == null || typeof value != "object") ?value : Objects.cloneDeep(value)
         }
 
         return output as any;

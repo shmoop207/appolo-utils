@@ -1,3 +1,5 @@
+import {Classes} from "./classes";
+
 export class Arrays {
     public static clone<T>(arr: T[]): T[] {
         return arr.slice(0);
@@ -58,6 +60,22 @@ export class Arrays {
                 dto = output[value] || (output[value] = []);
 
             dto.push(item);
+        }
+
+        return output;
+    }
+
+    public static keyBy<T extends object>(arr: T[], key: string | ((item: T, index: number) => string)) {
+
+        let output: { [index: string]: T } = {};
+
+        for (let i = 0, len = (arr || []).length; i < len; i++) {
+
+            let item: any = arr[i];
+
+            let outputKey = Classes.isFunction(key) ? (key as Function)(item, i) : item[key as string];
+
+            output[outputKey] = item;
         }
 
         return output;

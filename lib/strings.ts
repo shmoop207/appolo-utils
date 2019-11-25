@@ -11,6 +11,10 @@ export class Strings {
         return s;
     }
 
+    public static isString(str: any): boolean {
+        return (typeof str === 'string' || str instanceof String);
+    }
+
     public static removeNewLine(str: string): string {
         return str.replace(/(\r\n|\n|\r)/gm, "");
     }

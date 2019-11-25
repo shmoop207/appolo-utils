@@ -5,6 +5,10 @@ export class Classes {
         return typeof v === 'function' && v.name && /^\s*class\s+/.test(v.toString());
     }
 
+    public static isFunction(obj: any): boolean {
+        return !!(obj && obj.constructor && obj.call && obj.apply);
+    };
+
     public static className(fn: Function): string {
         return fn.name.charAt(0).toLowerCase() + fn.name.slice(1)
     }
