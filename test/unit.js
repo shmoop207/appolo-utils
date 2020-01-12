@@ -136,7 +136,7 @@ describe("Utils", function () {
         });
         it('should clone deep', async () => {
             let obj = { a: 1, b: { c: 2 }, d: [1, 2] };
-            let cloned = index_1.Util.objects.closeDeep(obj);
+            let cloned = index_1.Util.objects.cloneDeep(obj);
             (obj.a === cloned.a).should.be.ok;
             (obj.b === cloned.b).should.be.not.ok;
             (obj.b.c === cloned.b.c).should.be.ok;

@@ -122,8 +122,11 @@ export class Promises {
     public static defer<T>(): Deferred<T> {
         return new Deferred();
     }
-}
 
+    public static async to<T,K>(promise:Promise<T>):Promise<[K,T?]>{
+        return promise.then(data=>[null,data] as [K,T]).catch(e=>[e] as [K,T?])
+    }
+}
 
 export class Deferred<T> {
 
