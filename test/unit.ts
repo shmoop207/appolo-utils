@@ -27,6 +27,43 @@ describe("Utils", function () {
             arr[0].should.be.eq("b");
         });
 
+        it('should flat array', async () => {
+
+            let arr = [1, [2, [3, [4]], 5]];
+
+            let result = Util.arrays.flat(arr)
+
+            JSON.stringify(result).should.be.eq("[1,2,[3,[4]],5]");
+
+            result = Util.arrays.flat([1, 2, [3, 4]]);
+
+            JSON.stringify(result).should.be.eq("[1,2,3,4]");
+
+        });
+
+        it('should flat array deep', async () => {
+
+            let arr = [1, 2, [3, 4, [5, 6]]];
+
+            let result = Util.arrays.flatDeep(arr,Infinity);
+
+            JSON.stringify(result).should.be.eq("[1,2,3,4,5,6]");
+        });
+
+        it('should partition array', async () => {
+
+            let users = [
+                {'user': 'barney', 'age': 36, 'active': false},
+                {'user': 'fred', 'age': 40, 'active': true},
+                {'user': 'pebbles', 'age': 1, 'active': false}
+            ];
+
+            let [arr1,arr2] = Util.arrays.partition(users,(user)=>user.active);
+
+            JSON.stringify(arr1).should.be.eq(`[{"user":"fred","age":40,"active":true}]`);
+            JSON.stringify(arr2).should.be.eq(`[{"user":"barney","age":36,"active":false},{"user":"pebbles","age":1,"active":false}]`);
+        });
+
         it('should group by array', async () => {
 
             let arr = [{"a": 1, b: 2, c: 3}, {"a": 2, b: 2, c: 3}, {"a": 1, b: 2, c: 3}, {"a": 3, b: 2, c: 3}, {

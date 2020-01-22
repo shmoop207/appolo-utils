@@ -81,4 +81,26 @@ export class Arrays {
         return output;
     }
 
+    public static flat<T>(arr:T[]):T[]{
+        return arr.reduce((acc, val) => acc.concat(val), []);
+    }
+
+    public static flatDeep<T>(arr:T[],depth:number = 1):T[]{
+        return depth > 0
+            ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? Arrays.flatDeep(val, depth - 1) : val), [])
+            : arr.slice();
+    }
+
+    public static partition<T>(arr:T[],criteria:(value:T)=>boolean):[T[],T[]]{
+        let arr1 = [],arr2=[];
+
+        for(let i=0,len=(arr||[]).length;i<len;i++){
+
+            let value= arr[i];
+
+            criteria(value) ? arr1.push(value):arr2.push(value);
+        }
+
+        return [arr1,arr2]
+    }
 }
