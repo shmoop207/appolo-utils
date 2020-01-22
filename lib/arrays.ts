@@ -81,11 +81,11 @@ export class Arrays {
         return output;
     }
 
-    public static flat<T>(arr:T[]):T[]{
+    public static flat<T>(arr:any[]):T[]{
         return arr.reduce((acc, val) => acc.concat(val), []);
     }
 
-    public static flatDeep<T>(arr:T[],depth:number = 1):T[]{
+    public static flatDeep<T>(arr:any[],depth:number = 1):T[]{
         return depth > 0
             ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? Arrays.flatDeep(val, depth - 1) : val), [])
             : arr.slice();
