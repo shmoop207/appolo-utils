@@ -110,10 +110,10 @@ export class Promises {
     public static fromCallback<T>(resolver: (callback: (err: any, result?: T) => void) => void): Promise<T> {
         return new Promise((resolve, reject) => {
             resolver((err, data) => {
-                if (err !== null) {
-                    reject(err);
-                } else {
+                if (err == null) {
                     resolve(data);
+                } else {
+                    reject(err);
                 }
             })
         })
@@ -123,8 +123,8 @@ export class Promises {
         return new Deferred();
     }
 
-    public static async to<T,K>(promise:Promise<T>):Promise<[K,T?]>{
-        return promise.then(data=>[null,data] as [K,T]).catch(e=>[e] as [K,T?])
+    public static async to<T, K>(promise: Promise<T>): Promise<[K, T?]> {
+        return promise.then(data => [null, data] as [K, T]).catch(e => [e] as [K, T?])
     }
 }
 
