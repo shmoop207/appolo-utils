@@ -11,6 +11,22 @@ export class Objects {
         return JSON.parse(JSON.stringify(obj))
     }
 
+    public static defaults<T>(obj: Partial<T>, ...args: Partial<T>[]): T {
+
+        for (let i = 0, len = args.length; i < len; i++) {
+            let arg = args[i];
+            let keys = Object.keys(arg);
+            for (let j = 0, len2 = keys.length; j < len2; j++) {
+                let key = keys[j];
+                if (!(key in obj)) {
+                    obj[key] = arg[key]
+                }
+            }
+        }
+
+        return obj as T;
+    };
+
     public static cloneDeep<T>(obj: T): T {
 
         let output = Array.isArray(obj) ? [] : {};
@@ -19,8 +35,8 @@ export class Objects {
 
         for (let i = 0, len = keys.length; i < len; i++) {
 
-            let key = keys[i],value = obj[key];
-            output[key] = (value == null || typeof value != "object") ?value : Objects.cloneDeep(value)
+            let key = keys[i], value = obj[key];
+            output[key] = (value == null || typeof value != "object") ? value : Objects.cloneDeep(value)
         }
 
         return output as any;

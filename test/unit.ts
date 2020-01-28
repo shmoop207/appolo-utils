@@ -224,6 +224,13 @@ describe("Utils", function () {
 
         });
 
+        it('should extend defaults', async () => {
+            Util.objects.defaults<any>({},{a:1},{b:1}).should.deep.equals({a:1,b:1});
+            Util.objects.defaults<any>({},{a:1},{a:2}).should.deep.equals({a:1});
+            Util.objects.defaults<any>({a:1},{a:2,b:1}).should.deep.equals({a:1,b:1});
+            Util.objects.defaults<any>({a:1},{a:2,b:1},{b:2,c:3}).should.deep.equals({a:1,b:1,c:3});
+        });
+
         it('should not isEmpty', async () => {
             Util.objects.isEmpty({a: 1}).should.be.eq(false);
 

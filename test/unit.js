@@ -146,6 +146,12 @@ describe("Utils", function () {
         it('should isEmpty', async () => {
             index_1.Util.objects.isEmpty({}).should.be.eq(true);
         });
+        it('should extend defaults', async () => {
+            index_1.Util.objects.defaults({}, { a: 1 }, { b: 1 }).should.deep.equals({ a: 1, b: 1 });
+            index_1.Util.objects.defaults({}, { a: 1 }, { a: 2 }).should.deep.equals({ a: 1 });
+            index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }).should.deep.equals({ a: 1, b: 1 });
+            index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 1, b: 1, c: 3 });
+        });
         it('should not isEmpty', async () => {
             index_1.Util.objects.isEmpty({ a: 1 }).should.be.eq(false);
         });
