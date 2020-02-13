@@ -123,8 +123,23 @@ export class Promises {
         return new Deferred();
     }
 
-    public static  to<T, K>(promise: Promise<T>): Promise<[K, T?]> {
+    public static to<T, K>(promise: Promise<T>): Promise<[K, T?]> {
         return promise.then(data => [null, data] as [K, T]).catch(e => [e] as [K, T?])
+    }
+
+    public static allSettled<T>(promises: Promise<T>[]):Promise< ({ status: "fulfilled"; value: T; } | { status: "rejected"; reason: any; })[]> {
+
+        let settled = [];
+
+        for (let i = 0; i < promises.length; i++) {
+            let promise = promises[i]
+                .then(value => ({status: "fulfilled", value}))
+                .catch(reason => ({status: "rejected", reason}));
+
+            settled.push(promise);
+        }
+
+        return Promise.all(settled);
     }
 }
 
@@ -154,3 +169,16 @@ export class Deferred<T> {
     }
 
 }
+
+
+interface PromiseFulfilledResult<T> {
+    status: "fulfilled";
+    value: T;
+}
+
+interface PromiseRejectedResult {
+    status: "rejected";
+    reason: any;
+}
+
+type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejectedResult;

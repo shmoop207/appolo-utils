@@ -45,7 +45,7 @@ describe("Utils", function () {
 
             let arr = [1, 2, [3, 4, [5, 6]]];
 
-            let result = Util.arrays.flatDeep(arr,Infinity);
+            let result = Util.arrays.flatDeep(arr, Infinity);
 
             JSON.stringify(result).should.be.eq("[1,2,3,4,5,6]");
         });
@@ -58,7 +58,7 @@ describe("Utils", function () {
                 {'user': 'pebbles', 'age': 1, 'active': false}
             ];
 
-            let [arr1,arr2] = Util.arrays.partition(users,(user)=>user.active);
+            let [arr1, arr2] = Util.arrays.partition(users, (user) => user.active);
 
             JSON.stringify(arr1).should.be.eq(`[{"user":"fred","age":40,"active":true}]`);
             JSON.stringify(arr2).should.be.eq(`[{"user":"barney","age":36,"active":false},{"user":"pebbles","age":1,"active":false}]`);
@@ -132,16 +132,27 @@ describe("Utils", function () {
             result.should.be.eq(1);
 
         })
-    });
 
-    it('should run with props', async () => {
+        it('should run with props', async () => {
 
-        let result = await Util.promises.props({a: Promise.resolve(1), b: Promise.resolve(2)});
+            let result = await Util.promises.props({a: Promise.resolve(1), b: Promise.resolve(2)});
 
 
-        result.should.be.deep.equals({
-            "a": 1,
-            "b": 2
+            result.should.be.deep.equals({
+                "a": 1,
+                "b": 2
+            });
+
+        });
+
+        it('should run with allSettled', async () => {
+
+            let result = await Util.promises.allSettled([Promise.resolve(1), Promise.reject(2)]);
+
+            result.should.be.deep.equal([
+                {status: "fulfilled", value: 1},
+                {"reason": 2, "status": "rejected"}
+            ]);
         });
     });
 
@@ -225,10 +236,10 @@ describe("Utils", function () {
         });
 
         it('should extend defaults', async () => {
-            Util.objects.defaults<any>({},{a:1},{b:1}).should.deep.equals({a:1,b:1});
-            Util.objects.defaults<any>({},{a:1},{a:2}).should.deep.equals({a:1});
-            Util.objects.defaults<any>({a:1},{a:2,b:1}).should.deep.equals({a:1,b:1});
-            Util.objects.defaults<any>({a:1},{a:2,b:1},{b:2,c:3}).should.deep.equals({a:1,b:1,c:3});
+            Util.objects.defaults<any>({}, {a: 1}, {b: 1}).should.deep.equals({a: 1, b: 1});
+            Util.objects.defaults<any>({}, {a: 1}, {a: 2}).should.deep.equals({a: 1});
+            Util.objects.defaults<any>({a: 1}, {a: 2, b: 1}).should.deep.equals({a: 1, b: 1});
+            Util.objects.defaults<any>({a: 1}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 1, b: 1, c: 3});
         });
 
         it('should not isEmpty', async () => {

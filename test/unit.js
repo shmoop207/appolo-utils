@@ -87,12 +87,19 @@ describe("Utils", function () {
             let result = await index_1.Util.promises.fromCallback((c) => test(c));
             result.should.be.eq(1);
         });
-    });
-    it('should run with props', async () => {
-        let result = await index_1.Util.promises.props({ a: Promise.resolve(1), b: Promise.resolve(2) });
-        result.should.be.deep.equals({
-            "a": 1,
-            "b": 2
+        it('should run with props', async () => {
+            let result = await index_1.Util.promises.props({ a: Promise.resolve(1), b: Promise.resolve(2) });
+            result.should.be.deep.equals({
+                "a": 1,
+                "b": 2
+            });
+        });
+        it('should run with allSettled', async () => {
+            let result = await index_1.Util.promises.allSettled([Promise.resolve(1), Promise.reject(2)]);
+            result.should.be.deep.equal([
+                { status: "fulfilled", value: 1 },
+                { "reason": 2, "status": "rejected" }
+            ]);
         });
     });
     describe("Classes", function () {
