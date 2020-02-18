@@ -17,6 +17,17 @@ describe("Utils", function () {
             arr[0].should.be.eq("a");
         });
 
+        it('should key array', async () => {
+
+            let result = Util.arrays.keyBy(["a", "b", "c"]);
+
+            result.should.be.deep.equal({a: 'a', b: 'b', c: 'c'});
+
+            let result2 = Util.arrays.keyBy([{"a": 1}, {"a": 2}, {"a": 3}], (item => item.a.toString()));
+
+            result2.should.be.deep.equal({1: {"a": 1}, 2: {"a": 2}, 3: {"a": 3}});
+        });
+
         it('should compact array', async () => {
 
             let arr = ["a", "b"];

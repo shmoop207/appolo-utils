@@ -65,15 +65,19 @@ export class Arrays {
         return output;
     }
 
-    public static keyBy<T extends object>(arr: T[], key: string | ((item: T, index: number) => string)) {
+    public static keyBy<T extends any>(arr: T[], key?: string | ((item: T, index: number) => string)): { [index: string]: T } {
 
-        let output: { [index: string]: T } = {};
+        if (!key) {
+            key = (item: T, index: number) => item.toString();
+        }
+
+        let output: { [index: string]: T } = {}, isFn = Classes.isFunction(key);
 
         for (let i = 0, len = (arr || []).length; i < len; i++) {
 
             let item: any = arr[i];
 
-            let outputKey = Classes.isFunction(key) ? (key as Function)(item, i) : item[key as string];
+            let outputKey = isFn ? (key as Function)(item, i) : item[key as string];
 
             output[outputKey] = item;
         }
@@ -81,26 +85,26 @@ export class Arrays {
         return output;
     }
 
-    public static flat<T>(arr:any[]):T[]{
+    public static flat<T>(arr: any[]): T[] {
         return arr.reduce((acc, val) => acc.concat(val), []);
     }
 
-    public static flatDeep<T>(arr:any[],depth:number = 1):T[]{
+    public static flatDeep<T>(arr: any[], depth: number = 1): T[] {
         return depth > 0
             ? arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? Arrays.flatDeep(val, depth - 1) : val), [])
             : arr.slice();
     }
 
-    public static partition<T>(arr:T[],criteria:(value:T)=>boolean):[T[],T[]]{
-        let arr1 = [],arr2=[];
+    public static partition<T>(arr: T[], criteria: (value: T) => boolean): [T[], T[]] {
+        let arr1 = [], arr2 = [];
 
-        for(let i=0,len=(arr||[]).length;i<len;i++){
+        for (let i = 0, len = (arr || []).length; i < len; i++) {
 
-            let value= arr[i];
+            let value = arr[i];
 
-            criteria(value) ? arr1.push(value):arr2.push(value);
+            criteria(value) ? arr1.push(value) : arr2.push(value);
         }
 
-        return [arr1,arr2]
+        return [arr1, arr2]
     }
 }
