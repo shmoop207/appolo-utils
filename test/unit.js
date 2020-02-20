@@ -120,7 +120,7 @@ describe("Utils", function () {
                 index_1.Promises.delay(15).then(() => 3),
                 index_1.Promises.delay(10).then(() => Promise.reject(2)),
                 index_1.Promises.delay(5).then(() => 1)
-            ], 2);
+            ], { counter: 2 });
             result2.should.be.deep.equal([
                 { status: "fulfilled", value: 1 },
                 { status: "rejected", reason: 2 }
@@ -139,7 +139,7 @@ describe("Utils", function () {
                 index_1.Promises.delay(15).then(() => 3),
                 index_1.Promises.delay(10).then(() => Promise.reject(2)),
                 index_1.Promises.delay(5).then(() => 1)
-            ], 2);
+            ], { counter: 2 });
             result2.should.be.deep.equal([
                 { status: "fulfilled", value: 1 },
                 { status: "fulfilled", value: 3 }
@@ -148,7 +148,7 @@ describe("Utils", function () {
                 index_1.Promises.delay(15).then(() => 3),
                 index_1.Promises.delay(10).then(() => Promise.reject(2)),
                 index_1.Promises.delay(5).then(() => Promise.reject(1))
-            ], 2);
+            ], { counter: 2 });
             result3.should.be.deep.equal([
                 { status: "fulfilled", value: 3 }
             ]);
@@ -156,10 +156,19 @@ describe("Utils", function () {
                 index_1.Promises.delay(15).then(() => Promise.reject(3)),
                 index_1.Promises.delay(10).then(() => Promise.reject(2)),
                 index_1.Promises.delay(5).then(() => Promise.reject(1))
-            ], 2);
+            ], { counter: 2 });
             result4.should.be.deep.equal([]);
+            let result5 = await index_1.Util.promises.someResolved([
+                index_1.Promises.delay(15).then(() => Promise.resolve({ name: true })),
+                index_1.Promises.delay(10).then(() => Promise.resolve({ name: false })),
+                index_1.Promises.delay(5).then(() => Promise.resolve({ name: true }))
+            ], { counter: 3, fn: (value) => value.name });
+            result5.should.be.deep.equal([
+                { status: "fulfilled", value: { "name": true } },
+                { status: "fulfilled", value: { "name": true } }
+            ]);
         });
-        it.only('should run with some rejected', async () => {
+        it('should run with some rejected', async () => {
             let result = await index_1.Util.promises.someRejected([
                 index_1.Promises.delay(15).then(() => Promise.reject(3)),
                 index_1.Promises.delay(10).then(() => Promise.reject(2)),
@@ -172,7 +181,7 @@ describe("Utils", function () {
                 index_1.Promises.delay(15).then(() => Promise.reject(3)),
                 index_1.Promises.delay(10).then(() => 2),
                 index_1.Promises.delay(5).then(() => Promise.reject(1))
-            ], 2);
+            ], { counter: 2 });
             result2.should.be.deep.equal([
                 { status: "rejected", reason: 1 },
                 { status: "rejected", reason: 3 }
@@ -181,7 +190,7 @@ describe("Utils", function () {
                 index_1.Promises.delay(15).then(() => Promise.reject(3)),
                 index_1.Promises.delay(10).then(() => 2),
                 index_1.Promises.delay(5).then(() => 1)
-            ], 2);
+            ], { counter: 2 });
             result3.should.be.deep.equal([
                 { status: "rejected", reason: 3 }
             ]);
@@ -189,8 +198,16 @@ describe("Utils", function () {
                 index_1.Promises.delay(15).then(() => 3),
                 index_1.Promises.delay(10).then(() => 2),
                 index_1.Promises.delay(5).then(() => 1)
-            ], 2);
+            ], { counter: 2 });
             result4.should.be.deep.equal([]);
+            let result5 = await index_1.Util.promises.someRejected([
+                index_1.Promises.delay(15).then(() => Promise.resolve({ name: true })),
+                index_1.Promises.delay(10).then(() => Promise.resolve({ name: false })),
+                index_1.Promises.delay(5).then(() => Promise.resolve({ name: true }))
+            ], { counter: 3, fn: (value) => value.name });
+            result5.should.be.deep.equal([
+                { status: "rejected", reason: { "name": false } }
+            ]);
         });
     });
     describe("Classes", function () {
