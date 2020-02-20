@@ -149,6 +149,10 @@ export class Promises {
             let settled = [];
             counter = Math.min(Math.max(Math.floor(counter), 1), promises.length);
 
+            if (!promises.length) {
+                resolve(settled);
+            }
+
             for (let i = 0; i < promises.length; i++) {
                 promises[i]
                     .then(value => (settled.push({status: "fulfilled", value}) === counter) && resolve(settled))
@@ -165,6 +169,10 @@ export class Promises {
         return new Promise((resolve, reject) => {
 
             let resolved = [], rejected = [];
+
+            if (!promises.length) {
+                resolve(rejected);
+            }
             counter = Math.min(Math.max(Math.floor(counter), 1), promises.length);
 
             let fnResolve = value => (resolved.push({status: "fulfilled", value}) + rejected.length === promises.length)
@@ -186,9 +194,15 @@ export class Promises {
         fn: null
     }): Promise<({ status: "fulfilled"; value: T; })[]> {
 
+
         return new Promise((resolve, reject) => {
 
             let resolved = [], rejected = [];
+
+            if (!promises.length) {
+                resolve(resolved);
+            }
+
             counter = Math.min(Math.max(Math.floor(counter), 1), promises.length);
 
             let fnResolve = value => (resolved.push({status: "fulfilled", value}) === counter
