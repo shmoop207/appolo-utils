@@ -127,7 +127,7 @@ export class Promises {
         return promise.then(data => [null, data] as [K, T]).catch(e => [e] as [K, T?])
     }
 
-    public static allSettled<T>(promises: Promise<T>[]):Promise< ({ status: "fulfilled"; value: T; } | { status: "rejected"; reason: any; })[]> {
+    public static allSettled<T>(promises: Promise<T>[]): Promise<({ status: "fulfilled"; value: T; } | { status: "rejected"; reason: any; })[]> {
 
         let settled = [];
 
@@ -140,6 +140,55 @@ export class Promises {
         }
 
         return Promise.all(settled);
+    }
+
+    public static some<T>(promises: Promise<T>[], counter: number = 1): Promise<({ status: "fulfilled"; value: T; } | { status: "rejected"; reason: any; })[]> {
+
+        return new Promise((resolve) => {
+
+            let settled = [];
+            counter = Math.min(Math.max(Math.floor(counter), 1), promises.length);
+
+            for (let i = 0; i < promises.length; i++) {
+                promises[i]
+                    .then(value => (settled.push({status: "fulfilled", value}) === counter) && resolve(settled))
+                    .catch(reason => (settled.push({status: "rejected", reason}) === counter) && resolve(settled));
+            }
+        })
+    }
+
+    public static someResolved<T>(promises: Promise<T>[], counter: number = 1): Promise<({ status: "fulfilled"; value: T; })[]> {
+
+        return new Promise((resolve, reject) => {
+
+            let resolved = [], rejected = [];
+            counter = Math.min(Math.max(Math.floor(counter), 1), promises.length);
+
+            for (let i = 0; i < promises.length; i++) {
+                promises[i]
+                    .then(value => (resolved.push({status: "fulfilled", value}) === counter
+                        || resolved.length + rejected.length === promises.length) && resolve(resolved))
+                    .catch(reason => (rejected.push({status: "rejected", reason}) + resolved.length === promises.length)
+                        && resolve(resolved))
+            }
+        })
+    }
+
+    public static someRejected<T>(promises: Promise<T>[], counter: number = 1): Promise<({ status: "fulfilled"; value: T; })[]> {
+
+        return new Promise((resolve, reject) => {
+
+            let resolved = [], rejected = [];
+            counter = Math.min(Math.max(Math.floor(counter), 1), promises.length);
+
+            for (let i = 0; i < promises.length; i++) {
+                promises[i]
+                    .then(value => (resolved.push({status: "fulfilled", value}) + rejected.length === promises.length)
+                        && resolve(rejected))
+                    .catch(reason => (rejected.push({status: "rejected", reason}) === counter
+                        || resolved.length + rejected.length === promises.length) && resolve(rejected))
+            }
+        })
     }
 }
 

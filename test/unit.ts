@@ -1,7 +1,7 @@
 "use strict";
 import chai = require('chai');
 import Q = require('bluebird');
-import {Util} from "../index";
+import {Promises, Util} from "../index";
 
 let should = chai.should();
 
@@ -164,6 +164,106 @@ describe("Utils", function () {
                 {status: "fulfilled", value: 1},
                 {"reason": 2, "status": "rejected"}
             ]);
+        });
+
+        it('should run with some', async () => {
+
+            let result = await Util.promises.some([
+                Promises.delay(15).then(() => 3),
+                Promises.delay(10).then(() => 2),
+                Promises.delay(5).then(() => 1)]);
+
+            result.should.be.deep.equal([
+                {status: "fulfilled", value: 1}
+            ]);
+
+            let result2 = await Util.promises.some([
+                Promises.delay(15).then(() => 3),
+                Promises.delay(10).then(() => Promise.reject(2)),
+                Promises.delay(5).then(() => 1)], 2);
+
+            result2.should.be.deep.equal([
+                {status: "fulfilled", value: 1},
+                {status: "rejected", reason: 2}
+            ]);
+        });
+
+        it('should run with some resolved', async () => {
+
+            let result = await Util.promises.someResolved([
+                Promises.delay(15).then(() => 3),
+                Promises.delay(10).then(() => 2),
+                Promises.delay(5).then(() => 1)]);
+
+            result.should.be.deep.equal([
+                {status: "fulfilled", value: 1}
+            ]);
+
+            let result2 = await Util.promises.someResolved([
+                Promises.delay(15).then(() => 3),
+                Promises.delay(10).then(() => Promise.reject(2)),
+                Promises.delay(5).then(() => 1)], 2);
+
+            result2.should.be.deep.equal([
+                {status: "fulfilled", value: 1},
+                {status: "fulfilled", value: 3}
+            ]);
+
+            let result3 = await Util.promises.someResolved([
+                Promises.delay(15).then(() => 3),
+                Promises.delay(10).then(() => Promise.reject(2)),
+                Promises.delay(5).then(() => Promise.reject(1))], 2);
+
+            result3.should.be.deep.equal([
+                {status: "fulfilled", value: 3}
+            ]);
+
+
+            let result4 = await Util.promises.someResolved([
+                Promises.delay(15).then(() => Promise.reject(3)),
+                Promises.delay(10).then(() => Promise.reject(2)),
+                Promises.delay(5).then(() => Promise.reject(1))], 2);
+
+            result4.should.be.deep.equal([]);
+        });
+
+        it.only('should run with some rejected', async () => {
+
+            let result = await Util.promises.someRejected([
+                Promises.delay(15).then(() => Promise.reject(3)),
+                Promises.delay(10).then(() => Promise.reject(2)),
+                Promises.delay(5).then(() => Promise.reject(1))]);
+
+            result.should.be.deep.equal([
+                {status: "rejected", reason: 1}
+            ]);
+
+            let result2 = await Util.promises.someRejected([
+                Promises.delay(15).then(() => Promise.reject(3)),
+                Promises.delay(10).then(() => 2),
+                Promises.delay(5).then(() => Promise.reject(1))], 2);
+
+            result2.should.be.deep.equal([
+                {status: "rejected", reason: 1},
+                {status: "rejected", reason: 3}
+            ]);
+
+            let result3 = await Util.promises.someRejected([
+                Promises.delay(15).then(() => Promise.reject(3)),
+                Promises.delay(10).then(() => 2),
+                Promises.delay(5).then(() => 1)], 2);
+
+            result3.should.be.deep.equal([
+                {status: "rejected", reason: 3}
+            ]);
+
+
+            let result4 = await Util.promises.someRejected([
+                Promises.delay(15).then(() => 3),
+                Promises.delay(10).then(()=>2),
+                Promises.delay(5).then(() => 1)], 2);
+
+            result4.should.be.deep.equal([]);
         });
     });
 
