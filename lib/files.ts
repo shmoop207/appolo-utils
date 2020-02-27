@@ -1,4 +1,6 @@
 import {promises, Stats} from "fs";
+import * as path from "path";
+import * as fs from "fs";
 
 export class Files {
     public static async removeDir(dirPath: string, removeSelf: boolean = true): Promise<void> {
@@ -85,5 +87,40 @@ export class Files {
 
         await Files.createDir(dirPath);
 
+    }
+
+    public static* walk(root: string, filesPath: string | string[], ext?: string[]) {
+        if (!Array.isArray(filesPath)) {
+            filesPath = [filesPath];
+        }
+
+        if (!ext) {
+            ext = ["js"]
+        }
+
+        let filesRegex = new RegExp(`(.*)\.(${ext.join("|")})$`);
+
+        for (let filePath of filesPath) {
+
+            yield* this._loadFiles(path.join(root, filePath), filesRegex);
+        }
+    }
+
+    private static* _loadFiles(filePath: string, filesRegex: RegExp) {
+        if (fs.existsSync(filePath)) {
+
+            for (let file of fs.readdirSync(filePath)) {
+                let newPath = path.join(filePath, file), stat = fs.statSync(newPath), isIgnored = file.startsWith("~");
+
+
+                if (stat.isFile() && filesRegex.test(file) && !isIgnored) {
+
+                    yield newPath;
+
+                } else if (stat.isDirectory() && !isIgnored) {
+                    yield* this._loadFiles(newPath, filesRegex);
+                }
+            }
+        }
     }
 }

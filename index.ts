@@ -10,9 +10,10 @@ import {Time} from "./lib/time"
 import {Files} from "./lib/files"
 import {Enums} from "./lib/enums"
 import {Util} from "./lib/util"
+import {ReflectMetadata} from "./lib/reflectMetadata"
 
 export default Util;
 
-export {Numbers, Strings, Hash, Objects, Arrays, Classes, Guid, Promises, Time, Util, Files, Enums, Deferred}
+export {Numbers, Strings, Hash, Objects, Arrays, Classes, Guid, Promises, Time, Util, Files, Enums, Deferred,ReflectMetadata}
 
 

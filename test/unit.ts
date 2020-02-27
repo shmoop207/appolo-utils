@@ -212,7 +212,7 @@ describe("Utils", function () {
             let result3 = await Util.promises.someResolved([
                 Promises.delay(15).then(() => 3),
                 Promises.delay(10).then(() => Promise.reject(2)),
-                Promises.delay(5).then(() => Promise.reject(1))], {counter:2});
+                Promises.delay(5).then(() => Promise.reject(1))], {counter: 2});
 
             result3.should.be.deep.equal([
                 {status: "fulfilled", value: 3}
@@ -427,6 +427,20 @@ describe("Utils", function () {
             Util.enums.enumValues(Test).should.be.deep.equals([0, 1, 'aaa', 'bbb']);
             Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
 
+        });
+    });
+
+    describe("Files", function () {
+        it.only('should get flies', async () => {
+
+            let files = [];
+
+            for (let file of Util.files.walk(__dirname, "")) {
+                files.push(file);
+            }
+
+            files.length.should.be.eq(1);
+            files[0].should.include("unit.js")
         });
     });
 

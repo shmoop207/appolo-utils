@@ -309,5 +309,15 @@ describe("Utils", function () {
             index_1.Util.enums.enumNames(Test).should.be.deep.equals(['A', 'B', 'C', 'D']);
         });
     });
+    describe("Files", function () {
+        it.only('should get flies', async () => {
+            let files = [];
+            for (let file of index_1.Util.files.walk(__dirname, "")) {
+                files.push(file);
+            }
+            files.length.should.be.eq(1);
+            files[0].should.include("unit.js");
+        });
+    });
 });
 //# sourceMappingURL=unit.js.map

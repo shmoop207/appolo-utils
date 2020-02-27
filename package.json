@@ -14,7 +14,7 @@
     "test": "mocha test --exit"
   },
   "main": "./index.js",
-  "version": "0.0.30",
+  "version": "0.0.33",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -22,14 +22,16 @@
   },
   "readme": "",
   "readmeFilename": "README.md",
-  "dependencies": {},
+  "dependencies": {
+    "reflect-metadata": "^0.1.13"
+  },
   "devDependencies": {
     "@types/benchmark": "^1.0.31",
     "@types/bluebird": "^3.5.27",
     "@types/chai": "^4.1.6",
     "@types/lodash": "^4.14.116",
     "@types/mocha": "^5.2.5",
-    "@types/node": "^10.11.3",
+    "@types/node": "^13.7.6",
     "aes256": "^1.0.4",
     "benchmark": "^2.1.4",
     "bluebird": "^3.5.5",

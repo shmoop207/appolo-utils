@@ -25,5 +25,7 @@ const enums_1 = require("./lib/enums");
 exports.Enums = enums_1.Enums;
 const util_1 = require("./lib/util");
 exports.Util = util_1.Util;
+const reflectMetadata_1 = require("./lib/reflectMetadata");
+exports.ReflectMetadata = reflectMetadata_1.ReflectMetadata;
 exports.default = util_1.Util;
 //# sourceMappingURL=index.js.map
