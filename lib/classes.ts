@@ -29,4 +29,23 @@ export class Classes {
 
         return args;
     }
+
+    // public static  getAllClassMethods(klass:(new(...args: any[])=> any)):string[] {
+    //     let props = [];
+    //     let obj = klass;
+    //     do {
+    //
+    //         let keys = Object.getOwnPropertyDescriptors(obj);
+    //
+    //         for(let i =0;i<keys.length;i++){
+    //
+    //         }
+    //
+    //         props = props.concat();
+    //     } while (obj = Object.getPrototypeOf(obj));
+    //
+    //     // return props.sort().filter(function(e, i, arr) {
+    //     //     if (e!=arr[i+1] && typeof toCheck[e] == 'function') return true;
+    //     // });
+    // }
 }

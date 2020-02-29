@@ -312,6 +312,34 @@ describe("Utils", function () {
             }).should.be.deep.equals(['a', 'b', 'c']);
 
         });
+
+        // it('should get class methods inherit', async () => {
+        //
+        //     class A {
+        //         a() {
+        //
+        //         }
+        //
+        //         b() {
+        //
+        //         }
+        //     }
+        //
+        //     class B extends A {
+        //         c() {
+        //
+        //         }
+        //
+        //         get d(){
+        //             return ""
+        //         }
+        //     }
+        //
+        //
+        //
+        //     Util.classes.getAllClassMethods(new B()).should.be.deep.equals(['a', 'b', 'c']);
+        //
+        // });
     });
 
     describe("strings", function () {
@@ -431,7 +459,7 @@ describe("Utils", function () {
     });
 
     describe("Files", function () {
-        it.only('should get flies', async () => {
+        it('should get flies', async () => {
 
             let files = [];
 

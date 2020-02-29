@@ -12,6 +12,7 @@ export class ReflectMetadata {
         if (Reflect.hasMetadata(symbol, klass)) {
             value = Objects.cloneDeep(Reflect.getMetadata(symbol, klass));
             Reflect.defineMetadata(symbol, value, klass);
+            return value;
         }
 
         if (defaultValue !== undefined) {
