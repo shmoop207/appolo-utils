@@ -281,9 +281,22 @@ describe("Utils", function () {
     describe("Objects", function () {
         it('should isPlain', async () => {
             index_1.Util.objects.isPlain({ a: 1, b: true, c: "a" }).should.be.eq(true);
+            index_1.Util.objects.isPlain(Object.create({})).should.be.eq(true);
+            index_1.Util.objects.isPlain(Object.create(Object.prototype)).should.be.eq(true);
+            index_1.Util.objects.isPlain({ foo: 'bar' }).should.be.eq(true);
+            index_1.Util.objects.isPlain({}).should.be.eq(true);
         });
         it('should not isPlain', async () => {
             index_1.Util.objects.isPlain([{ a: 1, b: true, c: "a" }]).should.be.eq(false);
+            index_1.Util.objects.isPlain(1).should.be.eq(false);
+            index_1.Util.objects.isPlain(['foo', 'bar']).should.be.eq(false);
+            index_1.Util.objects.isPlain([]).should.be.eq(false);
+            index_1.Util.objects.isPlain(new class A {
+            }).should.be.eq(false);
+            index_1.Util.objects.isPlain(null).should.be.eq(false);
+            index_1.Util.objects.isPlain(function () { }).should.be.eq(false);
+            index_1.Util.objects.isPlain(new function () { }).should.be.eq(false);
+            index_1.Util.objects.isPlain(Object.create(null)).should.be.eq(false);
         });
         it('should isEmpty', async () => {
             index_1.Util.objects.isEmpty({}).should.be.eq(true);
@@ -305,13 +318,16 @@ describe("Utils", function () {
             index_1.Util.objects.tryParseJSON('{"a":1}').should.be.deep.equals({ a: 1 });
         });
         it('should clone deep', async () => {
-            let obj = { a: 1, b: { c: 2 }, d: [1, 2] };
+            let klass = new class A {
+            };
+            let obj = { a: 1, b: { c: 2 }, d: [1, 2], f: klass };
             let cloned = index_1.Util.objects.cloneDeep(obj);
             (obj.a === cloned.a).should.be.ok;
             (obj.b === cloned.b).should.be.not.ok;
             (obj.b.c === cloned.b.c).should.be.ok;
             (obj.d[1] === cloned.d[1]).should.be.ok;
             (obj.d === cloned.d).should.be.not.ok;
+            (obj.f === cloned.f).should.be.ok;
         });
         it('should clone fast', async () => {
             let obj = { a: 1, b: { c: 2 }, d: [1, 2] };

@@ -380,11 +380,32 @@ describe("Utils", function () {
     describe("Objects", function () {
         it('should isPlain', async () => {
             Util.objects.isPlain({a: 1, b: true, c: "a"}).should.be.eq(true);
+            Util.objects.isPlain(Object.create({})).should.be.eq(true);
+
+            Util.objects.isPlain(Object.create(Object.prototype)).should.be.eq(true);
+
+            Util.objects.isPlain({foo: 'bar'}).should.be.eq(true);
+
+            Util.objects.isPlain({}).should.be.eq(true);
 
         });
 
         it('should not isPlain', async () => {
             Util.objects.isPlain([{a: 1, b: true, c: "a"}] as any).should.be.eq(false);
+            Util.objects.isPlain(1).should.be.eq(false);
+
+            Util.objects.isPlain(['foo', 'bar']).should.be.eq(false);
+
+            Util.objects.isPlain([]).should.be.eq(false);
+
+            Util.objects.isPlain(new class A{}).should.be.eq(false);
+
+            Util.objects.isPlain(null).should.be.eq(false);
+            Util.objects.isPlain(function () {}).should.be.eq(false);
+            Util.objects.isPlain(new function () {}).should.be.eq(false);
+
+
+            Util.objects.isPlain(Object.create(null)).should.be.eq(false);
 
         });
 
@@ -417,7 +438,8 @@ describe("Utils", function () {
         });
 
         it('should clone deep', async () => {
-            let obj = {a: 1, b: {c: 2}, d: [1, 2]};
+            let klass = new class A {};
+            let obj = {a: 1, b: {c: 2}, d: [1, 2],f:klass};
             let cloned = Util.objects.cloneDeep(obj);
 
             (obj.a === cloned.a).should.be.ok;
@@ -425,6 +447,7 @@ describe("Utils", function () {
             (obj.b.c === cloned.b.c).should.be.ok;
             (obj.d[1] === cloned.d[1]).should.be.ok;
             (obj.d === cloned.d).should.be.not.ok;
+            (obj.f === cloned.f).should.be.ok;
 
         });
 

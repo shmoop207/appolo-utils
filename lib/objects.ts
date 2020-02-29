@@ -1,6 +1,26 @@
 export class Objects {
-    public static isPlain(obj: { [index: string]: string | number | boolean }): boolean {
-        return Object.prototype.toString.call(obj) === '[object Object]';
+    public static isPlain(obj: any): boolean {
+
+        if (!Objects.isObject(obj)) {
+            return false;
+        }
+
+        let ctor = obj.constructor;
+        if (typeof ctor !== 'function') {
+            return false;
+        }
+
+        let proto = ctor.prototype;
+        if (!Objects.isObject(proto) || !proto.hasOwnProperty('isPrototypeOf')) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public static isObject(val: any): boolean {
+        return val != null && typeof val === 'object' && Object.prototype.toString.call(val) === '[object Object]';
     }
 
     public static isEmpty(obj: { [index: string]: any }): boolean {
@@ -36,7 +56,9 @@ export class Objects {
         for (let i = 0, len = keys.length; i < len; i++) {
 
             let key = keys[i], value = obj[key];
-            output[key] = (value == null || typeof value != "object") ? value : Objects.cloneDeep(value)
+            output[key] = (value !== null && value !== undefined && (Array.isArray(value) || Objects.isPlain(value)))
+                ? Objects.cloneDeep(value)
+                : value
         }
 
         return output as any;
