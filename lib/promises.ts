@@ -218,6 +218,12 @@ export class Promises {
             }
         })
     }
+
+    public static isPromise(obj: any): boolean {
+
+        return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function' && typeof obj.catch === 'function';
+
+    }
 }
 
 export class Deferred<T> {

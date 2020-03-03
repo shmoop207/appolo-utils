@@ -93,6 +93,13 @@ describe("Utils", function () {
             let result = await index_1.Util.promises.fromCallback((c) => test(c));
             result.should.be.eq(1);
         });
+        it('should check if promise', async () => {
+            index_1.Util.promises.isPromise({ then: true }).should.be.not.ok;
+            index_1.Util.promises.isPromise(null).should.be.not.ok;
+            index_1.Util.promises.isPromise({}).should.be.not.ok;
+            index_1.Util.promises.isPromise(Promise.resolve()).should.be.ok;
+            index_1.Util.promises.isPromise(new Promise(resolve => null)).should.be.ok;
+        });
         it('should run with props', async () => {
             let result = await index_1.Util.promises.props({ a: Promise.resolve(1), b: Promise.resolve(2) });
             result.should.be.deep.equals({
@@ -294,8 +301,10 @@ describe("Utils", function () {
             index_1.Util.objects.isPlain(new class A {
             }).should.be.eq(false);
             index_1.Util.objects.isPlain(null).should.be.eq(false);
-            index_1.Util.objects.isPlain(function () { }).should.be.eq(false);
-            index_1.Util.objects.isPlain(new function () { }).should.be.eq(false);
+            index_1.Util.objects.isPlain(function () {
+            }).should.be.eq(false);
+            index_1.Util.objects.isPlain(new function () {
+            }).should.be.eq(false);
             index_1.Util.objects.isPlain(Object.create(null)).should.be.eq(false);
         });
         it('should isEmpty', async () => {

@@ -142,7 +142,16 @@ describe("Utils", function () {
 
             result.should.be.eq(1);
 
-        })
+        });
+
+        it('should check if promise', async () => {
+
+            Util.promises.isPromise({then: true}).should.be.not.ok;
+            Util.promises.isPromise(null).should.be.not.ok;
+            Util.promises.isPromise({}).should.be.not.ok;
+            Util.promises.isPromise(Promise.resolve()).should.be.ok;
+            Util.promises.isPromise(new Promise(resolve => null)).should.be.ok;
+        });
 
         it('should run with props', async () => {
 
@@ -398,11 +407,14 @@ describe("Utils", function () {
 
             Util.objects.isPlain([]).should.be.eq(false);
 
-            Util.objects.isPlain(new class A{}).should.be.eq(false);
+            Util.objects.isPlain(new class A {
+            }).should.be.eq(false);
 
             Util.objects.isPlain(null).should.be.eq(false);
-            Util.objects.isPlain(function () {}).should.be.eq(false);
-            Util.objects.isPlain(new function () {}).should.be.eq(false);
+            Util.objects.isPlain(function () {
+            }).should.be.eq(false);
+            Util.objects.isPlain(new function () {
+            }).should.be.eq(false);
 
 
             Util.objects.isPlain(Object.create(null)).should.be.eq(false);
@@ -438,8 +450,9 @@ describe("Utils", function () {
         });
 
         it('should clone deep', async () => {
-            let klass = new class A {};
-            let obj = {a: 1, b: {c: 2}, d: [1, 2],f:klass};
+            let klass = new class A {
+            };
+            let obj = {a: 1, b: {c: 2}, d: [1, 2], f: klass};
             let cloned = Util.objects.cloneDeep(obj);
 
             (obj.a === cloned.a).should.be.ok;
