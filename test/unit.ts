@@ -28,7 +28,7 @@ describe("Utils", function () {
             result2.should.be.deep.equal({1: {"a": 1}, 2: {"a": 2}, 3: {"a": 3}});
         });
 
-        it('should compact array', async () => {
+        it('should remove from array', async () => {
 
             let arr = ["a", "b"];
 
@@ -36,6 +36,25 @@ describe("Utils", function () {
 
             arr.length.should.be.eq(1);
             arr[0].should.be.eq("b");
+        });
+
+        it('should uniqby  array', async () => {
+
+            let arr = [{a: 2}, {a: 1}, {a: 2}];
+
+            arr = Util.arrays.uniqBy(arr, (item) => item.a);
+
+            arr.length.should.be.eq(2);
+            arr[0].a.should.be.eq(2);
+        });
+
+        it('should uniq  array', async () => {
+
+            let arr = [1,2,4,2,4];
+
+            arr = Util.arrays.uniq(arr);
+
+            arr.should.be.deep.equal([1,2,4]);
         });
 
         it('should flat array', async () => {

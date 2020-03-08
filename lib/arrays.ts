@@ -107,4 +107,25 @@ export class Arrays {
 
         return [arr1, arr2]
     }
+
+
+    public static uniqBy<T>(arr: T[], criteria: (value: T, i?: number) => any): T[] {
+        let dic = new Map<any, 1>(), out = [];
+        if (!arr || !arr.length) {
+            return []
+        }
+        for (let i = 0; i < arr.length; i++) {
+            let item = arr[i], key = criteria(item, i);
+            if (!dic.has(key)) {
+                dic.set(key, 1);
+                out.push(item)
+            }
+        }
+
+        return out;
+    }
+
+    public static uniq<T>(arr: T[]): T[] {
+        return Arrays.uniqBy(arr, (item) => item)
+    }
 }
