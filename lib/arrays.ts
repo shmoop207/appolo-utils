@@ -108,6 +108,29 @@ export class Arrays {
         return [arr1, arr2]
     }
 
+    public static sortBy<T>(arr: T[], criteria: (value: T) => any): T[] {
+        arr = Arrays.clone(arr);
+
+        arr.sort((a, b) => {
+            let valueA = criteria(a), valueB = criteria(b);
+            return (valueA > valueB) ? 1 : ((valueB > valueA) ? -1 : 0);
+        });
+
+        return arr;
+    }
+
+    public static sort<T>(arr: T[]): T[] {
+
+        let criteria = ((value) => value);
+        arr = Arrays.clone(arr);
+
+        arr.sort((a, b) => {
+            let valueA = criteria(a), valueB = criteria(b);
+            return (valueA > valueB) ? 1 : ((valueB > valueA) ? -1 : 0);
+        });
+
+        return arr;
+    }
 
     public static uniqBy<T>(arr: T[], criteria: (value: T, i?: number) => any): T[] {
         let dic = new Map<any, 1>(), out = [];

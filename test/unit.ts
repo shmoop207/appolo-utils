@@ -38,6 +38,26 @@ describe("Utils", function () {
             arr[0].should.be.eq("b");
         });
 
+        it('should sortBy array', async () => {
+
+            let arr = [{a: 2}, {a: 1}, {a: 3}, {a: 1.5}];
+
+            let arr2 = Util.arrays.sortBy(arr, (item) => item.a);
+
+            arr.should.be.deep.equal([{a: 2}, {a: 1}, {a: 3}, {a: 1.5}]);
+            arr2.should.be.deep.equal([{a: 1}, {a: 1.5}, {a: 2}, {a: 3}]);
+        });
+
+        it('should sort array', async () => {
+
+            let arr = [2,  1,  3,  1.5];
+
+            let arr2 = Util.arrays.sort(arr);
+
+            arr.should.be.deep.equal([2,  1,  3,  1.5]);
+            arr2.should.be.deep.equal([1,  1.5,  2,  3]);
+        });
+
         it('should uniqby  array', async () => {
 
             let arr = [{a: 2}, {a: 1}, {a: 2}];
@@ -50,11 +70,11 @@ describe("Utils", function () {
 
         it('should uniq  array', async () => {
 
-            let arr = [1,2,4,2,4];
+            let arr = [1, 2, 4, 2, 4];
 
             arr = Util.arrays.uniq(arr);
 
-            arr.should.be.deep.equal([1,2,4]);
+            arr.should.be.deep.equal([1, 2, 4]);
         });
 
         it('should flat array', async () => {
