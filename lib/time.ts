@@ -38,4 +38,6 @@ export class Time {
         }
         return ms + 'ms';
     }
+
+
 }

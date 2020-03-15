@@ -10,6 +10,7 @@ import {Time} from "./time";
 import {Files} from "./files";
 import {Enums} from "./enums";
 import {ReflectMetadata} from "./ReflectMetadata";
+import {Functions} from "./functions";
 
 export class Util {
     public static get numbers(): typeof Numbers {
@@ -54,6 +55,10 @@ export class Util {
 
     public static get enums(): typeof Enums{
         return Enums
+    }
+
+    public static get functions(): typeof Functions {
+        return Functions
     }
 
     public static get Metadata(): typeof ReflectMetadata{
