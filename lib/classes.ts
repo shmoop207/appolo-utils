@@ -1,4 +1,5 @@
 import {Arrays} from "./arrays";
+import {Functions} from "../index";
 
 export class Classes {
     public static isClass(v: any): boolean {
@@ -6,14 +7,14 @@ export class Classes {
     }
 
     public static isFunction(obj: any): boolean {
-        return !!(obj && obj.constructor && obj.call && obj.apply);
+        return Functions.isFunction(obj);
     };
 
     public static className(fn: Function): string {
         return fn.name.charAt(0).toLowerCase() + fn.name.slice(1)
     }
 
-    public static functionArgsNames(func: ((...args: any[]) => any) | (new(...args: any[])=> any)) {
+    public static functionArgsNames(func: ((...args: any[]) => any) | (new(...args: any[]) => any)) {
 
         const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
         const ARGUMENT_NAMES = /([^\s,]+)/g;

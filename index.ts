@@ -10,8 +10,9 @@ import {Time} from "./lib/time"
 import {Files} from "./lib/files"
 import {Enums} from "./lib/enums"
 import {Functions} from "./lib/functions"
+import {Errors} from "./lib/errors"
 import {Util} from "./lib/util"
-import {ReflectMetadata} from "./lib/reflectMetadata"
+import {Reflector} from "./lib/reflector"
 
 export default Util;
 
@@ -29,7 +30,7 @@ export {
     Files,
     Enums,
     Deferred,
-    ReflectMetadata, Functions
+    Reflector, Functions, Errors
 }
 
 

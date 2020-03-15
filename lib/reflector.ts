@@ -1,8 +1,14 @@
 import {Objects} from "../index";
 import "reflect-metadata";
 
-export class ReflectMetadata {
-    public static getNestedMetadata<T>(symbol: Symbol | string, klass, defaultValue?: T): T {
+export class Reflector {
+
+    public static getFnMetadata<T>(symbol: Symbol | string, klass: Function, defaultValue?: T): T {
+        return Reflector.getMetadata(symbol, klass, undefined, defaultValue);
+    }
+
+    public static getMetadata<T>(symbol: Symbol | string, klass: Function, propertyName?: string, defaultValue?: T): T {
+
         let value = Reflect.getOwnMetadata(symbol, klass);
 
         if (value !== undefined) {
@@ -10,14 +16,30 @@ export class ReflectMetadata {
         }
 
         if (Reflect.hasMetadata(symbol, klass)) {
-            value = Objects.cloneDeep(Reflect.getMetadata(symbol, klass));
+            value = Objects.cloneDeep(Reflect.getMetadata(symbol, klass, propertyName));
             Reflect.defineMetadata(symbol, value, klass);
             return value;
         }
 
         if (defaultValue !== undefined) {
             value = defaultValue;
-            Reflect.defineMetadata(symbol, value, klass);
+            Reflect.defineMetadata(symbol, value, klass, propertyName);
+        }
+
+        return value
+    }
+
+    public static getFnOwnMetadata<T>(symbol: Symbol | string, klass: any, defaultValue?: T): T {
+        return Reflector.getOwnMetadata(symbol, klass, undefined, defaultValue);
+    }
+
+    public static getOwnMetadata<T>(symbol: Symbol | string, klass: any, propertyName?: string, defaultValue?: T): T {
+
+        let value = Reflect.getOwnMetadata(symbol, klass, propertyName);
+
+        if (!value && defaultValue != undefined) {
+            value = defaultValue;
+            Reflect.defineMetadata(symbol, value, klass, propertyName);
         }
 
         return value
@@ -60,21 +82,10 @@ export class ReflectMetadata {
         }
     }
 
-    public static getOwnMetadata<T>(symbol: Symbol | string, klass: any, propertyName?: string, defaultValue?: T): T {
-
-        let value = Reflect.getOwnMetadata(symbol, klass, propertyName);
-
-        if (!value && defaultValue != undefined) {
-            value = defaultValue;
-            Reflect.defineMetadata(symbol, value, klass, propertyName);
-        }
-
-        return value
-    }
 
     public static decorateMetadata(key: string | Symbol, value: any) {
         return function (target: any, propertyKey?: string) {
-            ReflectMetadata.setMetadata(key, value, propertyKey ? target.constructor : target, propertyKey);
+            Reflector.setMetadata(key, value, propertyKey ? target.constructor : target, propertyKey);
         }
     }
 }

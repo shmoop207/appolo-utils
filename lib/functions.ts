@@ -1,3 +1,5 @@
+import {Arrays} from "./arrays";
+
 export class Functions {
     public static memoize(fn: Function, resolver?: (args?: any[]) => string | number) {
         let cache = {};
@@ -48,4 +50,21 @@ export class Functions {
             }
         };
     }
+
+    public static isFunction(obj: any): boolean {
+        return !!(obj && obj.constructor && obj.call && obj.apply);
+    };
+
+    public static mixins(_klass: Function, mixins: Function | Function[]) {
+
+        Arrays.arrayify<Function>(mixins).forEach(mixin => {
+            Object.getOwnPropertyNames(mixin.prototype).forEach((name) => {
+                if (["constructor"].indexOf(name) == -1) {
+                    _klass.prototype[name] = mixin.prototype[name]
+                }
+            })
+        });
+
+    }
+
 }

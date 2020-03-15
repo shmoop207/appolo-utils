@@ -9,8 +9,9 @@ import {Strings} from "./strings";
 import {Time} from "./time";
 import {Files} from "./files";
 import {Enums} from "./enums";
-import {ReflectMetadata} from "./ReflectMetadata";
+import {Reflector} from "./reflector";
 import {Functions} from "./functions";
+import {Errors} from "./errors";
 
 export class Util {
     public static get numbers(): typeof Numbers {
@@ -61,7 +62,10 @@ export class Util {
         return Functions
     }
 
-    public static get Metadata(): typeof ReflectMetadata{
-        return ReflectMetadata
+    public static get Reflector(): typeof Reflector{
+        return Reflector
+    }
+    public static get errors(): typeof Errors{
+        return Errors
     }
 }
