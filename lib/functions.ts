@@ -1,5 +1,5 @@
 export class Functions {
-    public static memoize(fn: Function, resolver: (args?: any[]) => string | number) {
+    public static memoize(fn: Function, resolver?: (args?: any[]) => string | number) {
         let cache = {};
         return (...args) => {
             let key = resolver ? resolver(args) : args[0];
@@ -7,7 +7,7 @@ export class Functions {
                 return cache[key];
             }
 
-            let result = fn.apply(null, args);
+            let result = fn.apply(this, args);
 
             cache[key] = result;
 
@@ -23,13 +23,13 @@ export class Functions {
             let now = Date.now();
 
             if (now - lastTime >= timeFrame) {
-                func.apply(null, arguments);
+                func.apply(this, arguments);
                 lastTime = now;
             }
         };
     }
 
-    public static debounce(func: Function, wait: number, immediate: boolean) {
+    public static debounce(func: Function, wait: number, immediate?: boolean) {
         let timeout;
         return function () {
             let context = this, args = arguments;
