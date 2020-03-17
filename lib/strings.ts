@@ -1,4 +1,3 @@
-
 export class Strings {
     public static stringifyObjectValues(obj: { [index: string]: string | boolean | number }): string {
         let s = '';
@@ -11,7 +10,7 @@ export class Strings {
         return s;
     }
 
-    public static isString(str: any): boolean {
+    public static isString(str: any): str is String {
         return (typeof str === 'string' || str instanceof String);
     }
 

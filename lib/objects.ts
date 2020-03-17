@@ -64,6 +64,21 @@ export class Objects {
         return output as any;
     }
 
+    public static clone<T>(obj: T): T {
+
+        let output = Array.isArray(obj) ? [] : {};
+
+        let keys = Object.keys(obj);
+
+        for (let i = 0, len = keys.length; i < len; i++) {
+
+            let key = keys[i];
+            output[key] = obj[key]
+        }
+
+        return output as any;
+    }
+
     public static compact(obj: any): any {
 
         let output = {};

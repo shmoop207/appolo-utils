@@ -51,7 +51,7 @@ export class Functions {
         };
     }
 
-    public static isFunction(obj: any): boolean {
+    public static isFunction(obj: any): obj is Function {
         return !!(obj && obj.constructor && obj.call && obj.apply);
     };
 
