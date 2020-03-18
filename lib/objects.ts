@@ -111,7 +111,7 @@ export class Objects {
         return null;
     }
 
-    public static pick<T extends object, U extends keyof T>(obj: T, pick: U[]): Pick<T, U> {
+    public static pick<T extends object, U extends keyof T>(obj: T, ...pick: U[]): Pick<T, U> {
         let out: any = {};
         for (let i = 0; i < pick.length; i++) {
             let key = pick[i];
@@ -121,7 +121,7 @@ export class Objects {
         return out
     }
 
-    public static omit<T extends object, U extends keyof T>(obj: T, omit: U[]): Omit<T, U> {
+    public static omit<T extends object, U extends keyof T>(obj: T, ...omit: U[]): Omit<T, U> {
         let out: any = {}, keys = Object.keys(obj || {}), omitIndex = Arrays.keyBy(omit);
         for (let i = 0; i < keys.length; i++) {
             let key = keys[i];
