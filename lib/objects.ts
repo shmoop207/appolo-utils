@@ -1,3 +1,5 @@
+import {Arrays} from "./arrays";
+
 export class Objects {
     public static isPlain(obj: any): boolean {
 
@@ -108,4 +110,28 @@ export class Objects {
 
         return null;
     }
+
+    public static pick<T extends object, U extends keyof T>(obj: T, pick: U[]): Pick<T, U> {
+        let out: any = {};
+        for (let i = 0; i < pick.length; i++) {
+            let key = pick[i];
+            out[key] = obj[key];
+        }
+
+        return out
+    }
+
+    public static omit<T extends object, U extends keyof T>(obj: T, omit: U[]): Omit<T, U> {
+        let out: any = {}, keys = Object.keys(obj || {}), omitIndex = Arrays.keyBy(omit);
+        for (let i = 0; i < keys.length; i++) {
+            let key = keys[i];
+            if (!omitIndex[key]) {
+                out[key] = obj[key];
+            }
+
+        }
+
+        return out
+    }
+
 }

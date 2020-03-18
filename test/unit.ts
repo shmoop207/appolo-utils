@@ -438,6 +438,14 @@ describe("Utils", function () {
 
         });
 
+        it('should object pick', async () => {
+            Util.objects.pick({a: 1, b: true, c: "a"},["a"]).should.be.deep.equal({a:1});
+        });
+
+        it('should object omit', async () => {
+            Util.objects.omit({a: 1, b: true, c: "a"},["a"]).should.be.deep.equal({ b: true, c: 'a' });
+        });
+
         it('should not isPlain', async () => {
             Util.objects.isPlain([{a: 1, b: true, c: "a"}] as any).should.be.eq(false);
             Util.objects.isPlain(1).should.be.eq(false);

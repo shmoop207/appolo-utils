@@ -119,6 +119,12 @@ export class Arrays {
         return arr;
     }
 
+
+    public static zip<T>(arr: T[], ...args: Array<T>): Array<Array<T | undefined>> {
+        return arr.map((value, idx) => [value, ...args.map(arr => arr[idx])])
+    }
+
+
     public static sort<T>(arr: T[]): T[] {
 
         let criteria = ((value) => value);
