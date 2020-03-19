@@ -26,7 +26,7 @@ export class Objects {
     }
 
     public static isEmpty(obj: { [index: string]: any }): boolean {
-        return Object.keys(obj).length === 0
+        return Object.keys(obj || {}).length === 0
     }
 
     public static cloneFast<T>(obj: T): T {
@@ -37,7 +37,7 @@ export class Objects {
 
         for (let i = 0, len = args.length; i < len; i++) {
             let arg = args[i];
-            let keys = Object.keys(arg);
+            let keys = Object.keys(arg || {});
             for (let j = 0, len2 = keys.length; j < len2; j++) {
                 let key = keys[j];
                 if (!(key in obj)) {
@@ -53,7 +53,7 @@ export class Objects {
 
         let output = Array.isArray(obj) ? [] : {};
 
-        let keys = Object.keys(obj);
+        let keys = Object.keys(obj || {});
 
         for (let i = 0, len = keys.length; i < len; i++) {
 
@@ -70,7 +70,7 @@ export class Objects {
 
         let output = Array.isArray(obj) ? [] : {};
 
-        let keys = Object.keys(obj);
+        let keys = Object.keys(obj || {});
 
         for (let i = 0, len = keys.length; i < len; i++) {
 
@@ -85,7 +85,7 @@ export class Objects {
 
         let output = {};
 
-        let keys = Object.keys(obj);
+        let keys = Object.keys(obj || {});
 
         for (let i = 0, length = keys.length; i < length; i++) {
             let key = keys[i], item = obj[key];
@@ -113,9 +113,12 @@ export class Objects {
 
     public static pick<T extends object, U extends keyof T>(obj: T, ...pick: U[]): Pick<T, U> {
         let out: any = {};
+        obj = obj || {} as T;
         for (let i = 0; i < pick.length; i++) {
             let key = pick[i];
-            out[key] = obj[key];
+            if(key in obj){
+                out[key] = obj[key];
+            }
         }
 
         return out

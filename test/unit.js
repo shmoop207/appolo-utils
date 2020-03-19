@@ -17,6 +17,12 @@ describe("Utils", function () {
             result2.should.be.deep.equal({ 1: { "a": 1 }, 2: { "a": 2 }, 3: { "a": 3 } });
         });
         it('should remove from array', async () => {
+            index_1.Util.arrays.sum([1, 2, 5]).should.be.eq(8);
+        });
+        it('should remove from array', async () => {
+            index_1.Util.arrays.sumBy([{ a: 1 }, { a: 2 }, { a: 5 }], item => item.a).should.be.eq(8);
+        });
+        it('should remove from array', async () => {
             let arr = ["a", "b"];
             index_1.Util.arrays.remove(arr, "a");
             arr.length.should.be.eq(1);

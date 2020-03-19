@@ -157,4 +157,21 @@ export class Arrays {
     public static uniq<T>(arr: T[]): T[] {
         return Arrays.uniqBy(arr, (item) => item)
     }
+
+    public static sumBy<T>(arr: T[], criteria: (value: T, i?: number) => number): number {
+        if (!arr || !arr.length) {
+            return 0
+        }
+        let sum = 0;
+        for (let i = 0; i < arr.length; i++) {
+            let item = arr[i], num = criteria(item, i);
+            sum += num
+        }
+
+        return sum;
+    }
+
+    public static sum(arr: number[]): number {
+        return Arrays.sumBy(arr, item => item);
+    }
 }

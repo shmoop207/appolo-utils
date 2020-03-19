@@ -29,6 +29,14 @@ describe("Utils", function () {
         });
 
         it('should remove from array', async () => {
+            Util.arrays.sum([1, 2, 5]).should.be.eq(8);
+        });
+
+        it('should remove from array', async () => {
+            Util.arrays.sumBy([{a: 1}, {a: 2}, {a: 5}], item => item.a).should.be.eq(8);
+        });
+
+        it('should remove from array', async () => {
 
             let arr = ["a", "b"];
 
@@ -50,12 +58,12 @@ describe("Utils", function () {
 
         it('should sort array', async () => {
 
-            let arr = [2,  1,  3,  1.5];
+            let arr = [2, 1, 3, 1.5];
 
             let arr2 = Util.arrays.sort(arr);
 
-            arr.should.be.deep.equal([2,  1,  3,  1.5]);
-            arr2.should.be.deep.equal([1,  1.5,  2,  3]);
+            arr.should.be.deep.equal([2, 1, 3, 1.5]);
+            arr2.should.be.deep.equal([1, 1.5, 2, 3]);
         });
 
         it('should uniqby  array', async () => {
@@ -439,11 +447,11 @@ describe("Utils", function () {
         });
 
         it('should object pick', async () => {
-            Util.objects.pick({a: 1, b: true, c: "a"},"a").should.be.deep.equal({a:1});
+            Util.objects.pick({a: 1, b: true, c: "a"}, "a").should.be.deep.equal({a: 1});
         });
 
         it('should object omit', async () => {
-            Util.objects.omit({a: 1, b: true, c: "a"},"a").should.be.deep.equal({ b: true, c: 'a' });
+            Util.objects.omit({a: 1, b: true, c: "a"}, "a").should.be.deep.equal({b: true, c: 'a'});
         });
 
         it('should not isPlain', async () => {
