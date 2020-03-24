@@ -224,6 +224,16 @@ export class Promises {
         return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function' && typeof obj.catch === 'function';
 
     }
+
+    public static promiseTimeout<T>(promise: Promise<T>, timeout: number): Promise<T> {
+        return new Promise<T>((resolve, reject) => {
+            let interval = setTimeout(() => reject(new Error("promise timeout")), timeout);
+            promise
+                .then(resolve)
+                .catch(reject)
+                .finally(() => clearTimeout(interval))
+        })
+    }
 }
 
 export class Deferred<T> {

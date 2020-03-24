@@ -115,6 +115,14 @@ describe("Utils", function () {
             let result = await index_1.Util.promises.map([1, 2], item => Promise.resolve(item));
             result.should.be.deep.equals([1, 2]);
         });
+        it('should throw on promise timeout', async () => {
+            try {
+                await index_1.Util.promises.promiseTimeout(index_1.Util.promises.delay(1000), 100);
+            }
+            catch (e) {
+                e.message.should.be.eq("promise timeout");
+            }
+        });
         it('should run from callback', async () => {
             function test(callback) {
                 process.nextTick(() => callback(null, 1));

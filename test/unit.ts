@@ -180,6 +180,16 @@ describe("Utils", function () {
             result.should.be.deep.equals([1, 2]);
         });
 
+        it('should throw on promise timeout', async () => {
+            try {
+                await Util.promises.promiseTimeout(Util.promises.delay(1000), 100)
+
+
+            } catch (e) {
+                e.message.should.be.eq("promise timeout")
+            }
+        });
+
         it('should run from callback', async () => {
             function test(callback: (err, data) => void) {
                 process.nextTick(() => callback(null, 1))
@@ -340,7 +350,8 @@ describe("Utils", function () {
                 {status: "rejected", reason: {"name": false}}
             ]);
         });
-    });
+    })
+    ;
 
 
     describe("Classes", function () {
@@ -564,4 +575,5 @@ describe("Utils", function () {
     });
 
 
-});
+})
+;
