@@ -10,6 +10,22 @@ describe("Utils", function () {
             arr.length.should.be.eq(1);
             arr[0].should.be.eq("a");
         });
+        it('should map array', async () => {
+            index_1.Util.arrays.map([{ a: 1 }, { a: 2 }], item => item.a).should.deep.equal([1, 2]);
+            index_1.Util.arrays.map({ a: 1, b: 2 }, (item, key) => item + key).should.deep.equal(['1a', '2b']);
+            index_1.Util.arrays.map(undefined, (item, key) => item + key).should.deep.equal([]);
+        });
+        it('should forEach array', async () => {
+            let result = 0;
+            index_1.Util.arrays.forEach([{ a: 1 }, { a: 2 }], item => result += item.a);
+            result.should.be.eq(3);
+            let result2 = "";
+            index_1.Util.arrays.forEach({ a: 1, b: 2 }, (item, key) => result2 += item + key);
+            result2.should.be.eq("1a2b");
+            result = 0;
+            index_1.Util.arrays.forEach(undefined, (item) => result += item.a);
+            result.should.be.eq(0);
+        });
         it('should key array', async () => {
             let result = index_1.Util.arrays.keyBy(["a", "b", "c"]);
             result.should.be.deep.equal({ a: 'a', b: 'b', c: 'c' });

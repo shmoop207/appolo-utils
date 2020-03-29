@@ -28,17 +28,25 @@ export class Arrays {
         return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    public static remove<T>(list: T[], item: T): void {
 
+    public static removeBy<T>(list: T[], criteria: (value: T, i?: number) => boolean): void {
         if (!list || !list.length) {
             return;
         }
 
         for (let i = list.length - 1; i >= 0; i--) {
-            if (list[i] === item) {
+            if (criteria(list[i], i)) {
                 list.splice(i, 1);
             }
         }
+    }
+
+    public static remove<T>(list: T[], item: T): void {
+        Arrays.removeBy(list, current => current === item)
+    }
+
+    public static chunk(array: any[], chunkSize: number): any[] {
+        return Arrays.splitToChunks(array, chunkSize)
     }
 
     public static splitToChunks(array: any[], chunkSize: number): any[] {
@@ -136,6 +144,31 @@ export class Arrays {
         });
 
         return arr;
+    }
+
+    public static map<T, K>(arr: T[] | { [index: string]: T }, criteria: (value: T, i?: number | string) => K): K[] {
+        if (!arr) {
+            return []
+        }
+
+        if (!Array.isArray(arr)) {
+            return Object.keys(arr).map(key => criteria(arr[key], key))
+        }
+
+        return arr.map(criteria)
+    }
+
+    public static forEach<T>(arr: T[] | { [index: string]: T }, criteria: (value: T, i?: number | string) => void): void {
+        if (!arr) {
+            return;
+        }
+
+        if (!Array.isArray(arr)) {
+            Object.keys(arr).forEach(key => criteria(arr[key], key));
+            return;
+        }
+
+        arr.forEach(criteria);
     }
 
     public static uniqBy<T>(arr: T[], criteria: (value: T, i?: number) => any): T[] {
