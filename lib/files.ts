@@ -1,6 +1,7 @@
 import {promises, Stats} from "fs";
 import * as path from "path";
 import * as fs from "fs";
+import {Errors} from "./errors";
 
 export class Files {
     public static async removeDir(dirPath: string, removeSelf: boolean = true): Promise<void> {
@@ -50,6 +51,21 @@ export class Files {
         if (status.isFile()) {
             await promises.unlink(filePath)
         }
+    }
+
+    public static callerPaths(deep: number = 1): string[] {
+        const offset = 2;
+        let stack = Errors.stack();
+
+        let output = [];
+
+        for (let i = offset; i < deep + offset; i++) {
+            if (stack[i] && stack[i].getFileName) {
+                output.push(stack[i].getFileName());
+            }
+        }
+
+        return output;
     }
 
     public static async pathStats(filePath: string): Promise<Stats> {

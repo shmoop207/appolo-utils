@@ -429,6 +429,10 @@ describe("Utils", function () {
             files.length.should.be.eq(1);
             files[0].should.include("unit.js");
         });
+        it('should get calller path', async () => {
+            let paths = index_1.Util.files.callerPaths(1);
+            paths[0].should.be.eq(__filename);
+        });
     });
 });
 //# sourceMappingURL=unit.js.map
