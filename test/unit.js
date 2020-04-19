@@ -4,6 +4,16 @@ const chai = require("chai");
 const index_1 = require("../index");
 let should = chai.should();
 describe("Utils", function () {
+    describe("guid", function () {
+        it("should generate nanoid", async () => {
+            let guid = await index_1.Util.guid.nanoid(21);
+            guid.length.should.be.eq(21);
+        });
+        it("should generate uid", async () => {
+            let guid = await index_1.Util.guid.uid(21);
+            guid.length.should.be.eq(21);
+        });
+    });
     describe("arrays", function () {
         it('should compact array', async () => {
             let arr = index_1.Util.arrays.compact([undefined, null, "a"]);
@@ -366,7 +376,7 @@ describe("Utils", function () {
             }).should.be.eq(false);
             index_1.Util.objects.isPlain(Object.create(null)).should.be.eq(false);
         });
-        it('should isEmpty', async () => {
+        it('should isDrained', async () => {
             index_1.Util.objects.isEmpty({}).should.be.eq(true);
         });
         it('should extend defaults', async () => {
@@ -375,7 +385,7 @@ describe("Utils", function () {
             index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }).should.deep.equals({ a: 1, b: 1 });
             index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 1, b: 1, c: 3 });
         });
-        it('should not isEmpty', async () => {
+        it('should not isDrained', async () => {
             index_1.Util.objects.isEmpty({ a: 1 }).should.be.eq(false);
         });
         it('should compact', async () => {

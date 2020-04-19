@@ -8,6 +8,20 @@ let should = chai.should();
 describe("Utils", function () {
 
 
+    describe("guid", function () {
+        it("should generate nanoid", async ()=> {
+            let guid = await Util.guid.nanoid(21);
+
+            guid.length.should.be.eq(21)
+        })
+
+        it("should generate uid", async ()=> {
+            let guid = await Util.guid.uid(21);
+
+            guid.length.should.be.eq(21)
+        })
+    })
+
     describe("arrays", function () {
         it('should compact array', async () => {
 
@@ -257,6 +271,9 @@ describe("Utils", function () {
                 {"reason": 2, "status": "rejected"}
             ]);
         });
+
+
+
 
         it('should run with some', async () => {
 
@@ -513,7 +530,7 @@ describe("Utils", function () {
 
         });
 
-        it('should isEmpty', async () => {
+        it('should isDrained', async () => {
             Util.objects.isEmpty({}).should.be.eq(true);
 
         });
@@ -525,7 +542,7 @@ describe("Utils", function () {
             Util.objects.defaults<any>({a: 1}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 1, b: 1, c: 3});
         });
 
-        it('should not isEmpty', async () => {
+        it('should not isDrained', async () => {
             Util.objects.isEmpty({a: 1}).should.be.eq(false);
 
         });

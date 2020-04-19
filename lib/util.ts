@@ -4,7 +4,7 @@ import {Classes} from "./classes";
 import {Guid} from "./guid";
 import {Hash} from "./hash";
 import {Objects} from "./objects";
-import {Promises} from "./promises";
+import {Promises} from "./promises/promises";
 import {Strings} from "./strings";
 import {Time} from "./time";
 import {Files} from "./files";
