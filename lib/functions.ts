@@ -67,4 +67,12 @@ export class Functions {
 
     }
 
+    public static to<T, K>(fn: Function): [K, T?] {
+        try {
+            return [null, fn()]
+        } catch (e) {
+            return [e]
+        }
+    }
+
 }
