@@ -238,6 +238,18 @@ describe("Utils", function () {
                 { status: "fulfilled", value: { "name": true } }
             ]);
         });
+        it('should run promise reject', async () => {
+            let counter = 0;
+            let fn = async () => {
+                counter++;
+                if (counter != 3) {
+                    throw new Error("aaa");
+                }
+                return counter;
+            };
+            counter = await index_1.Promises.retry(fn, 3);
+            counter.should.be.eq(3);
+        });
         it('should run with some rejected', async () => {
             let result = await index_1.Util.promises.someRejected([
                 index_1.Promises.delay(15).then(() => Promise.reject(3)),

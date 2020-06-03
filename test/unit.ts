@@ -9,13 +9,13 @@ describe("Utils", function () {
 
 
     describe("guid", function () {
-        it("should generate nanoid", async ()=> {
+        it("should generate nanoid", async () => {
             let guid = await Util.guid.nanoid(21);
 
             guid.length.should.be.eq(21)
         })
 
-        it("should generate uid", async ()=> {
+        it("should generate uid", async () => {
             let guid = await Util.guid.uid(21);
 
             guid.length.should.be.eq(21)
@@ -273,8 +273,6 @@ describe("Utils", function () {
         });
 
 
-
-
         it('should run with some', async () => {
 
             let result = await Util.promises.some([
@@ -345,6 +343,23 @@ describe("Utils", function () {
                 {status: "fulfilled", value: {"name": true}}
             ]);
         });
+
+        it('should run promise reject', async () => {
+            let counter = 0;
+
+            let fn = async () => {
+                counter++;
+                if (counter != 3) {
+                    throw new Error("aaa")
+                }
+
+                return counter
+            }
+
+            counter = await Promises.retry(fn, 3);
+
+            counter.should.be.eq(3)
+        })
 
         it('should run with some rejected', async () => {
 

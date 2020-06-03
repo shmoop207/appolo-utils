@@ -90,6 +90,24 @@ export class Promises {
 
     }
 
+    public static timeout<T>(promise: Promise<T>, timeout: number): Promise<T> {
+        return Promises.promiseTimeout(promise, timeout)
+    }
+
+    public static async retry<T>(fn: () => Promise<T>, retires: number = 1): Promise<T> {
+        let [err, result] = await Promises.to(fn());
+
+        if (err == null) {
+            return result
+        }
+
+        if (retires <= 0) {
+            throw err;
+        }
+
+        return Promises.retry(fn, --retires);
+    }
+
     public static promiseTimeout<T>(promise: Promise<T>, timeout: number): Promise<T> {
         return new Promise<T>((resolve, reject) => {
             let interval = setTimeout(() => reject(new Error("promise timeout")), timeout);
