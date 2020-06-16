@@ -1,4 +1,5 @@
 import {Arrays} from "./arrays";
+import {Functions} from "../index";
 
 export class Objects {
     public static isPlain(obj: any): boolean {
@@ -100,15 +101,17 @@ export class Objects {
     }
 
     public static tryParseJSON(jsonString: string): any {
-        try {
 
-            let o = JSON.parse(jsonString);
+        let [err, output] = Functions.to(() => JSON.parse(jsonString));
 
-            return o;
-        } catch (e) {
-        }
+        return err ? null : output;
+    }
 
-        return null;
+    public static tryStringifyJSON(json: any): string {
+
+        let [err, str] = Functions.to(() => JSON.stringify(json))
+
+        return err ? "" : str;
     }
 
     public static pick<T extends object, U extends keyof T>(obj: T, ...pick: U[]): Pick<T, U> {
@@ -116,7 +119,7 @@ export class Objects {
         obj = obj || {} as T;
         for (let i = 0; i < pick.length; i++) {
             let key = pick[i];
-            if(key in obj){
+            if (key in obj) {
                 out[key] = obj[key];
             }
         }

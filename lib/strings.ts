@@ -1,3 +1,5 @@
+import {Functions} from "../index";
+
 export class Strings {
     public static stringifyObjectValues(obj: { [index: string]: string | boolean | number }): string {
         let s = '';
@@ -31,10 +33,9 @@ export class Strings {
     }
 
     public static tryDecodeURIComponent(str): string {
-        try {
-            return decodeURIComponent(str || "");
-        } catch (e) {
-            return str || ""
-        }
+
+        let [err, output] = Functions.to(() => decodeURIComponent(str || ""));
+
+        return err ? str || "" : output;
     }
 }
