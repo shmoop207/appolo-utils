@@ -77,7 +77,7 @@ export class Reflector {
         if (propertyKey) {
             Reflect.defineMetadata(key, value, target.constructor, propertyKey)
         } else {
-            Reflect.defineMetadata(key, value, target.constructor)
+            Reflect.defineMetadata(key, value, target)
 
         }
     }
@@ -85,7 +85,7 @@ export class Reflector {
 
     public static decorateMetadata(key: string | Symbol, value: any) {
         return function (target: any, propertyKey?: string) {
-            Reflector.setMetadata(key, value, propertyKey ? target.constructor : target, propertyKey);
+            Reflector.setMetadata(key, value, target, propertyKey);
         }
     }
 }

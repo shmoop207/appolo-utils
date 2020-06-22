@@ -51,15 +51,20 @@ export class Objects {
     };
 
     public static cloneDeep<T>(obj: T): T {
+        let isArray = Array.isArray(obj);
 
-        let output = Array.isArray(obj) ? [] : {};
+        if (!obj || !isArray && !Objects.isPlain(obj)) {
+            return obj
+        }
+
+        let output = isArray ? [] : {};
 
         let keys = Object.keys(obj || {});
 
         for (let i = 0, len = keys.length; i < len; i++) {
 
             let key = keys[i], value = obj[key];
-            output[key] = (value !== null && value !== undefined && (Array.isArray(value) || Objects.isPlain(value)))
+            output[key] = (value !== null && value !== undefined)
                 ? Objects.cloneDeep(value)
                 : value
         }
@@ -67,7 +72,12 @@ export class Objects {
         return output as any;
     }
 
+
     public static clone<T>(obj: T): T {
+
+        if (!obj) {
+            return obj;
+        }
 
         let output = Array.isArray(obj) ? [] : {};
 

@@ -438,6 +438,33 @@ describe("Utils", function () {
 
         });
 
+        it.only('should clone class', async () => {
+
+
+            class C {
+                private _test = "aa"
+
+                constructor() {
+                }
+
+                public getTest() {
+                    return this._test;
+                }
+            }
+
+            let a = new C()
+
+            let b: any = Util.functions.cloneFn(a);
+
+            a.should.not.equal(b);
+
+            b.getTest().should.be.eq("aa")
+
+            b._test = "bb";
+            a.getTest().should.be.eq("aa");
+
+        });
+
         // it('should get class methods inherit', async () => {
         //
         //     class A {

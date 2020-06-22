@@ -309,6 +309,22 @@ describe("Utils", function () {
                 }
             }).should.be.deep.equals(['a', 'b', 'c']);
         });
+        it.only('should clone class', async () => {
+            class C {
+                constructor() {
+                    this._test = "aa";
+                }
+                getTest() {
+                    return this._test;
+                }
+            }
+            let a = new C();
+            let b = index_1.Util.functions.cloneFn(a);
+            a.should.not.equal(b);
+            b.getTest().should.be.eq("aa");
+            b._test = "bb";
+            a.getTest().should.be.eq("aa");
+        });
         // it('should get class methods inherit', async () => {
         //
         //     class A {

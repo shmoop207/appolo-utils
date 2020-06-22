@@ -55,6 +55,11 @@ export class Functions {
         return !!(obj && obj.constructor && obj.call && obj.apply);
     };
 
+    public static cloneFn<T>(orig: T): T {
+        return Object.assign(Object.create(Object.getPrototypeOf(orig)), orig)
+
+    }
+
     public static mixins(_klass: Function, mixins: Function | Function[]) {
 
         Arrays.arrayify<Function>(mixins).forEach(mixin => {
