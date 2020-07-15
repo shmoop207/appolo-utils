@@ -20,6 +20,11 @@ describe("Utils", function () {
             arr.length.should.be.eq(1);
             arr[0].should.be.eq("a");
         });
+        it('should check areArraysEqual', async () => {
+            index_1.Util.arrays.areArraysEqual([1, 2, 3], [1, 2, 3]).should.be.ok;
+            index_1.Util.arrays.areArraysEqual([2, 1, 3, 5], [1, 2, 3, 5]).should.be.ok;
+            index_1.Util.arrays.areArraysEqual([2, 1, 3, 5], [1, 2, 4, 5]).should.be.not.ok;
+        });
         it('should map array', async () => {
             index_1.Util.arrays.map([{ a: 1 }, { a: 2 }], item => item.a).should.deep.equal([1, 2]);
             index_1.Util.arrays.map({ a: 1, b: 2 }, (item, key) => item + key).should.deep.equal(['1a', '2b']);
@@ -309,7 +314,7 @@ describe("Utils", function () {
                 }
             }).should.be.deep.equals(['a', 'b', 'c']);
         });
-        it.only('should clone class', async () => {
+        it('should clone class', async () => {
             class C {
                 constructor() {
                     this._test = "aa";
@@ -360,6 +365,12 @@ describe("Utils", function () {
         it('should removeNewLine', async () => {
             index_1.Util.strings.removeNewLine("aaa\nbbb\r").should.be.eq("aaabbb");
         });
+        it('should serializeToQueryString', async () => {
+            index_1.Util.strings.serializeToQueryString({ a: 12, b: 34, c: "56" }).should.be.eq("a=12&b=34&c=56");
+        });
+        it('should convertStringToFloatArray', async () => {
+            index_1.Util.strings.convertStringToFloatArray("1,2.3,5").should.be.deep.equals([1, 2.3, 5]);
+        });
         it('should replaceFormat', async () => {
             index_1.Util.strings.replaceFormat("aa${b}", { b: 1 }).should.be.eq("aa1");
         });
@@ -367,6 +378,9 @@ describe("Utils", function () {
     describe("numbers", function () {
         it('should toFixed', async () => {
             index_1.Util.numbers.toFixed(1.22344566778, 2).should.be.eq(1.22);
+        });
+        it('should round', async () => {
+            index_1.Util.numbers.round(1.6, 0.5).should.be.eq(1.5);
         });
         it('should random', async () => {
             let num = index_1.Util.numbers.random(1.22344566778, 4);
@@ -377,6 +391,11 @@ describe("Utils", function () {
         });
     });
     describe("Objects", function () {
+        it('should Object set', async () => {
+            let obt = { a: {} };
+            index_1.Util.objects.set(obt, "a.b.c", 1);
+            obt.a.b.c.should.be.eq(1);
+        });
         it('should isPlain', async () => {
             index_1.Util.objects.isPlain({ a: 1, b: true, c: "a" }).should.be.eq(true);
             index_1.Util.objects.isPlain(Object.create({})).should.be.eq(true);

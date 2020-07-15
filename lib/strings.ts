@@ -38,4 +38,35 @@ export class Strings {
 
         return err ? str || "" : output;
     }
+
+    public static serializeToQueryString(obj: any): string {
+
+        let keys = Object.keys(obj || {});
+
+        let output = [];
+
+        for (let i = 0, length = keys.length; i < length; i++) {
+            let key = keys[i];
+            output.push(`${key}=${obj[key]}`);
+        }
+
+        return output.join('&');
+    }
+
+    public static convertStringToFloatArray(str: string): number[] {
+        if (!str) {
+            return [];
+        }
+
+        let output = [];
+
+        let arr = str.split(",");
+
+        for (let i = 0, length = arr.length; i < length; i++) {
+            let int = parseFloat(arr[i]);
+            !isNaN(int) && output.push(int);
+        }
+
+        return output;
+    }
 }

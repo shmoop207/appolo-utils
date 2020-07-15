@@ -31,6 +31,14 @@ describe("Utils", function () {
             arr[0].should.be.eq("a");
         });
 
+        it('should check areArraysEqual', async () => {
+
+             Util.arrays.areArraysEqual([1,2,3],[1,2,3]).should.be.ok
+             Util.arrays.areArraysEqual([2,1,3,5],[1,2,3,5]).should.be.ok
+             Util.arrays.areArraysEqual([2,1,3,5],[1,2,4,5]).should.be.not.ok
+
+        });
+
         it('should map array', async () => {
             Util.arrays.map([{a: 1}, {a: 2}], item => item.a).should.deep.equal([1, 2]);
             Util.arrays.map({a: 1, b: 2}, (item, key: string) => item + key).should.deep.equal(['1a', '2b'])
@@ -438,7 +446,7 @@ describe("Utils", function () {
 
         });
 
-        it.only('should clone class', async () => {
+        it('should clone class', async () => {
 
 
             class C {
@@ -505,6 +513,16 @@ describe("Utils", function () {
 
         });
 
+        it('should serializeToQueryString', async () => {
+            Util.strings.serializeToQueryString({a:12,b:34,c:"56"}).should.be.eq("a=12&b=34&c=56");
+
+        });
+
+        it('should convertStringToFloatArray', async () => {
+            Util.strings.convertStringToFloatArray("1,2.3,5").should.be.deep.equals([1,2.3,5]);
+
+        });
+
         it('should replaceFormat', async () => {
             Util.strings.replaceFormat("aa${b}", {b: 1}).should.be.eq("aa1");
 
@@ -514,6 +532,10 @@ describe("Utils", function () {
     describe("numbers", function () {
         it('should toFixed', async () => {
             Util.numbers.toFixed(1.22344566778, 2).should.be.eq(1.22);
+        });
+
+        it('should round', async () => {
+            Util.numbers.round(1.6, 0.5).should.be.eq(1.5);
         });
 
         it('should random', async () => {
@@ -530,6 +552,15 @@ describe("Utils", function () {
     });
 
     describe("Objects", function () {
+
+        it('should Object set', async () => {
+            let obt:any = {a:{}}
+
+            Util.objects.set(obt,"a.b.c",1);
+
+            obt.a.b.c.should.be.eq(1);
+        })
+
         it('should isPlain', async () => {
             Util.objects.isPlain({a: 1, b: true, c: "a"}).should.be.eq(true);
             Util.objects.isPlain(Object.create({})).should.be.eq(true);

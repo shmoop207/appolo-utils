@@ -22,6 +22,10 @@ export class Numbers {
         return (Math.random() * (max - min + 1)) + min;
     }
 
+    public static isNumber(str: any): str is String {
+        return (typeof str === 'number' || str instanceof Number);
+    }
+
     public static randomInt(min: number, max?: number): number {
 
         if (max === undefined) {
@@ -37,5 +41,19 @@ export class Numbers {
 
     public static isValidRandom(num: number): boolean {
         return Numbers.random(1, num) == num
+    }
+
+    public static round(value: number, step: number): number {
+        step || (step = 1.0);
+        let inv = 1.0 / step;
+        return Math.round(value * inv) / inv;
+    }
+
+    public static diff(a: number, b: number): number {
+        if (a === 0) {
+            return 0;
+        }
+        const diff = a - b;
+        return diff / a;
     }
 }

@@ -150,4 +150,20 @@ export class Objects {
         return out
     }
 
+    public static set(obj: any, path: string, value: any) {
+        if (!obj) {
+            return;
+        }
+        const parts = path.split('.');
+        let current = obj;
+        for (let i = 0, len = parts.length; i < len - 1; i++) {
+            const part = parts[i];
+            if (!current[part]) {
+                current[part] = {};
+            }
+            current = current[part];
+        }
+        current[parts[parts.length - 1]] = value;
+    }
+
 }

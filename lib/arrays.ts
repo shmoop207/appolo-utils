@@ -6,7 +6,26 @@ export class Arrays {
     }
 
     public static arrayify<T>(val: any): T[] {
-        return Array.isArray(val) ? val : [val];
+        return val ? (Array.isArray(val) ? val : [val]) : [];
+    }
+
+    public static nullifyEmptyArray<T>(arr: T[]): T[] {
+        return (arr && arr.length) ? arr : null;
+    }
+
+    public static areArraysEqual(arrA: any[], arrB: any[]): boolean {
+        const a = new Set(arrA);
+        const b = new Set(arrB);
+
+        if (a.size !== b.size) {
+            return false;
+        }
+        for (let k of a) {
+            if (!b.has(k)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static compact<T>(array: T[]): T[] {
