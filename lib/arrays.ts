@@ -6,7 +6,7 @@ export class Arrays {
     }
 
     public static arrayify<T>(val: any): T[] {
-        return val ? (Array.isArray(val) ? val : [val]) : [];
+        return undefined === val ? [] : (Array.isArray(val) ? val : [val]);
     }
 
     public static nullifyEmptyArray<T>(arr: T[]): T[] {
