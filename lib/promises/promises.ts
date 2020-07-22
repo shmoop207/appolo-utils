@@ -69,6 +69,23 @@ export class Promises {
         return Promise.all(settled);
     }
 
+    public static async allSettledSpread<T>(promises: Promise<T>[]): Promise<([T[], any[]])> {
+        let fulfilled: T[] = [], rejected: any[] = [];
+
+        let results = await Promises.allSettled(promises);
+
+        for (let i = 0; i < results.length; i++) {
+            let item = results[i];
+            if (item.status == "fulfilled") {
+                fulfilled.push(item.value)
+            } else {
+                rejected.push(item.reason)
+            }
+        }
+
+        return [fulfilled, rejected]
+    }
+
     public static some<T>(promises: Promise<T>[], opts: { counter?: number } = {}): Promise<({ status: "fulfilled"; value: T; } | { status: "rejected"; reason: any; })[]> {
 
         return PromiseSome.some(promises, opts);
