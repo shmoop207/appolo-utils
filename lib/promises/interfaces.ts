@@ -1,14 +1,14 @@
-interface PromiseFulfilledResult<T> {
+export interface PromiseFulfilledResult<T> {
     status: "fulfilled";
     value: T;
 }
 
-interface PromiseRejectedResult {
+export interface PromiseRejectedResult {
     status: "rejected";
     reason: any;
 }
 
-type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejectedResult;
+export type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejectedResult;
 
-type Resolvable<R> = R | PromiseLike<R>
-type IterateFunction<T, R> = (item: T, index: number | string) => Resolvable<R>;
+export type Resolvable<R> = R | PromiseLike<R>
+export type IterateFunction<T, R> = (item: T, index: number | string) => Resolvable<R>;

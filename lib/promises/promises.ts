@@ -2,6 +2,7 @@ import {Deferred} from "./deferred";
 import {PromiseMap} from "./promiseMap";
 import {PromiseFilter} from "./promiseFilter";
 import {PromiseSome} from "./promiseSome";
+import {IterateFunction, Resolvable} from "./interfaces";
 
 export class Promises {
     public static delay(delay: number): Promise<void> {
