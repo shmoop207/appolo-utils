@@ -9,15 +9,15 @@ export class Reflector {
 
     public static getMetadata<T>(symbol: Symbol | string, klass: Function, propertyName?: string, defaultValue?: T): T {
 
-        let value = Reflect.getOwnMetadata(symbol, klass);
+        let value = Reflect.getOwnMetadata(symbol, klass,propertyName);
 
         if (value !== undefined) {
             return value;
         }
 
-        if (Reflect.hasMetadata(symbol, klass)) {
+        if (Reflect.hasMetadata(symbol, klass,propertyName)) {
             value = Objects.cloneDeep(Reflect.getMetadata(symbol, klass, propertyName));
-            Reflect.defineMetadata(symbol, value, klass);
+            Reflect.defineMetadata(symbol, value, klass,propertyName);
             return value;
         }
 
