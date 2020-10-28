@@ -298,6 +298,25 @@ describe("Utils", function () {
         });
     });
     describe("Classes", function () {
+        it('should get class methods', async () => {
+            class B {
+                cc() {
+                }
+            }
+            class A extends B {
+                get a() {
+                    return "a";
+                }
+                set a(value) {
+                }
+                aa() {
+                }
+                bb() {
+                }
+            }
+            let result = index_1.Util.classes.getClassMethodsName(A);
+            result.should.be.deep.eq(["aa", "bb"]);
+        });
         it('should isClass', async () => {
             index_1.Util.classes.isClass(class A {
             }).should.be.eq(true);

@@ -421,6 +421,38 @@ describe("Utils", function () {
 
 
     describe("Classes", function () {
+
+
+        it('should get class methods', async () => {
+            class B{
+                cc(){
+
+                }
+            }
+
+            class A extends B{
+                get a(){
+                    return "a"
+                }
+                set a(value){
+
+                }
+
+                aa(){
+
+                }
+                bb(){
+
+                }
+            }
+
+
+            let result = Util.classes.getClassMethodsName(A);
+
+            result.should.be.deep.eq(["aa","bb"])
+
+        });
+
         it('should isClass', async () => {
 
             Util.classes.isClass(class A {
