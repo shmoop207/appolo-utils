@@ -80,4 +80,8 @@ export class Functions {
         }
     }
 
+    public static emptyFn(){
+
+    }
+
 }

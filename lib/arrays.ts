@@ -112,6 +112,26 @@ export class Arrays {
         return output;
     }
 
+    public static keyByMap<T extends any, K extends any = string>(arr: T[], key?: string | ((item: T, index: number) => string)): Map<K,T> {
+
+        if (!key) {
+            key = (item: T, index: number) => item.toString();
+        }
+
+        let output: Map<K,T> = new Map<K, T>(), isFn = Classes.isFunction(key);
+
+        for (let i = 0, len = (arr || []).length; i < len; i++) {
+
+            let item: any = arr[i];
+
+            let outputKey = isFn ? (key as Function)(item, i) : item[key as string];
+
+            output.set(outputKey,item);
+        }
+
+        return output;
+    }
+
     public static flat<T>(arr: any[]): T[] {
         return arr.reduce((acc, val) => acc.concat(val), []);
     }
