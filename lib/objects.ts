@@ -41,7 +41,7 @@ export class Objects {
             let keys = Object.keys(arg || {});
             for (let j = 0, len2 = keys.length; j < len2; j++) {
                 let key = keys[j];
-                if (!(key in obj)) {
+                if (!(key in obj) || (obj[key] === undefined && arg[key] != undefined)) {
                     obj[key] = arg[key]
                 }
             }
@@ -119,7 +119,7 @@ export class Objects {
 
     public static tryStringifyJSON(json: any): string {
 
-        let [err, str] = Functions.to(() => JSON.stringify(json))
+        let [err, str] = Functions.to<any,Error>(() => JSON.stringify(json))
 
         return err ? "" : str;
     }

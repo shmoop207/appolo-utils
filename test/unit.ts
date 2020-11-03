@@ -645,6 +645,11 @@ describe("Utils", function () {
             Util.objects.defaults<any>({}, {a: 1}, {a: 2}).should.deep.equals({a: 1});
             Util.objects.defaults<any>({a: 1}, {a: 2, b: 1}).should.deep.equals({a: 1, b: 1});
             Util.objects.defaults<any>({a: 1}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 1, b: 1, c: 3});
+            Util.objects.defaults<any>({},{a: undefined}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 2, b: 1, c: 3});
+
+            Util.objects.defaults<any>({a: undefined}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 2, b: 1, c: 3});
+            Util.objects.defaults<any>({a: null}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: null, b: 1, c: 3});
+
         });
 
         it('should not isDrained', async () => {

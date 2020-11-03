@@ -450,6 +450,9 @@ describe("Utils", function () {
             index_1.Util.objects.defaults({}, { a: 1 }, { a: 2 }).should.deep.equals({ a: 1 });
             index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }).should.deep.equals({ a: 1, b: 1 });
             index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 1, b: 1, c: 3 });
+            index_1.Util.objects.defaults({}, { a: undefined }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 2, b: 1, c: 3 });
+            index_1.Util.objects.defaults({ a: undefined }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 2, b: 1, c: 3 });
+            index_1.Util.objects.defaults({ a: null }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: null, b: 1, c: 3 });
         });
         it('should not isDrained', async () => {
             index_1.Util.objects.isEmpty({ a: 1 }).should.be.eq(false);
