@@ -4,7 +4,7 @@ import {Objects} from "./lib/objects"
 import {Arrays} from "./lib/arrays"
 import {Classes} from "./lib/classes"
 import {Guid} from "./lib/guid"
-import {Hash} from "./lib/hash"
+import {Hash} from "./lib/crypto/hash"
 import {Promises} from "./lib/promises/promises"
 import {Deferred} from "./lib/promises/deferred"
 import {Time} from "./lib/time"
@@ -14,6 +14,9 @@ import {Functions} from "./lib/functions"
 import {Errors} from "./lib/errors"
 import {Util} from "./lib/util"
 import {Reflector} from "./lib/reflector"
+import {Crypto} from "./lib/crypto/crypto"
+import {Ip} from "./lib/ip"
+import {Url} from "./lib/url"
 
 export default Util;
 
@@ -31,7 +34,7 @@ export {
     Files,
     Enums,
     Deferred,
-    Reflector, Functions, Errors
+    Reflector, Functions, Errors,Crypto,Ip,Url
 }
 
 

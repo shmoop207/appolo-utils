@@ -39,5 +39,15 @@ export class Time {
         return ms + 'ms';
     }
 
+    public static durationIntToString(durationSeconds: number): string {
+        return new Date(durationSeconds * 1000).toISOString().substr(11, 8);
+    }
+
+    public static daysInCurrentMonth() {
+        const d = new Date();
+        d.setDate(0); // goes back to end of previous month
+        return d.getDate();
+    }
+
 
 }

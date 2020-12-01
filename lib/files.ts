@@ -2,6 +2,7 @@ import {promises, Stats} from "fs";
 import * as path from "path";
 import * as fs from "fs";
 import {Errors} from "./errors";
+import zlib = require("zlib");
 
 export class Files {
     public static async removeDir(dirPath: string, removeSelf: boolean = true): Promise<void> {
@@ -138,5 +139,16 @@ export class Files {
                 }
             }
         }
+    }
+
+    public static unGzipFile(inPath, outPath): Promise<void> {
+        return new Promise((resolve, reject) => {
+
+            fs.createReadStream(inPath)
+                .pipe(zlib.createGunzip())
+                .pipe(fs.createWriteStream(outPath))
+                .on("finish", () => resolve())
+                .on("error", (e) => reject());
+        })
     }
 }

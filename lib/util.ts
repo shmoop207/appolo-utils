@@ -2,7 +2,7 @@ import {Numbers} from "./numbers";
 import {Arrays} from "./arrays";
 import {Classes} from "./classes";
 import {Guid} from "./guid";
-import {Hash} from "./hash";
+import {Hash} from "./crypto/hash";
 import {Objects} from "./objects";
 import {Promises} from "./promises/promises";
 import {Strings} from "./strings";
@@ -12,6 +12,9 @@ import {Enums} from "./enums";
 import {Reflector} from "./reflector";
 import {Functions} from "./functions";
 import {Errors} from "./errors";
+import {Crypto} from "./crypto/crypto";
+import {Url} from "./url";
+import {Ip} from "./ip";
 
 export class Util {
     public static get numbers(): typeof Numbers {
@@ -67,5 +70,17 @@ export class Util {
     }
     public static get errors(): typeof Errors{
         return Errors
+    }
+
+    public static get crypto(): typeof Crypto{
+        return Crypto
+    }
+
+    public static get url(): typeof Url{
+        return Url
+    }
+
+    public static get ip(): typeof Ip{
+        return Ip
     }
 }

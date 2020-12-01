@@ -44,6 +44,14 @@ export class Arrays {
     }
 
     public static random<T>(arr: T[]): T {
+
+        if (!arr) {
+            return null;
+        }
+        if (arr.length < 2) {
+            return arr[0];
+        }
+
         return arr[Math.floor(Math.random() * arr.length)];
     }
 

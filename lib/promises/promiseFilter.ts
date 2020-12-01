@@ -1,3 +1,5 @@
+import {IterateFunction, Resolvable} from "./interfaces";
+
 export class PromiseFilter {
     public static filter<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, filterer: IterateFunction<R, U>, options: { concurrency: number } = {concurrency: Infinity}): Promise<U[]> {
         let concurrency = options.concurrency || Infinity;

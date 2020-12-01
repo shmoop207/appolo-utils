@@ -1,7 +1,7 @@
 "use strict";
 import chai = require('chai');
 import Q = require('bluebird');
-import {Promises, Util} from "../index";
+import {Promises, Util,Crypto} from "../index";
 
 let should = chai.should();
 
@@ -540,6 +540,15 @@ describe("Utils", function () {
 
         });
 
+        it('should generate password', async () => {
+            let pass = Util.strings.generatePassword(3);
+            pass.length.should.be.eq(3);
+
+             pass = Util.strings.generatePassword(3,"a");
+            pass.should.be.eq("aaa");
+        });
+
+
         it('should removeNewLine', async () => {
             Util.strings.removeNewLine("aaa\nbbb\r").should.be.eq("aaabbb");
 
@@ -734,6 +743,111 @@ describe("Utils", function () {
 
     });
 
+    describe("rsa", function () {
+        it('should encrypt decrypt ras keys', async () => {
 
-})
-;
+            let {privateKey, publicKey} = await Crypto.rsa.generateRsaKeys();
+
+            let encrypt = Crypto.rsa.encrypt(publicKey, "test");
+            let singhId = Crypto.rsa.sign(privateKey, "test");
+
+            let decrypt = Crypto.rsa.decrypt(privateKey, encrypt);
+            let isValid = Crypto.rsa.verify(publicKey, singhId, decrypt);
+
+            decrypt.should.be.eq("test");
+            isValid.should.be.ok;
+        });
+
+    });
+    describe("aes", function () {
+        it('should encrypt decrypt', async () => {
+
+            let encrypt = Crypto.aes.encrypt("aaaaaa", "bbbbbbbb")
+
+            let decrypt = Crypto.aes.decrypt("aaaaaa", encrypt);
+
+            decrypt.should.be.eq("bbbbbbbb")
+
+        });
+
+
+    });
+
+    describe("md5", function () {
+        it('should create valid hash', async () => {
+
+            let has1 = Crypto.hash.md5("aaaaaa");
+            let has2 = Crypto.hash.md5("aaaaaa");
+
+            has1.should.be.eq(has2)
+
+        });
+
+    });
+
+    describe("salt", function () {
+        it('should create salt password', async () => {
+
+            let hashed = await Crypto.salt.hash("aaaaaa");
+            let isValid = await Crypto.salt.verify("aaaaaa", hashed);
+            let isValid2 = await Crypto.salt.verify("aaaaaa2", hashed);
+
+            isValid.should.be.ok;
+            isValid2.should.not.be.ok;
+
+        });
+
+    });
+
+    describe("xor", function () {
+        it('should create encrypt with xor', async () => {
+
+            let hashed = await Crypto.xor.encode("aaaaaa","bbbb");
+            let result = await Crypto.xor.decode("aaaaaa", hashed);
+
+
+            result.should.be.ok;
+            result.should.be.eq("bbbb")
+
+        });
+
+    });
+
+
+    describe("url", function () {
+        it('should validate domain', async () => {
+
+             Util.url.isValidDomain("aaaaaa").should.be.not.ok;
+             Util.url.isValidDomain("aaaaaa..com").should.be.not.ok;
+             Util.url.isValidDomain("aaaaaa.com").should.be.ok;
+
+        });
+
+        it('should validate domain', async () => {
+
+            Util.url.isValidUrl("aaaaaa").should.be.not.ok;
+            Util.url.isValidUrl("aaaaaa..com").should.be.not.ok;
+            Util.url.isValidUrl("httt://aaaaaa.com").should.be.not.ok;
+            Util.url.isValidUrl("http://aaaaaa.com").should.be.ok;
+        });
+
+    });
+
+
+    describe("ip", function () {
+        it('should validate ip', async () => {
+
+            Util.ip.isValidIp("aaaaaa").should.be.not.ok;
+            Util.ip.isValidIp("123.1.257.1.").should.be.not.ok;
+            Util.ip.isValidIp("123.1.257.1").should.be.ok;
+
+            Util.ip.isValidIpRegex("aaaaaa").should.be.not.ok;
+            Util.ip.isValidIpRegex("123.1.257.1.").should.be.not.ok;
+            Util.ip.isValidIpRegex("123.1.257.1").should.be.not.ok;
+            Util.ip.isValidIpRegex("123.1.255.1").should.be.ok;
+        });
+
+
+    });
+
+});

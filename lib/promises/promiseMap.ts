@@ -1,3 +1,5 @@
+import {IterateFunction, Resolvable} from "./interfaces";
+
 export class PromiseMap {
     public static map<R, U>(iterable: Resolvable<Iterable<Resolvable<R>>>, mapper: IterateFunction<R, U>, options: { concurrency: number } = {concurrency: Infinity}): Promise<U[]> {
 

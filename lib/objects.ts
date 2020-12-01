@@ -166,4 +166,17 @@ export class Objects {
         current[parts[parts.length - 1]] = value;
     }
 
+    public static mapObject<T>(obj: any, iteratee: (value: any, key: string) => T): T[] {
+        const memo: T[] = [];
+
+        for (let k in obj) {
+            if (obj.hasOwnProperty(k)) {
+                const v = obj[k];
+                memo.push(iteratee(v, k));
+            }
+        }
+
+        return memo;
+    }
+
 }
