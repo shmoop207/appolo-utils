@@ -12,6 +12,10 @@ export class Time {
         return Math.floor(Date.now() / interval) * interval
     }
 
+    public static unix(): number {
+        return Math.floor(Date.now() / 1000);
+    }
+
     public static timeMili(time?: [number, number]): number {
         let t = process.hrtime(time);
         return (t[0] * 1e3) + (t[1] / 1e6);
