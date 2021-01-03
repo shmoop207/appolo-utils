@@ -42,6 +42,10 @@ export class Strings {
         return fromString;
     }
 
+    public capitalize(str: string) {
+        (str || "").replace(/^\w/, (c) => c.toUpperCase());
+    }
+
     public static tryDecodeURIComponent(str): string {
 
         let [err, output] = Functions.to(() => decodeURIComponent(str || ""));
