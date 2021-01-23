@@ -2,7 +2,9 @@ import {Deferred} from "./deferred";
 import {PromiseMap} from "./promiseMap";
 import {PromiseFilter} from "./promiseFilter";
 import {PromiseSome} from "./promiseSome";
-import {IterateFunction, Resolvable} from "./interfaces";
+import {IRetry, IterateFunction, Resolvable} from "./interfaces";
+import {Time} from "../time";
+import {PromiseCreate} from "./promiseCreate";
 
 export class Promises {
     public static delay(delay: number): Promise<void> {
@@ -51,7 +53,7 @@ export class Promises {
     }
 
 
-    public static async to<T, K>(promise: Promise<T>): Promise<[K, T?]> {
+    public static async to<T, K = any>(promise: Promise<T>): Promise<[K, T?]> {
 
         try {
             let result = await promise;
@@ -60,6 +62,7 @@ export class Promises {
             return [e] as [K, T?];
         }
     }
+
 
     public static allSettled<T>(promises: Promise<T>[]): Promise<({ status: "fulfilled"; value: T; } | { status: "rejected"; reason: any; })[]> {
 
@@ -118,18 +121,30 @@ export class Promises {
         return Promises.promiseTimeout(promise, timeout)
     }
 
-    public static async retry<T>(fn: () => Promise<T>, retires: number = 1): Promise<T> {
+    public static async retry<T>(fn: () => Promise<T>, options: (number | IRetry) = 1, retryCount: number = 0): Promise<T> {
         let [err, result] = await Promises.to(fn());
 
         if (err == null) {
             return result
         }
 
-        if (retires <= 0) {
+        if (typeof options == "number") {
+            options = {retires: options}
+        }
+
+        retryCount++;
+
+        if (retryCount > options.retires) {
             throw err;
         }
 
-        return Promises.retry(fn, --retires);
+        let delay = Time.calcBackOff(retryCount, options);
+
+        if (delay) {
+            await Promises.delay(delay);
+        }
+
+        return Promises.retry(fn, options, retryCount);
     }
 
     public static promiseTimeout<T>(promise: Promise<T>, timeout: number): Promise<T> {
@@ -141,9 +156,8 @@ export class Promises {
                 .finally(() => clearTimeout(interval))
         })
     }
+
+    public static create<T>(fn: () => Promise<T>): PromiseCreate<T> {
+        return new PromiseCreate<T>(fn)
+    }
 }
-
-
-
-
-

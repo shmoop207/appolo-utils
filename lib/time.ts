@@ -1,3 +1,6 @@
+import {Numbers} from "../index";
+import {IRetry} from "./promises/interfaces";
+
 export class Time {
 
     public static Second = 1000;
@@ -51,6 +54,30 @@ export class Time {
         const d = new Date();
         d.setDate(0); // goes back to end of previous month
         return d.getDate();
+    }
+
+    public static calcBackOff(retry: number, params: IRetry): number {
+        let delay = 0;
+
+        if (params.linear) {
+            delay += params.linear * retry;
+        }
+
+        if (params.exponential) {
+            delay += Math.pow(params.exponential, retry);
+        }
+
+        if (params.random) {
+            delay += Numbers.random(0, params.random)
+        }
+
+        delay +=(params.min || 0);
+
+        if (params.max) {
+            delay = Math.min(params.max, delay)
+        }
+
+        return Math.fround(delay);
     }
 
 
