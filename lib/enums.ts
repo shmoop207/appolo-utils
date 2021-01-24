@@ -1,5 +1,9 @@
 export class Enums {
 
+    public static names(enm: any): string[] {
+        return Enums.enumNames(enm)
+    }
+
     public static enumNames(enm: any): string[] {
         let res = [], keys = Object.keys(enm || {}), i = 0, len = keys.length;
 
@@ -11,6 +15,10 @@ export class Enums {
         }
 
         return res;
+    }
+
+    public static values<T = string | number>(enm: any): T[] {
+        return Enums.enumValues(enm)
     }
 
     public static enumValues<T>(enm: any): T[] {
