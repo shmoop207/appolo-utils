@@ -255,6 +255,28 @@ describe("Utils", function () {
             counter = await index_1.Promises.retry(fn, 3);
             counter.should.be.eq(3);
         });
+        it('should run promise create', async () => {
+            let counter = 0;
+            let fn = async () => {
+                counter++;
+                if (counter != 3) {
+                    throw new Error("aaa");
+                }
+                return counter;
+            };
+            let [err, counter2] = await index_1.Promises.create(fn)
+                .delay(10)
+                .retry(1)
+                .runTo();
+            should.not.exist(counter2);
+            should.exist(err);
+            counter = 0;
+            [err, counter2] = await index_1.Promises.create(fn)
+                .delay(10)
+                .retry(2)
+                .runTo();
+            counter2.should.be.eq(3);
+        });
         it('should run with some rejected', async () => {
             let result = await index_1.Util.promises.someRejected([
                 index_1.Promises.delay(15).then(() => Promise.reject(3)),
@@ -456,8 +478,16 @@ describe("Utils", function () {
             index_1.Util.objects.defaults({}, { a: 1 }, { a: 2 }).should.deep.equals({ a: 1 });
             index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }).should.deep.equals({ a: 1, b: 1 });
             index_1.Util.objects.defaults({ a: 1 }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 1, b: 1, c: 3 });
-            index_1.Util.objects.defaults({}, { a: undefined }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 2, b: 1, c: 3 });
-            index_1.Util.objects.defaults({ a: undefined }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: 2, b: 1, c: 3 });
+            index_1.Util.objects.defaults({}, { a: undefined }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({
+                a: 2,
+                b: 1,
+                c: 3
+            });
+            index_1.Util.objects.defaults({ a: undefined }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({
+                a: 2,
+                b: 1,
+                c: 3
+            });
             index_1.Util.objects.defaults({ a: null }, { a: 2, b: 1 }, { b: 2, c: 3 }).should.deep.equals({ a: null, b: 1, c: 3 });
         });
         it('should not isDrained', async () => {

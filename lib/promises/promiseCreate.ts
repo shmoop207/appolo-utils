@@ -11,6 +11,12 @@ export class PromiseCreate<T> {
         return this
     }
 
+    public delay(time: number): this {
+        let fn = this.fn;
+        this.fn = () => Promises.delay(time).then(() => fn())
+        return this
+    }
+
     public retry(options: (number | IRetry) = 1): this {
         let fn = this.fn;
         this.fn = () => Promises.retry<T>(fn, options);
@@ -21,7 +27,7 @@ export class PromiseCreate<T> {
         return this.fn();
     }
 
-    public runTo<K = any>() {
+    public runTo<K = any>(): Promise<[K, T?]> {
         return Promises.to<T, K>(this.fn());
     }
 }

@@ -1,7 +1,7 @@
 "use strict";
 import chai = require('chai');
 import Q = require('bluebird');
-import {Promises, Util,Crypto} from "../index";
+import {Promises, Util, Crypto} from "../index";
 
 let should = chai.should();
 
@@ -33,9 +33,9 @@ describe("Utils", function () {
 
         it('should check areArraysEqual', async () => {
 
-             Util.arrays.areArraysEqual([1,2,3],[1,2,3]).should.be.ok
-             Util.arrays.areArraysEqual([2,1,3,5],[1,2,3,5]).should.be.ok
-             Util.arrays.areArraysEqual([2,1,3,5],[1,2,4,5]).should.be.not.ok
+            Util.arrays.areArraysEqual([1, 2, 3], [1, 2, 3]).should.be.ok
+            Util.arrays.areArraysEqual([2, 1, 3, 5], [1, 2, 3, 5]).should.be.ok
+            Util.arrays.areArraysEqual([2, 1, 3, 5], [1, 2, 4, 5]).should.be.not.ok
 
         });
 
@@ -369,6 +369,37 @@ describe("Utils", function () {
             counter.should.be.eq(3)
         })
 
+        it('should run promise create', async () => {
+            let counter = 0;
+
+            let fn = async () => {
+                counter++;
+                if (counter != 3) {
+                    throw new Error("aaa")
+                }
+
+                return counter
+            }
+
+            let [err, counter2] = await Promises.create(fn)
+                .delay(10)
+                .retry(1)
+                .runTo();
+
+            should.not.exist(counter2)
+            should.exist(err)
+
+            counter = 0;
+
+            [err, counter2] = await Promises.create(fn)
+                .delay(10)
+                .retry(2)
+                .runTo();
+
+            counter2.should.be.eq(3)
+
+        })
+
         it('should run with some rejected', async () => {
 
             let result = await Util.promises.someRejected([
@@ -424,24 +455,26 @@ describe("Utils", function () {
 
 
         it('should get class methods', async () => {
-            class B{
-                cc(){
+            class B {
+                cc() {
 
                 }
             }
 
-            class A extends B{
-                get a(){
+            class A extends B {
+                get a() {
                     return "a"
                 }
-                set a(value){
+
+                set a(value) {
 
                 }
 
-                aa(){
+                aa() {
 
                 }
-                bb(){
+
+                bb() {
 
                 }
             }
@@ -449,7 +482,7 @@ describe("Utils", function () {
 
             let result = Util.classes.getClassMethodsName(A);
 
-            result.should.be.deep.eq(["aa","bb"])
+            result.should.be.deep.eq(["aa", "bb"])
 
         });
 
@@ -544,7 +577,7 @@ describe("Utils", function () {
             let pass = Util.strings.generatePassword(3);
             pass.length.should.be.eq(3);
 
-             pass = Util.strings.generatePassword(3,"a");
+            pass = Util.strings.generatePassword(3, "a");
             pass.should.be.eq("aaa");
         });
 
@@ -555,12 +588,12 @@ describe("Utils", function () {
         });
 
         it('should serializeToQueryString', async () => {
-            Util.strings.serializeToQueryString({a:12,b:34,c:"56"}).should.be.eq("a=12&b=34&c=56");
+            Util.strings.serializeToQueryString({a: 12, b: 34, c: "56"}).should.be.eq("a=12&b=34&c=56");
 
         });
 
         it('should convertStringToFloatArray', async () => {
-            Util.strings.convertStringToFloatArray("1,2.3,5").should.be.deep.equals([1,2.3,5]);
+            Util.strings.convertStringToFloatArray("1,2.3,5").should.be.deep.equals([1, 2.3, 5]);
 
         });
 
@@ -595,9 +628,9 @@ describe("Utils", function () {
     describe("Objects", function () {
 
         it('should Object set', async () => {
-            let obt:any = {a:{}}
+            let obt: any = {a: {}}
 
-            Util.objects.set(obt,"a.b.c",1);
+            Util.objects.set(obt, "a.b.c", 1);
 
             obt.a.b.c.should.be.eq(1);
         })
@@ -654,9 +687,17 @@ describe("Utils", function () {
             Util.objects.defaults<any>({}, {a: 1}, {a: 2}).should.deep.equals({a: 1});
             Util.objects.defaults<any>({a: 1}, {a: 2, b: 1}).should.deep.equals({a: 1, b: 1});
             Util.objects.defaults<any>({a: 1}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 1, b: 1, c: 3});
-            Util.objects.defaults<any>({},{a: undefined}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 2, b: 1, c: 3});
+            Util.objects.defaults<any>({}, {a: undefined}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({
+                a: 2,
+                b: 1,
+                c: 3
+            });
 
-            Util.objects.defaults<any>({a: undefined}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: 2, b: 1, c: 3});
+            Util.objects.defaults<any>({a: undefined}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({
+                a: 2,
+                b: 1,
+                c: 3
+            });
             Util.objects.defaults<any>({a: null}, {a: 2, b: 1}, {b: 2, c: 3}).should.deep.equals({a: null, b: 1, c: 3});
 
         });
@@ -802,7 +843,7 @@ describe("Utils", function () {
     describe("xor", function () {
         it('should create encrypt with xor', async () => {
 
-            let hashed = await Crypto.xor.encode("aaaaaa","bbbb");
+            let hashed = await Crypto.xor.encode("aaaaaa", "bbbb");
             let result = await Crypto.xor.decode("aaaaaa", hashed);
 
 
@@ -817,9 +858,9 @@ describe("Utils", function () {
     describe("url", function () {
         it('should validate domain', async () => {
 
-             Util.url.isValidDomain("aaaaaa").should.be.not.ok;
-             Util.url.isValidDomain("aaaaaa..com").should.be.not.ok;
-             Util.url.isValidDomain("aaaaaa.com").should.be.ok;
+            Util.url.isValidDomain("aaaaaa").should.be.not.ok;
+            Util.url.isValidDomain("aaaaaa..com").should.be.not.ok;
+            Util.url.isValidDomain("aaaaaa.com").should.be.ok;
 
         });
 
