@@ -31,9 +31,21 @@ export class Classes {
         return args;
     }
 
-    public static  getClassMethodsName(klass:(new(...args: any[])=> any)):string[] {
-        let names = Object.getOwnPropertyNames( klass.prototype ).filter(name => (name !== 'constructor' && typeof klass.prototype[name] === 'function'))
+    public static getClassMethodsName(klass: (new(...args: any[]) => any)): string[] {
+        let names = Object.getOwnPropertyNames(klass.prototype).filter(name => (name !== 'constructor' && typeof klass.prototype[name] === 'function'))
 
-        return  names;
+        return names;
+    }
+
+    public static createClassFromObject<T>(klass: { new(): T }, obj: { [P in keyof T]: T[P] }): T {
+        let instance = new klass();
+        let keys = Object.keys(obj);
+
+        for (let i = 0; i < keys.length; i++) {
+            let key = keys[i]
+            instance[key] = obj[key];
+        }
+
+        return instance;
     }
 }
