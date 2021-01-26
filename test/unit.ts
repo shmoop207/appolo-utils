@@ -1,7 +1,7 @@
 "use strict";
 import chai = require('chai');
 import Q = require('bluebird');
-import {Promises, Util, Crypto} from "../index";
+import {Promises, Util, Crypto, Classes} from "../index";
 
 let should = chai.should();
 
@@ -452,7 +452,72 @@ describe("Utils", function () {
 
 
     describe("Classes", function () {
+        it('should get classToPlain', async () => {
+            class B {
+                g = "gg"
+            }
 
+            class A extends B {
+                d = "ddd"
+
+                get a() {
+                    return "aa"
+                }
+
+                set a(value) {
+
+                }
+
+                c() {
+
+                }
+
+                get e() {
+                    return "e"
+                }
+
+                static c() {
+
+                }
+            }
+
+            let a = Classes.classToPlain<A>(new A());
+
+            a.should.be.deep.equals({g: 'gg', d: 'ddd'})
+
+        })
+
+        it('should get plainToClass', async () => {
+
+            class A {
+                constructor(private _params: { a?: string, b?: string } = {}) {
+
+                }
+
+                a(value) {
+                    this._params.a = value
+                    return this;
+                }
+
+                b(value) {
+                    this._params.b = value
+                    return this;
+                }
+
+                get params() {
+                    return this._params
+                }
+            }
+
+            let  a = new A().a(1).b(2)
+
+            let dto = Classes.classToPlain<A>(a);
+
+            let dto2 = Classes.plainToClass(A,dto);
+
+            dto2.params.should.be.deep.equals({ a: 1, b: 2 })
+
+        })
 
         it('should get class methods', async () => {
             class B {

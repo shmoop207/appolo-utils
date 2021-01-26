@@ -320,6 +320,55 @@ describe("Utils", function () {
         });
     });
     describe("Classes", function () {
+        it('should get classToPlain', async () => {
+            class B {
+                constructor() {
+                    this.g = "gg";
+                }
+            }
+            class A extends B {
+                constructor() {
+                    super(...arguments);
+                    this.d = "ddd";
+                }
+                get a() {
+                    return "aa";
+                }
+                set a(value) {
+                }
+                c() {
+                }
+                get e() {
+                    return "e";
+                }
+                static c() {
+                }
+            }
+            let a = index_1.Classes.classToPlain(new A());
+            a.should.be.deep.equals({ g: 'gg', d: 'ddd' });
+        });
+        it('should get plainToClass', async () => {
+            class A {
+                constructor(_params = {}) {
+                    this._params = _params;
+                }
+                a(value) {
+                    this._params.a = value;
+                    return this;
+                }
+                b(value) {
+                    this._params.b = value;
+                    return this;
+                }
+                get params() {
+                    return this._params;
+                }
+            }
+            let a = new A().a(1).b(2);
+            let dto = index_1.Classes.classToPlain(a);
+            let dto2 = index_1.Classes.plainToClass(A, dto);
+            dto2.params.should.be.deep.equals({ a: 1, b: 2 });
+        });
         it('should get class methods', async () => {
             class B {
                 cc() {

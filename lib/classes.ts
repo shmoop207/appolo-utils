@@ -1,5 +1,5 @@
 import {Arrays} from "./arrays";
-import {Functions} from "../index";
+import {Functions, Util} from "../index";
 
 export class Classes {
     public static isClass(v: any): boolean {
@@ -37,15 +37,37 @@ export class Classes {
         return names;
     }
 
-    public static createClassFromObject<T>(klass: { new(): T }, obj: { [P in keyof T]: T[P] }): T {
-        let instance = new klass();
+    public static classToPlain<T>(klass: T ): { [P in keyof T]: T[P] } {
+
+        let dto = typeof klass["toJSON"] == "function" ? klass["toJSON"]() : JSON.parse(JSON.stringify(klass))
+
+        return dto
+    }
+
+    public static plainToClassInstance<T>(instance: T, obj: { [P in keyof T]: T[P] }): T {
+
+        if (typeof instance["formJSON"] == "function") {
+            instance["formJSON"](obj);
+
+            return instance;
+        }
+
         let keys = Object.keys(obj);
 
         for (let i = 0; i < keys.length; i++) {
-            let key = keys[i]
-            instance[key] = obj[key];
+            let key = keys[i];
+            if (typeof instance[key] != "function") {
+                instance[key] = obj[key];
+            }
         }
 
         return instance;
+    }
+
+    public static plainToClass<T>(klass: { new(...args: any[]): T }, obj: { [P in keyof T]: T[P] }): T {
+
+        let instance = new klass(obj);
+
+        return Classes.plainToClassInstance(instance, obj)
     }
 }
