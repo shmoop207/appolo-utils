@@ -30,6 +30,10 @@ export class Objects {
         return Object.keys(obj || {}).length === 0
     }
 
+    public static isBoolean(obj: any): obj is boolean {
+        return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
+    }
+
     public static cloneFast<T>(obj: T): T {
         return JSON.parse(JSON.stringify(obj))
     }
@@ -119,7 +123,7 @@ export class Objects {
 
     public static tryStringifyJSON(json: any): string {
 
-        let [err, str] = Functions.to<any,Error>(() => JSON.stringify(json))
+        let [err, str] = Functions.to<any, Error>(() => JSON.stringify(json))
 
         return err ? "" : str;
     }
