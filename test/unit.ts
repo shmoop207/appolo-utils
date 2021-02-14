@@ -1,6 +1,5 @@
 "use strict";
 import chai = require('chai');
-import Q = require('bluebird');
 import {Promises, Util, Crypto, Classes} from "../index";
 
 let should = chai.should();

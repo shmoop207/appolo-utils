@@ -1,15 +1,15 @@
 import {Strings} from '../strings';
 
-import {BinaryLike, createHash, HexBase64Latin1Encoding} from "crypto";
+import {BinaryLike, createHash, BinaryToTextEncoding} from "crypto";
 
 export class Hash {
 
-    public static hash(value: BinaryLike, algorithm: string = 'sha1', encoding: HexBase64Latin1Encoding = 'hex'): string {
+    public static hash(value: BinaryLike, algorithm: string = 'sha1', encoding: BinaryToTextEncoding = 'hex'): string {
         return createHash(algorithm).update(value).digest(encoding);
     }
 
-    public static hashPlainObject(obj: { [index: string]: string | number | boolean }, algorithm: string = 'sha1', encoding: HexBase64Latin1Encoding = 'hex'): string {
-        return Hash.hash(Strings.stringifyObjectValues(obj));
+    public static hashPlainObject(obj: { [index: string]: string | number | boolean }, algorithm: string = 'sha1', encoding: BinaryToTextEncoding = 'hex'): string {
+        return Hash.hash(Strings.stringifyObjectValues(obj),algorithm,encoding);
     }
 
     public static md5(str: string): string {
