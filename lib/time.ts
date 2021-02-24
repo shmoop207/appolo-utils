@@ -46,6 +46,24 @@ export class Time {
         return ms + 'ms';
     }
 
+    public static milisecHuman(ms: number): string {
+        let str = '';
+        let date = new Date(ms),
+            days = date.getUTCDate() - 1,
+            hours = date.getUTCHours(),
+            minutes = date.getUTCMinutes(),
+            seconds = date.getUTCSeconds(),
+            milli = date.getUTCMilliseconds();
+
+        days && (str += `${days} days, `);
+        (hours || str) && (str += `${hours} hours, `);
+        (minutes || str) && (str += `${minutes} minutes, `);
+        (seconds || str) && (str += `${seconds} seconds, `);
+        str += `${milli} milli`;
+
+        return str;
+    }
+
     public static durationIntToString(durationSeconds: number): string {
         return new Date(durationSeconds * 1000).toISOString().substr(11, 8);
     }
@@ -71,7 +89,7 @@ export class Time {
             delay += Numbers.random(0, params.random)
         }
 
-        delay +=(params.min || 0);
+        delay += (params.min || 0);
 
         if (params.max) {
             delay = Math.min(params.max, delay)

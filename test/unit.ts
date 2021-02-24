@@ -216,7 +216,16 @@ describe("Utils", function () {
 
             Util.time.milisecPretty(1000 * 5 * 60 * 60).should.be.eq("5h");
         });
+
+        it('should milisecHuman', async () => {
+
+            Util.time.milisecHuman(536643021).should.be.eq("6 days, 5 hours, 4 minutes, 3 seconds, 21 milli");
+            Util.time.milisecHuman((3*60*1000)+500).should.be.eq("3 minutes, 0 seconds, 500 milli");
+
+        });
     });
+
+
 
     describe("Promise", function () {
         it('should run with map', async () => {
