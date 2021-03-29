@@ -54,6 +54,25 @@ export class Objects {
         return obj as T;
     };
 
+    public static defaultsDeep<T>(obj: Partial<T>, ...args: Partial<T>[]): T {
+
+        for (let i = 0, len = args.length; i < len; i++) {
+            let arg = args[i];
+            let keys = Object.keys(arg || {});
+            for (let j = 0, len2 = keys.length; j < len2; j++) {
+                let key = keys[j], value = arg[key], source = obj[key];
+
+                if (Objects.isPlain(value)) {
+                    obj[key] = Objects.defaultsDeep({},source, value)
+                } else if (!(key in obj) || (source === undefined && value != undefined)) {
+                    obj[key] = value
+                }
+            }
+        }
+
+        return obj as T;
+    };
+
     public static cloneDeep<T>(obj: T): T {
         let isArray = Array.isArray(obj);
 

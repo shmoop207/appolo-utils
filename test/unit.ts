@@ -755,6 +755,14 @@ describe("Utils", function () {
 
         });
 
+        it.only('should extend defaults deep', async () => {
+            Util.objects.defaultsDeep<any>({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 } });
+            Util.objects.defaultsDeep<any>({ 'a': { 'b': 2 }, 'd': 4 }, { 'a': { 'b': 3, 'c': 3 }, 'e': 5 }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 }, 'd': 4, 'e': 5 });
+            Util.objects.defaultsDeep<any>({ 'a': 1, 'b': { 'c': 2 } }, { 'b': { 'c': 3, 'd': 3 } }).should.deep.equals({ 'a': 1, 'b': { 'c': 2, 'd': 3 } });
+            Util.objects.defaultsDeep<any>({ 'a': { 'b': 2 } },{ 'a': { 'b': 3 } }, { 'a': { 'c': 3 } },{ 'a': { 'b': 3, 'c': 3 } },{ 'a': { 'c': 4 } }).should.deep.equals( { 'a': { 'b': 2, 'c': 3 } });
+
+        });
+
         it('should extend defaults', async () => {
             Util.objects.defaults<any>({}, {a: 1}, {b: 1}).should.deep.equals({a: 1, b: 1});
             Util.objects.defaults<any>({}, {a: 1}, {a: 2}).should.deep.equals({a: 1});
