@@ -17,7 +17,7 @@
     "test": "mocha test --exit"
   },
   "main": "./index.js",
-  "version": "8.0.18",
+  "version": "8.0.19",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -30,14 +30,14 @@
   },
   "devDependencies": {
     "@types/benchmark": "^2.1.0",
-    "@types/chai": "^4.2.15",
+    "@types/chai": "^4.2.16",
     "@types/lodash": "^4.14.168",
-    "@types/mocha": "^8.2.0",
-    "@types/node": "^14.14.27",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^14.14.37",
     "benchmark": "^2.1.4",
-    "chai": "^4.3.0",
-    "mocha": "^8.3.0",
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2",
     "tslib": "^2.1.0",
-    "typescript": "^4.1.5"
+    "typescript": "^4.2.3"
   }
 }

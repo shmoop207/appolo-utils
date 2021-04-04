@@ -1,14 +1,14 @@
 import {Strings} from '../strings';
 
-import {BinaryLike, createHash, BinaryToTextEncoding} from "crypto";
+import {BinaryLike, createHash} from "crypto";
 
 export class Hash {
 
-    public static hash(value: BinaryLike, algorithm: string = 'sha1', encoding: BinaryToTextEncoding = 'hex'): string {
+    public static hash(value: BinaryLike, algorithm: string = 'sha1', encoding: 'base64' | 'hex' = 'hex'): string {
         return createHash(algorithm).update(value).digest(encoding);
     }
 
-    public static hashPlainObject(obj: { [index: string]: string | number | boolean }, algorithm: string = 'sha1', encoding: BinaryToTextEncoding = 'hex'): string {
+    public static hashPlainObject(obj: { [index: string]: string | number | boolean }, algorithm: string = 'sha1', encoding: 'base64' | 'hex' = 'hex'): string {
         return Hash.hash(Strings.stringifyObjectValues(obj),algorithm,encoding);
     }
 
