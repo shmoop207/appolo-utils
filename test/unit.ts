@@ -101,6 +101,11 @@ describe("Utils", function () {
 
             arr.should.be.deep.equal([{a: 2}, {a: 1}, {a: 3}, {a: 1.5}]);
             arr2.should.be.deep.equal([{a: 1}, {a: 1.5}, {a: 2}, {a: 3}]);
+
+            let arr3 = Util.arrays.sortBy(arr, (item) => -item.a);
+            arr3.should.be.deep.equal([{a: 3}, {a: 2}, {a: 1.5}, {a: 1}]);
+
+
         });
 
         it('should sort array', async () => {
@@ -130,6 +135,31 @@ describe("Utils", function () {
             arr = Util.arrays.uniq(arr);
 
             arr.should.be.deep.equal([1, 2, 4]);
+        });
+
+        it('should differenceBy  array', async () => {
+
+            let arr = Util.arrays.differenceBy([{'x': 2}, {'x': 1}, {x: 2}, {'x': 1}], [{'x': 1}], (item) => item.x);
+
+            arr.length.should.be.eq(2);
+            arr[0].x.should.be.eq(2);
+
+            arr = Util.arrays.differenceBy([{'x': 2}, {'x': 1}, {x: 2}, {'x': 1}], [{'x': 1}, {'x': 2}], (item) => item.x);
+            arr.length.should.be.eq(0)
+
+
+            let arr2 = Util.arrays.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+
+            arr2.length.should.be.eq(1);
+            arr2[0].should.be.eq(1.2);
+
+            let arr3 = Util.arrays.difference([2, 1], [2, 3]);
+            arr3.length.should.be.eq(1);
+            arr3[0].should.be.eq(1);
+
+            Util.arrays.difference([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([1])
+            Util.arrays.difference([1, 2], [2, 1]).should.be.deep.equal([])
+
         });
 
         it('should flat array', async () => {
@@ -220,11 +250,10 @@ describe("Utils", function () {
         it('should milisecHuman', async () => {
 
             Util.time.milisecHuman(536643021).should.be.eq("6 days, 5 hours, 4 minutes, 3 seconds, 21 milli");
-            Util.time.milisecHuman((3*60*1000)+500).should.be.eq("3 minutes, 0 seconds, 500 milli");
+            Util.time.milisecHuman((3 * 60 * 1000) + 500).should.be.eq("3 minutes, 0 seconds, 500 milli");
 
         });
     });
-
 
 
     describe("Promise", function () {
@@ -517,13 +546,13 @@ describe("Utils", function () {
                 }
             }
 
-            let  a = new A().a(1).b(2)
+            let a = new A().a(1).b(2)
 
             let dto = Classes.classToPlain<A>(a);
 
-            let dto2 = Classes.plainToClass(A,dto);
+            let dto2 = Classes.plainToClass(A, dto);
 
-            dto2.params.should.be.deep.equals({ a: 1, b: 2 })
+            dto2.params.should.be.deep.equals({a: 1, b: 2})
 
         })
 
@@ -755,11 +784,27 @@ describe("Utils", function () {
 
         });
 
-        it.only('should extend defaults deep', async () => {
-            Util.objects.defaultsDeep<any>({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 } });
-            Util.objects.defaultsDeep<any>({ 'a': { 'b': 2 }, 'd': 4 }, { 'a': { 'b': 3, 'c': 3 }, 'e': 5 }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 }, 'd': 4, 'e': 5 });
-            Util.objects.defaultsDeep<any>({ 'a': 1, 'b': { 'c': 2 } }, { 'b': { 'c': 3, 'd': 3 } }).should.deep.equals({ 'a': 1, 'b': { 'c': 2, 'd': 3 } });
-            Util.objects.defaultsDeep<any>({ 'a': { 'b': 2 } },{ 'a': { 'b': 3 } }, { 'a': { 'c': 3 } },{ 'a': { 'b': 3, 'c': 3 } },{ 'a': { 'c': 4 } }).should.deep.equals( { 'a': { 'b': 2, 'c': 3 } });
+        it('should extend defaults deep', async () => {
+            Util.objects.defaultsDeep<any>({'a': {'b': 2}}, {'a': {'b': 1, 'c': 3}}).should.deep.equals({
+                'a': {
+                    'b': 2,
+                    'c': 3
+                }
+            });
+            Util.objects.defaultsDeep<any>({'a': {'b': 2}, 'd': 4}, {
+                'a': {'b': 3, 'c': 3},
+                'e': 5
+            }).should.deep.equals({'a': {'b': 2, 'c': 3}, 'd': 4, 'e': 5});
+            Util.objects.defaultsDeep<any>({'a': 1, 'b': {'c': 2}}, {'b': {'c': 3, 'd': 3}}).should.deep.equals({
+                'a': 1,
+                'b': {'c': 2, 'd': 3}
+            });
+            Util.objects.defaultsDeep<any>({'a': {'b': 2}}, {'a': {'b': 3}}, {'a': {'c': 3}}, {
+                'a': {
+                    'b': 3,
+                    'c': 3
+                }
+            }, {'a': {'c': 4}}).should.deep.equals({'a': {'b': 2, 'c': 3}});
 
         });
 

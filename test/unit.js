@@ -64,6 +64,8 @@ describe("Utils", function () {
             let arr2 = index_1.Util.arrays.sortBy(arr, (item) => item.a);
             arr.should.be.deep.equal([{ a: 2 }, { a: 1 }, { a: 3 }, { a: 1.5 }]);
             arr2.should.be.deep.equal([{ a: 1 }, { a: 1.5 }, { a: 2 }, { a: 3 }]);
+            let arr3 = index_1.Util.arrays.sortBy(arr, (item) => -item.a);
+            arr3.should.be.deep.equal([{ a: 3 }, { a: 2 }, { a: 1.5 }, { a: 1 }]);
         });
         it('should sort array', async () => {
             let arr = [2, 1, 3, 1.5];
@@ -81,6 +83,21 @@ describe("Utils", function () {
             let arr = [1, 2, 4, 2, 4];
             arr = index_1.Util.arrays.uniq(arr);
             arr.should.be.deep.equal([1, 2, 4]);
+        });
+        it('should differenceBy  array', async () => {
+            let arr = index_1.Util.arrays.differenceBy([{ 'x': 2 }, { 'x': 1 }, { x: 2 }, { 'x': 1 }], [{ 'x': 1 }], (item) => item.x);
+            arr.length.should.be.eq(2);
+            arr[0].x.should.be.eq(2);
+            arr = index_1.Util.arrays.differenceBy([{ 'x': 2 }, { 'x': 1 }, { x: 2 }, { 'x': 1 }], [{ 'x': 1 }, { 'x': 2 }], (item) => item.x);
+            arr.length.should.be.eq(0);
+            let arr2 = index_1.Util.arrays.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+            arr2.length.should.be.eq(1);
+            arr2[0].should.be.eq(1.2);
+            let arr3 = index_1.Util.arrays.difference([2, 1], [2, 3]);
+            arr3.length.should.be.eq(1);
+            arr3[0].should.be.eq(1);
+            index_1.Util.arrays.difference([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([1]);
+            index_1.Util.arrays.difference([1, 2], [2, 1]).should.be.deep.equal([]);
         });
         it('should flat array', async () => {
             let arr = [1, [2, [3, [4]], 5]];
@@ -526,11 +543,27 @@ describe("Utils", function () {
         it('should isDrained', async () => {
             index_1.Util.objects.isEmpty({}).should.be.eq(true);
         });
-        it.only('should extend defaults deep', async () => {
-            index_1.Util.objects.defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 } });
-            index_1.Util.objects.defaultsDeep({ 'a': { 'b': 2 }, 'd': 4 }, { 'a': { 'b': 3, 'c': 3 }, 'e': 5 }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 }, 'd': 4, 'e': 5 });
-            index_1.Util.objects.defaultsDeep({ 'a': 1, 'b': { 'c': 2 } }, { 'b': { 'c': 3, 'd': 3 } }).should.deep.equals({ 'a': 1, 'b': { 'c': 2, 'd': 3 } });
-            index_1.Util.objects.defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 3 } }, { 'a': { 'c': 3 } }, { 'a': { 'b': 3, 'c': 3 } }, { 'a': { 'c': 4 } }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 } });
+        it('should extend defaults deep', async () => {
+            index_1.Util.objects.defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } }).should.deep.equals({
+                'a': {
+                    'b': 2,
+                    'c': 3
+                }
+            });
+            index_1.Util.objects.defaultsDeep({ 'a': { 'b': 2 }, 'd': 4 }, {
+                'a': { 'b': 3, 'c': 3 },
+                'e': 5
+            }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 }, 'd': 4, 'e': 5 });
+            index_1.Util.objects.defaultsDeep({ 'a': 1, 'b': { 'c': 2 } }, { 'b': { 'c': 3, 'd': 3 } }).should.deep.equals({
+                'a': 1,
+                'b': { 'c': 2, 'd': 3 }
+            });
+            index_1.Util.objects.defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 3 } }, { 'a': { 'c': 3 } }, {
+                'a': {
+                    'b': 3,
+                    'c': 3
+                }
+            }, { 'a': { 'c': 4 } }).should.deep.equals({ 'a': { 'b': 2, 'c': 3 } });
         });
         it('should extend defaults', async () => {
             index_1.Util.objects.defaults({}, { a: 1 }, { b: 1 }).should.deep.equals({ a: 1, b: 1 });

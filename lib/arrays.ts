@@ -120,13 +120,13 @@ export class Arrays {
         return output;
     }
 
-    public static keyByMap<T extends any, K extends any = string>(arr: T[], key?: string | ((item: T, index: number) => string)): Map<K,T> {
+    public static keyByMap<T extends any, K extends any = string>(arr: T[], key?: string | ((item: T, index: number) => string)): Map<K, T> {
 
         if (!key) {
             key = (item: T, index: number) => item.toString();
         }
 
-        let output: Map<K,T> = new Map<K, T>(), isFn = Classes.isFunction(key);
+        let output: Map<K, T> = new Map<K, T>(), isFn = Classes.isFunction(key);
 
         for (let i = 0, len = (arr || []).length; i < len; i++) {
 
@@ -134,7 +134,7 @@ export class Arrays {
 
             let outputKey = isFn ? (key as Function)(item, i) : item[key as string];
 
-            output.set(outputKey,item);
+            output.set(outputKey, item);
         }
 
         return output;
@@ -253,5 +253,37 @@ export class Arrays {
 
     public static sum(arr: number[]): number {
         return Arrays.sumBy(arr, item => item);
+    }
+
+    public static difference<T>(arr: T[], arr2: T[]): T[] {
+        return Arrays.differenceBy(arr, arr2, item => item);
+    }
+
+    public static differenceBy<T>(arr: T[], arr2: T[], criteria: (value: T, i?: number) => any): T[] {
+        let out = [];
+        if (!arr || !arr.length) {
+            return []
+        }
+
+        if (!arr2 || !arr2.length) {
+            return arr
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+            let item1 = arr[i], key1 = criteria(item1, i),
+                found = false;
+            for (let j = 0; j < arr2.length; j++) {
+                let item2 = arr2[j], key2 = criteria(item2, j);
+                if (key1 === key2) {
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                out.push(item1);
+            }
+        }
+
+        return out;
     }
 }
