@@ -26,6 +26,22 @@ export class Strings {
         return str.replace(/\$\{([\w\.\_]*)\}/gm, (m, key) => data.hasOwnProperty(key) ? ((!data[key] && data[key] !== false) ? "" : data[key]) : m)
     }
 
+    public static replaceFormatJson(str: string, data: any): string {
+        str = (str || "").replace(/\"\$\{([\w\.\_\:]*)\}\"/gm, (_m, key) => {
+
+            let spread = key.split(":"),
+                type = spread[1] || "";
+
+            key = spread[0];
+
+            let value = data.hasOwnProperty(key) ? ((!data[key] && data[key] !== false) ? "" : data[key]) : "";
+
+            return type == "number" ? (parseFloat(value) || 0).toString() : (type == "boolean" ? Boolean(value).toString() : `"${value}"`)
+        });
+
+        return Strings.replaceFormat(str, data)
+    }
+
     public static sanitizeString(str: string): string {
         // u200B is the hex equivalent of unicode 8203 and it will fuck with our encoding function in the ad server
         // https://stackoverflow.com/questions/24205193/javascript-remove-zero-width-space-unicode-8203-from-string
