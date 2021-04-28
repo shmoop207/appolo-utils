@@ -63,7 +63,7 @@ export class Objects {
                 let key = keys[j], value = arg[key], source = obj[key];
 
                 if (Objects.isPlain(value)) {
-                    obj[key] = Objects.defaultsDeep({},source, value)
+                    obj[key] = Objects.defaultsDeep({}, source, value)
                 } else if (!(key in obj) || (source === undefined && value != undefined)) {
                     obj[key] = value
                 }
@@ -187,6 +187,20 @@ export class Objects {
             current = current[part];
         }
         current[parts[parts.length - 1]] = value;
+    }
+
+    public static has(obj: any, key: string): boolean {
+        if (!obj || !key) {
+            return false;
+        }
+
+        let keyParts = key.split('.');
+
+        return !!obj && (
+            keyParts.length > 1
+                ? Objects.has(obj[key.split('.')[0]], keyParts.slice(1).join('.'))
+                : Object.hasOwnProperty.call(obj, key)
+        );
     }
 
     public static mapObject<T>(obj: any, iteratee: (value: any, key: string) => T): T[] {
