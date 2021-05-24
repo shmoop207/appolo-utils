@@ -703,6 +703,11 @@ describe("Utils", function () {
             Util.strings.replaceFormat("aa${b}", {b: 1}).should.be.eq("aa1");
 
         });
+
+        it('should slugify', async () => {
+            Util.strings.slugify("Vtest/aaa.bbb%").should.be.eq("vtestaaabbb");
+
+        });
     });
 
     describe("numbers", function () {

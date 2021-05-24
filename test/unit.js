@@ -491,6 +491,9 @@ describe("Utils", function () {
         it('should replaceFormat', async () => {
             index_1.Util.strings.replaceFormat("aa${b}", { b: 1 }).should.be.eq("aa1");
         });
+        it('should slugify', async () => {
+            index_1.Util.strings.slugify("Vtest/aaa.bbb%").should.be.eq("vtestaaabbb");
+        });
     });
     describe("numbers", function () {
         it('should toFixed', async () => {
