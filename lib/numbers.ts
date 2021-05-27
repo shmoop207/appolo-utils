@@ -22,7 +22,7 @@ export class Numbers {
         return (Math.random() * (max - min + 1)) + min;
     }
 
-    public static isNumber(str: any): str is String {
+    public static isNumber(str: any): str is Number {
         return (typeof str === 'number' || str instanceof Number);
     }
 
