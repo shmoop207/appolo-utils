@@ -148,11 +148,11 @@ export class Chain<K> {
         return this;
     }
 
-    public keyBy(key?: string | ((item: K, index: number) => string)): { [index: string]: T } {
+    public keyBy(key?: string | ((item: K, index: number) => string)): { [index: string]: K } {
         return Arrays.keyBy(this._value, key)
     }
 
-    public groupBy(key: string | number | ((item: K) => string | number)): { [index: string]: T[] } {
+    public groupBy(key: string | number | ((item: K) => string | number)): { [index: string]: K[] } {
 
         return Arrays.groupBy(this._value, key);
     }
