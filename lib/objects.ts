@@ -1,5 +1,5 @@
 import {Arrays} from "./arrays";
-import {Functions} from "../index";
+import {Functions, Strings} from "../index";
 
 export class Objects {
     public static isPlain(obj: any): boolean {
@@ -30,8 +30,16 @@ export class Objects {
         return Object.keys(obj || {}).length === 0
     }
 
+    public static replaceFormatJson(obj: {[index:string]:any},data:{[index:string]:any}):{[index:string]:any}{
+        return JSON.parse(Strings.replaceFormatJson(JSON.stringify(obj),data));
+    }
+
     public static isBoolean(obj: any): obj is boolean {
         return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
+    }
+
+    public static isNullish(obj: any): boolean {
+        return  obj === undefined || obj === null  || Number.isNaN(obj);
     }
 
     public static cloneFast<T>(obj: T): T {

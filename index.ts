@@ -17,10 +17,12 @@ import {Reflector} from "./lib/reflector"
 import {Crypto} from "./lib/crypto/crypto"
 import {Ip} from "./lib/ip"
 import {Url} from "./lib/url"
+import {_} from "./lib/chain"
 
 export default Util;
 
 export {
+    _,
     Numbers,
     Strings,
     Hash,
@@ -34,7 +36,7 @@ export {
     Files,
     Enums,
     Deferred,
-    Reflector, Functions, Errors,Crypto,Ip,Url
+    Reflector, Functions, Errors, Crypto, Ip, Url
 }
 
 

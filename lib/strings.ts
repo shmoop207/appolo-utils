@@ -1,4 +1,5 @@
-import {Functions} from "../index";
+import {Functions, Objects} from "../index";
+import {isNull} from "util";
 
 const Charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=-"
 
@@ -23,7 +24,20 @@ export class Strings {
     }
 
     public static replaceFormat(str: string, data: any): string {
-        return str.replace(/\$\{([\w\.\_]*)\}/gm, (m, key) => data.hasOwnProperty(key) ? ((!data[key] && data[key] !== false) ? "" : data[key]) : m)
+        return str.replace(/\$\{([\w\.\_]*)\}/gm, (m, key) => {
+
+            if (!data.hasOwnProperty(key)) {
+                return m;
+            }
+
+            let value = data[key];
+
+            if (Objects.isNullish(value)) {
+                value = "";
+            }
+
+            return value;
+        })
     }
 
     public static replaceFormatJson(str: string, data: any): string {
@@ -34,13 +48,30 @@ export class Strings {
 
             key = spread[0];
 
-            let value = data.hasOwnProperty(key) ? ((!data[key] && data[key] !== false) ? "" : data[key]) : "";
+            if (!data.hasOwnProperty(key)) {
+                return _m
+            }
 
-            return type == "number" ? (parseFloat(value) || 0).toString() : (type == "boolean" ? Boolean(value).toString() : `"${value}"`)
+            let value = data[key];
+
+            if (Objects.isNullish(value)) {
+                value = "";
+            }
+
+            if (type == "number") {
+                return (parseFloat(value) || 0).toString()
+            } else if (type == "integer") {
+                return (parseInt(value) || 0).toString()
+            } else if (type == "boolean") {
+                return Boolean(value).toString()
+            } else {
+                return `"${value}"`
+            }
         });
 
         return Strings.replaceFormat(str, data)
     }
+
 
     public static sanitizeString(str: string): string {
         // u200B is the hex equivalent of unicode 8203 and it will fuck with our encoding function in the ad server

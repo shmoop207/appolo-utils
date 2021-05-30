@@ -30,6 +30,13 @@ describe("Utils", function () {
             index_1.Util.arrays.map({ a: 1, b: 2 }, (item, key) => item + key).should.deep.equal(['1a', '2b']);
             index_1.Util.arrays.map(undefined, (item, key) => item + key).should.deep.equal([]);
         });
+        it('should chain array', async () => {
+            let result = index_1._(["aa", "cc"]).difference(["aa", "bb"])
+                .filter(item => item == "cc")
+                .uniq()
+                .value();
+            result.should.be.deep.equal(["cc"]);
+        });
         it('should forEach array', async () => {
             let result = 0;
             index_1.Util.arrays.forEach([{ a: 1 }, { a: 2 }], item => result += item.a);
@@ -490,6 +497,20 @@ describe("Utils", function () {
         });
         it('should replaceFormat', async () => {
             index_1.Util.strings.replaceFormat("aa${b}", { b: 1 }).should.be.eq("aa1");
+            index_1.Util.strings.replaceFormat("aa${c}", { b: 1 }).should.be.eq("aa${c}");
+            index_1.Util.strings.replaceFormat("aa${c}bbb${hh}${cc}${dd}", {
+                c: 1,
+                hh: 2,
+                cc: 0,
+                dd: undefined
+            }).should.be.eq("aa1bbb20");
+        });
+        it('should replaceFormatJson', async () => {
+            let obj = { a: "${aa:number}", b: "${bb:boolean}", d: "${kk}", c: ["${dd:integer}", "${ff}", "${gg}"] };
+            let data = { aa: 1, bb: true, dd: 2.2, ff: "aa", kk: undefined };
+            let output = index_1.Util.objects.replaceFormatJson(obj, data);
+            let expected = { "a": 1, "b": true, "d": "", "c": [2, "aa", "${gg}"] };
+            output.should.be.deep.equals(expected);
         });
         it('should slugify', async () => {
             index_1.Util.strings.slugify("Vtest/aaa.bbb%").should.be.eq("vtestaaabbb");
