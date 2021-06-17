@@ -20,7 +20,7 @@ export class Chain<K> {
         return this;
     }
 
-    public removeBy(criteria: (value: K, i?: number) => boolean): this {
+    public removeBy<S = K>(criteria: (value: S, i?: number) => boolean): this {
         Arrays.removeBy(this._value, criteria);
         return this;
     }
@@ -36,22 +36,22 @@ export class Chain<K> {
         return this;
     }
 
-    public flat(): this {
+    public flat<S = K>(): Chain<S> {
         this._value = Arrays.flat(this._value);
-        return this;
+        return this as any;
     }
 
-    public flatDeep(depth: number = 1): this {
+    public flatDeep<S = K>(depth: number = 1): Chain<S> {
         this._value = Arrays.flatDeep(this._value, depth);
-        return this;
+        return this as any;
     }
 
-    public sortBy(criteria: (value: K) => any): this {
+    public sortBy<S = K>(criteria: (value: S) => any): this {
         this._value = Arrays.sortBy(this._value, criteria);
         return this;
     }
 
-    public sort<T>(): this {
+    public sort(): this {
         this._value = Arrays.sort(this._value);
         return this;
     }
@@ -62,7 +62,7 @@ export class Chain<K> {
     }
 
 
-    public uniqBy<T>(criteria: (value: T, i?: number) => any): this {
+    public uniqBy<S = K>(criteria: (value: S, i?: number) => any): this {
         this._value = Arrays.uniqBy(this._value, criteria);
         return this
     }
@@ -72,47 +72,47 @@ export class Chain<K> {
         return this
     }
 
-    public difference<T>(arr2: T[]): this {
+    public difference<S = K>(arr2: S[]): this {
         this._value = Arrays.difference(this._value, arr2);
         return this
     }
 
-    public differenceBy<T>(arr2: T[], criteria: (value: T, i?: number) => any): this {
+    public differenceBy<S = K>(arr2: S[], criteria: (value: S, i?: number) => any): this {
         this._value = Arrays.differenceBy(this._value, arr2, criteria);
         return this
     }
 
-    public map<U>(predicate: (value: K, index: number, array: K[]) => U): this {
+    public map<U, S = K>(predicate: (value: S, index: number, array: S[]) => U): Chain<U> {
         this._value = this._value.map(predicate);
-        return this
+        return this as any
     }
 
-    public filter<S extends K>(predicate: (value: K, index?: number, array?: K[]) => boolean): this {
+    public filter<S = K>(predicate: (value: S, index?: number, array?: S[]) => boolean): this {
         this._value = this._value.filter(predicate);
         return this
     }
 
-    public find<S extends K>(predicate: (value: K, index?: number, array?: K[]) => boolean): S | undefined {
+    public find<S = K>(predicate: (value: S, index?: number, array?: S[]) => boolean): S | undefined {
         return this._value.find(predicate);
     }
 
-    public forEach<S extends K>(predicate: (value: K, index?: number, array?: K[]) => void): void {
+    public forEach<S = K>(predicate: (value: S, index?: number, array?: S[]) => void): void {
         this._value.forEach(predicate);
     }
 
-    public includes(searchElement: K, fromIndex?: number): boolean {
+    public includes<S = K>(searchElement: S, fromIndex?: number): boolean {
         return this._value.includes(searchElement, fromIndex);
     }
 
-    public indexOf(searchElement: K, fromIndex?: number): number {
+    public indexOf<S = K>(searchElement: S, fromIndex?: number): number {
         return this._value.indexOf(searchElement, fromIndex);
     }
 
-    public every<S extends K>(predicate: (value: K, index: number, array: K[]) => boolean): boolean {
+    public every<S = K>(predicate: (value: S, index: number, array: S[]) => boolean): boolean {
         return this._value.every(predicate);
     }
 
-    public some<S extends K>(predicate: (value: K, index: number, array: K[]) => boolean): boolean {
+    public some<S = K>(predicate: (value: S, index: number, array: S[]) => boolean): boolean {
         return this._value.some(predicate);
     }
 
@@ -122,50 +122,50 @@ export class Chain<K> {
         return this;
     }
 
-    public shift<T = K>() {
-        return this._value.shift() as T
+    public shift<S = K>(): S {
+        return this._value.shift() as S
     }
 
-    public pop<T = K>() {
-        return this._value.pop() as T
+    public pop<S = K>(): S {
+        return this._value.pop() as S
     }
 
     public length(): number {
         return this._value.length
     }
 
-    public push(...items: K[]): this {
+    public push<S = K>(...items: S[]): this {
 
         this._value.push(...items);
 
         return this;
     }
 
-    public unshift(...items: K[]): this {
+    public unshift<S = K>(...items: S[]): this {
 
         this._value.unshift(...items);
 
         return this;
     }
 
-    public keyBy(key?: string | ((item: K, index: number) => string)): { [index: string]: K } {
+    public keyBy<S = K>(key?: string | ((item: S, index: number) => string)): { [index: string]: S } {
         return Arrays.keyBy(this._value, key)
     }
 
-    public groupBy(key: string | number | ((item: K) => string | number)): { [index: string]: K[] } {
+    public groupBy<S = K>(key: string | number | ((item: S) => string | number)): { [index: string]: S[] } {
 
         return Arrays.groupBy(this._value, key);
     }
 
-    public random<T>(arr: T[]): T {
+    public random<S = K>(arr: S[]): S {
         return Arrays.random(this._value);
     }
 
-    public value<T = K>(): T[] {
-        return this._value as T[]
+    public value<S = K>(): S[] {
+        return this._value as S[]
     }
 }
 
-export function _<T>(arr: T[]): Chain<T> {
+export function _<K>(arr: K[]): Chain<K> {
     return new Chain(arr);
 }
