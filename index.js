@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Url = exports.Ip = exports.Crypto = exports.Errors = exports.Functions = exports.Reflector = exports.Deferred = exports.Enums = exports.Files = exports.Util = exports.Time = exports.Promises = exports.Guid = exports.Classes = exports.Arrays = exports.Objects = exports.Hash = exports.Strings = exports.Numbers = exports._ = void 0;
+exports.Url = exports.Ip = exports.Crypto = exports.Errors = exports.Functions = exports.Reflector = exports.Deferred = exports.Enums = exports.Files = exports.Util = exports.Time = exports.Promises = exports.Guid = exports.Classes = exports.Arrays = exports.Objects = exports.Hash = exports.Strings = exports.Numbers = exports._ = exports.date = void 0;
 const numbers_1 = require("./lib/numbers");
 Object.defineProperty(exports, "Numbers", { enumerable: true, get: function () { return numbers_1.Numbers; } });
 const strings_1 = require("./lib/strings");
@@ -41,5 +41,7 @@ const url_1 = require("./lib/url");
 Object.defineProperty(exports, "Url", { enumerable: true, get: function () { return url_1.Url; } });
 const chain_1 = require("./lib/chain");
 Object.defineProperty(exports, "_", { enumerable: true, get: function () { return chain_1._; } });
+const dateJs_1 = require("./lib/dateJs");
+Object.defineProperty(exports, "date", { enumerable: true, get: function () { return dateJs_1.date; } });
 exports.default = util_1.Util;
 //# sourceMappingURL=index.js.map

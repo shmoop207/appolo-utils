@@ -23,6 +23,7 @@ import {date} from "./lib/dateJs"
 export default Util;
 
 export {
+    date,
     _,
     Numbers,
     Strings,
