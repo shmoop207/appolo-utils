@@ -18,6 +18,7 @@ import {Crypto} from "./lib/crypto/crypto"
 import {Ip} from "./lib/ip"
 import {Url} from "./lib/url"
 import {_} from "./lib/chain"
+import {date} from "./lib/dateJs"
 
 export default Util;
 

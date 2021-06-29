@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const chai = require("chai");
 const index_1 = require("../index");
+const dateJs_1 = require("../lib/dateJs");
 let should = chai.should();
 describe("Utils", function () {
     describe("guid", function () {
@@ -729,6 +730,21 @@ describe("Utils", function () {
             index_1.Util.ip.isValidIpRegex("123.1.257.1.").should.be.not.ok;
             index_1.Util.ip.isValidIpRegex("123.1.257.1").should.be.not.ok;
             index_1.Util.ip.isValidIpRegex("123.1.255.1").should.be.ok;
+        });
+    });
+    describe("date", function () {
+        it('should get date diff', async () => {
+            dateJs_1.date('2007-01-27').diff(dateJs_1.date('2007-01-29'), 'millisecond').should.be.eq(-172800000);
+            dateJs_1.date('2007-01-27').diff(dateJs_1.date('2007-01-29'), 'day').should.be.eq(-2);
+        });
+        it('should get date add subtract', async () => {
+            dateJs_1.date('2018-09-09T09:12:49.695Z').subtract(7, 'day').toISOString().should.be.eq("2018-09-02T09:12:49.695Z");
+            dateJs_1.date('2018-09-09T09:12:49.695Z').add(7, 'day').toISOString().should.be.eq("2018-09-16T09:12:49.695Z");
+        });
+        it('should get date add endOf', async () => {
+            dateJs_1.date('2018-09-09T09:12:49.695Z').endOf("month").toISOString().should.be.eq("2018-10-01T00:00:00.000Z");
+            dateJs_1.date('2018-09-09T09:12:49.695Z').endOf("hour").toISOString().should.be.eq("2018-09-09T10:00:00.000Z");
+            dateJs_1.date('2018-09-09T09:12:49.695Z').startOf("hour").toISOString().should.be.eq("2018-09-09T09:00:00.000Z");
         });
     });
 });
