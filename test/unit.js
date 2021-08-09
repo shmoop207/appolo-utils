@@ -533,6 +533,12 @@ describe("Utils", function () {
         });
     });
     describe("Objects", function () {
+        it('should Object get', async () => {
+            index_1.Util.objects.get({ a: { b: 2 } }, "a.b").should.be.eq(2);
+            index_1.Util.objects.get({ a: 1, b: 2 }, "a").should.be.eq(1);
+            should.not.exist(index_1.Util.objects.get({ a: 1, b: 2 }, "a.b"));
+            index_1.Util.objects.get({ a: [{ bar: { c: 3 } }] }, 'a[0].bar.c').should.be.eq(3);
+        });
         it('should Object set', async () => {
             let obt = { a: {} };
             index_1.Util.objects.set(obt, "a.b.c", 1);

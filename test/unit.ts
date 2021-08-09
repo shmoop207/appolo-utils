@@ -761,6 +761,20 @@ describe("Utils", function () {
 
     describe("Objects", function () {
 
+        it('should Object get', async () => {
+
+
+
+            Util.objects.get({ a: { b: 2 } }, "a.b").should.be.eq(2);
+            Util.objects.get({ a: 1,b:2 }, "a").should.be.eq(1);
+
+            should.not.exist( Util.objects.get({ a: 1,b:2 }, "a.b"))
+
+            Util.objects.get({ a: [{ bar: { c: 3 } }] }, 'a[0].bar.c').should.be.eq(3)
+
+
+        })
+
         it('should Object set', async () => {
             let obt: any = {a: {}}
 

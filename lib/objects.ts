@@ -30,8 +30,8 @@ export class Objects {
         return Object.keys(obj || {}).length === 0
     }
 
-    public static replaceFormatJson(obj: {[index:string]:any},data:{[index:string]:any}):{[index:string]:any}{
-        return JSON.parse(Strings.replaceFormatJson(JSON.stringify(obj),data));
+    public static replaceFormatJson(obj: { [index: string]: any }, data: { [index: string]: any }): { [index: string]: any } {
+        return JSON.parse(Strings.replaceFormatJson(JSON.stringify(obj), data));
     }
 
     public static isBoolean(obj: any): obj is boolean {
@@ -39,7 +39,7 @@ export class Objects {
     }
 
     public static isNullish(obj: any): boolean {
-        return  obj === undefined || obj === null  || Number.isNaN(obj);
+        return obj === undefined || obj === null || Number.isNaN(obj);
     }
 
     public static cloneFast<T>(obj: T): T {
@@ -179,6 +179,19 @@ export class Objects {
         }
 
         return out
+    }
+
+    public static get<T>(obj: any, path: string, defValue?: T): T {
+
+        if (!path) {
+            return undefined
+        }
+
+        const pathArray = Array.isArray(path) ? path : path.match(/([^[.\]])+/g)
+
+        const result = pathArray.reduce((prevObj, key) => prevObj && prevObj[key], obj)
+
+        return result === undefined ? defValue : result
     }
 
     public static set(obj: any, path: string, value: any) {
