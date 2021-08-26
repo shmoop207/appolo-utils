@@ -22,6 +22,8 @@ import {date} from "./lib/dateJs"
 
 export default Util;
 
+export * from "./lib/types/types"
+
 export {
     date,
     _,

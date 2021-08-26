@@ -45,7 +45,7 @@ export class Arrays {
 
     public static random<T>(arr: T[]): T {
 
-        if (!arr) {
+        if (!arr || !arr.length) {
             return null;
         }
         if (arr.length < 2) {
@@ -53,6 +53,14 @@ export class Arrays {
         }
 
         return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    public static randomItems<T>(arr: T[], n: number): T[] {
+
+        if (!arr || !arr.length) {
+            return [];
+        }
+        return Arrays.sortBy(arr, () => 0.5 - Math.random()).slice(0, n)
     }
 
 
