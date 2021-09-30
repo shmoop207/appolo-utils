@@ -72,6 +72,14 @@ export class Chain<K> {
         return this
     }
 
+    public sum(): number {
+        return Arrays.sum(this._value);
+    }
+
+    public sumBy<S = K>(criteria: (value: S, i?: number) => any): number {
+        return Arrays.sumBy(this._value, criteria);
+    }
+
     public difference<S = K>(arr2: S[]): this {
         this._value = Arrays.difference(this._value, arr2);
         return this
@@ -157,8 +165,12 @@ export class Chain<K> {
         return Arrays.groupBy(this._value, key);
     }
 
-    public random<S = K>(arr: S[]): S {
+    public random<S = K>(): S {
         return Arrays.random(this._value);
+    }
+
+    public randomItems<S = K>(count: number = 1): S[] {
+        return Arrays.randomItems(this._value, count);
     }
 
     public value<S = K>(): S[] {
