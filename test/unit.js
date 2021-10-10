@@ -32,7 +32,7 @@ describe("Utils", function () {
             index_1.Util.arrays.map(undefined, (item, key) => item + key).should.deep.equal([]);
         });
         it('should chain array', async () => {
-            let result = index_1._(["aa", "cc"]).difference(["aa", "bb"])
+            let result = (0, index_1._)(["aa", "cc"]).difference(["aa", "bb"])
                 .filter(item => item == "cc")
                 .uniq()
                 .value();
@@ -119,11 +119,17 @@ describe("Utils", function () {
             let result = index_1.Util.arrays.flatDeep(arr, Infinity);
             JSON.stringify(result).should.be.eq("[1,2,3,4,5,6]");
         });
-        it('should flat array deep', async () => {
+        it('should zip array', async () => {
             let arr = [[1, 2], [3, 4], [5, 6], [7], [8, 9, 10, 11]];
             let [head, ...tail] = arr;
-            let result = index_1._(head).zip(...tail).flat().compact().value();
+            let result = (0, index_1._)(head).zip(...tail).flat().compact().value();
             JSON.stringify(result).should.be.eq("[1,3,5,7,8,2,4,6,9,10,11]");
+        });
+        it('should zip array 1 item', async () => {
+            let arr = [[1, 2, 3, 4]];
+            let [head, ...tail] = arr;
+            let result = (0, index_1._)(head).zip(...tail).flat().compact().value();
+            JSON.stringify(result).should.be.eq("[1,2,3,4]");
         });
         it('should partition array', async () => {
             let users = [
@@ -746,17 +752,17 @@ describe("Utils", function () {
     });
     describe("date", function () {
         it('should get date diff', async () => {
-            dateJs_1.date('2007-01-27').diff(dateJs_1.date('2007-01-29'), 'millisecond').should.be.eq(-172800000);
-            dateJs_1.date('2007-01-27').diff(dateJs_1.date('2007-01-29'), 'day').should.be.eq(-2);
+            (0, dateJs_1.date)('2007-01-27').diff((0, dateJs_1.date)('2007-01-29'), 'millisecond').should.be.eq(-172800000);
+            (0, dateJs_1.date)('2007-01-27').diff((0, dateJs_1.date)('2007-01-29'), 'day').should.be.eq(-2);
         });
         it('should get date add subtract', async () => {
-            dateJs_1.date('2018-09-09T09:12:49.695Z').subtract(7, 'day').toISOString().should.be.eq("2018-09-02T09:12:49.695Z");
-            dateJs_1.date('2018-09-09T09:12:49.695Z').add(7, 'day').toISOString().should.be.eq("2018-09-16T09:12:49.695Z");
+            (0, dateJs_1.date)('2018-09-09T09:12:49.695Z').subtract(7, 'day').toISOString().should.be.eq("2018-09-02T09:12:49.695Z");
+            (0, dateJs_1.date)('2018-09-09T09:12:49.695Z').add(7, 'day').toISOString().should.be.eq("2018-09-16T09:12:49.695Z");
         });
         it('should get date add endOf', async () => {
-            dateJs_1.date('2018-09-09T09:12:49.695Z').endOf("month").toISOString().should.be.eq("2018-10-01T00:00:00.000Z");
-            dateJs_1.date('2018-09-09T09:12:49.695Z').endOf("hour").toISOString().should.be.eq("2018-09-09T10:00:00.000Z");
-            dateJs_1.date('2018-09-09T09:12:49.695Z').startOf("hour").toISOString().should.be.eq("2018-09-09T09:00:00.000Z");
+            (0, dateJs_1.date)('2018-09-09T09:12:49.695Z').endOf("month").toISOString().should.be.eq("2018-10-01T00:00:00.000Z");
+            (0, dateJs_1.date)('2018-09-09T09:12:49.695Z').endOf("hour").toISOString().should.be.eq("2018-09-09T10:00:00.000Z");
+            (0, dateJs_1.date)('2018-09-09T09:12:49.695Z').startOf("hour").toISOString().should.be.eq("2018-09-09T09:00:00.000Z");
         });
     });
 });

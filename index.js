@@ -45,5 +45,5 @@ Object.defineProperty(exports, "_", { enumerable: true, get: function () { retur
 const dateJs_1 = require("./lib/dateJs");
 Object.defineProperty(exports, "date", { enumerable: true, get: function () { return dateJs_1.date; } });
 exports.default = util_1.Util;
-tslib_1.__exportStar(require("./lib/types/types"), exports);
+(0, tslib_1.__exportStar)(require("./lib/types/types"), exports);
 //# sourceMappingURL=index.js.map
