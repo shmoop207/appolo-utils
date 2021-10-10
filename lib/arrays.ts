@@ -183,8 +183,23 @@ export class Arrays {
     }
 
 
-    public static zip<T>(arr: T[], ...args: Array<T>): Array<Array<T | undefined>> {
-        return arr.map((value, idx) => [value, ...args.map(arr => arr[idx])])
+    public static zip<T>(arr: T[], ...args: Array<T[]>): Array<Array<T | undefined>> {
+
+        let arrs = [arr].concat(args);
+
+        let maxLen = Math.max(...arrs.map(item => item.length));
+
+        let output = [];
+
+        for (let i = 0; i < maxLen; i++) {
+            let dto = []
+            for (let j = 0; j < arrs.length; j++) {
+                dto.push(arrs[j][i]);
+            }
+            output.push(dto);
+        }
+
+        return output;
     }
 
 

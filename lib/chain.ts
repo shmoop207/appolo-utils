@@ -56,8 +56,8 @@ export class Chain<K> {
         return this;
     }
 
-    public zip(...args: Array<K>): this {
-        this._value = Arrays.zip(this._value, args);
+    public zip(...args: Array<Array<K>>): this {
+        this._value = Arrays.zip(this._value, ...args);
         return this;
     }
 

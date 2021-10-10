@@ -119,6 +119,12 @@ describe("Utils", function () {
             let result = index_1.Util.arrays.flatDeep(arr, Infinity);
             JSON.stringify(result).should.be.eq("[1,2,3,4,5,6]");
         });
+        it('should flat array deep', async () => {
+            let arr = [[1, 2], [3, 4], [5, 6], [7], [8, 9, 10, 11]];
+            let [head, ...tail] = arr;
+            let result = index_1._(head).zip(...tail).flat().compact().value();
+            JSON.stringify(result).should.be.eq("[1,3,5,7,8,2,4,6,9,10,11]");
+        });
         it('should partition array', async () => {
             let users = [
                 { 'user': 'barney', 'age': 36, 'active': false },
