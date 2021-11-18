@@ -151,4 +151,11 @@ export class Strings {
         }
         return retVal;
     }
+
+    public static truncate(input:string,n:number):string {
+        if (input.length > n) {
+            return input.substring(0, n) + '...';
+        }
+        return input;
+    };
 }

@@ -703,6 +703,12 @@ describe("Utils", function () {
 
         });
 
+        it('should truncate', async () => {
+            Util.strings.truncate("qwertyuiop",5).should.be.eq("qwert...");
+            Util.strings.truncate("qwertyuiop",10).should.be.eq("qwertyuiop");
+
+        });
+
         it('should generate password', async () => {
             let pass = Util.strings.generatePassword(3);
             pass.length.should.be.eq(3);

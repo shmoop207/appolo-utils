@@ -493,6 +493,10 @@ describe("Utils", function () {
         it('should stringifyObjectValues', async () => {
             index_1.Util.strings.stringifyObjectValues({ a: 1, b: true, c: "a" }).should.be.eq("1truea");
         });
+        it('should truncate', async () => {
+            index_1.Util.strings.truncate("qwertyuiop", 5).should.be.eq("qwert...");
+            index_1.Util.strings.truncate("qwertyuiop", 10).should.be.eq("qwertyuiop");
+        });
         it('should generate password', async () => {
             let pass = index_1.Util.strings.generatePassword(3);
             pass.length.should.be.eq(3);
