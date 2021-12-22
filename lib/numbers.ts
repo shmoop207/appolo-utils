@@ -56,4 +56,8 @@ export class Numbers {
         const diff = a - b;
         return diff / a;
     }
+
+    public static format(num:number):string{
+        return new Intl.NumberFormat().format(num)
+    }
 }

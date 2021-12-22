@@ -537,6 +537,9 @@ describe("Utils", function () {
         it('should toFixed', async () => {
             index_1.Util.numbers.toFixed(1.22344566778, 2).should.be.eq(1.22);
         });
+        it('should format', async () => {
+            index_1.Util.numbers.format(2132131232132131.2223).should.be.eq("2,132,131,232,132,131.2");
+        });
         it('should round', async () => {
             index_1.Util.numbers.round(1.6, 0.5).should.be.eq(1.5);
         });

@@ -766,6 +766,10 @@ describe("Utils", function () {
             Util.numbers.toFixed(1.22344566778, 2).should.be.eq(1.22);
         });
 
+        it('should format', async () => {
+            Util.numbers.format(2132131232132131.2223).should.be.eq("2,132,131,232,132,131.2");
+        });
+
         it('should round', async () => {
             Util.numbers.round(1.6, 0.5).should.be.eq(1.5);
         });
