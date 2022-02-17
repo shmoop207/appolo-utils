@@ -43,6 +43,28 @@ export class Arrays {
         return result;
     }
 
+    public static range(start: number, end?: number, increment?: number): number[] {
+        const isEndDef = typeof end !== 'undefined'
+        end = isEndDef ? end : start
+        start = isEndDef ? start : 0
+
+        if (typeof increment === 'undefined') {
+            increment = Math.sign(end - start)
+        }
+        const length = Math.abs((end - start) / (increment || 1));
+
+        let arr: number[] = Array.from({length}),
+            current = start;
+
+        for (let i = 0; i < length; i++) {
+            arr[i] = current;
+            current = current + increment
+        }
+
+        return arr
+
+    }
+
     public static random<T>(arr: T[]): T {
 
         if (!arr || !arr.length) {

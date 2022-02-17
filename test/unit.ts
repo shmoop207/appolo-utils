@@ -31,6 +31,16 @@ describe("Utils", function () {
             arr[0].should.be.eq("a");
         });
 
+        it('should check array range', async () => {
+            Util.arrays.range(4).should.deep.equal([0, 1, 2, 3])
+            Util.arrays.range(-4).should.deep.equal([0, -1, -2, -3])
+            Util.arrays.range(1, 5).should.deep.equal([1, 2, 3, 4])
+            Util.arrays.range(0, 20, 5).should.deep.equal([0, 5, 10, 15])
+            Util.arrays.range(0, -4, -1).should.deep.equal([0, -1, -2, -3])
+            Util.arrays.range(1, 4, 0).should.deep.equal([1, 1, 1])
+            Util.arrays.range(0).should.deep.equal([])
+        })
+
         it('should check areArraysEqual', async () => {
 
             Util.arrays.areArraysEqual([1, 2, 3], [1, 2, 3]).should.be.ok
@@ -54,6 +64,16 @@ describe("Utils", function () {
                 .value();
 
             result.should.be.deep.equal(["cc"])
+        })
+
+        it('should chain object', async () => {
+            let result = _({a: 1, b: 2}).pick("a")
+                .keys()
+                .filter(item => item == "a")
+                .uniq()
+                .value();
+
+            result.should.be.deep.equal(["a"])
         })
 
         it('should forEach array', async () => {
@@ -197,7 +217,7 @@ describe("Utils", function () {
 
         it('should zip array', async () => {
 
-            let arr = [[1, 2], [3, 4], [5, 6],[7],[8,9,10,11]];
+            let arr = [[1, 2], [3, 4], [5, 6], [7], [8, 9, 10, 11]];
             let [head, ...tail] = arr
             let result = _(head).zip(...tail).flat().compact().value()
 
@@ -206,7 +226,7 @@ describe("Utils", function () {
 
         it('should zip array 1 item', async () => {
 
-            let arr = [[1, 2,3,4]];
+            let arr = [[1, 2, 3, 4]];
             let [head, ...tail] = arr
             let result = _(head).zip(...tail).flat().compact().value()
 
@@ -704,8 +724,8 @@ describe("Utils", function () {
         });
 
         it('should truncate', async () => {
-            Util.strings.truncate("qwertyuiop",5).should.be.eq("qwert...");
-            Util.strings.truncate("qwertyuiop",10).should.be.eq("qwertyuiop");
+            Util.strings.truncate("qwertyuiop", 5).should.be.eq("qwert...");
+            Util.strings.truncate("qwertyuiop", 10).should.be.eq("qwertyuiop");
 
         });
 
@@ -792,13 +812,12 @@ describe("Utils", function () {
         it('should Object get', async () => {
 
 
+            Util.objects.get({a: {b: 2}}, "a.b").should.be.eq(2);
+            Util.objects.get({a: 1, b: 2}, "a").should.be.eq(1);
 
-            Util.objects.get({ a: { b: 2 } }, "a.b").should.be.eq(2);
-            Util.objects.get({ a: 1,b:2 }, "a").should.be.eq(1);
+            should.not.exist(Util.objects.get({a: 1, b: 2}, "a.b"))
 
-            should.not.exist( Util.objects.get({ a: 1,b:2 }, "a.b"))
-
-            Util.objects.get({ a: [{ bar: { c: 3 } }] }, 'a[0].bar.c').should.be.eq(3)
+            Util.objects.get({a: [{bar: {c: 3}}]}, 'a[0].bar.c').should.be.eq(3)
 
 
         })

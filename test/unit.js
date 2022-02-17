@@ -21,6 +21,15 @@ describe("Utils", function () {
             arr.length.should.be.eq(1);
             arr[0].should.be.eq("a");
         });
+        it('should check array range', async () => {
+            index_1.Util.arrays.range(4).should.deep.equal([0, 1, 2, 3]);
+            index_1.Util.arrays.range(-4).should.deep.equal([0, -1, -2, -3]);
+            index_1.Util.arrays.range(1, 5).should.deep.equal([1, 2, 3, 4]);
+            index_1.Util.arrays.range(0, 20, 5).should.deep.equal([0, 5, 10, 15]);
+            index_1.Util.arrays.range(0, -4, -1).should.deep.equal([0, -1, -2, -3]);
+            index_1.Util.arrays.range(1, 4, 0).should.deep.equal([1, 1, 1]);
+            index_1.Util.arrays.range(0).should.deep.equal([]);
+        });
         it('should check areArraysEqual', async () => {
             index_1.Util.arrays.areArraysEqual([1, 2, 3], [1, 2, 3]).should.be.ok;
             index_1.Util.arrays.areArraysEqual([2, 1, 3, 5], [1, 2, 3, 5]).should.be.ok;
@@ -37,6 +46,14 @@ describe("Utils", function () {
                 .uniq()
                 .value();
             result.should.be.deep.equal(["cc"]);
+        });
+        it('should chain object', async () => {
+            let result = (0, index_1._)({ a: 1, b: 2 }).pick("a")
+                .keys()
+                .filter(item => item == "a")
+                .uniq()
+                .value();
+            result.should.be.deep.equal(["a"]);
         });
         it('should forEach array', async () => {
             let result = 0;

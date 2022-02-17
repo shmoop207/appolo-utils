@@ -1,4 +1,5 @@
 import {Arrays} from "./arrays";
+import {ChainObject} from "./chainObject";
 
 export class Chain<K> {
     constructor(private _value: any[]) {
@@ -177,7 +178,8 @@ export class Chain<K> {
         return this._value as S[]
     }
 }
-
-export function _<K>(arr: K[]): Chain<K> {
-    return new Chain(arr);
+export function _<K>(arr: K[]): Chain<K>
+export function _<K extends object>(arr: K): ChainObject<K>
+export function _<K = any>(arr: K[]): Chain<K> | ChainObject<any> {
+    return Array.isArray(arr) ? new Chain<K>(arr) : new ChainObject<any>(arr as any)
 }
