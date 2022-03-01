@@ -609,6 +609,10 @@ describe("Utils", function () {
         });
         it('should isDrained', async () => {
             index_1.Util.objects.isEmpty({}).should.be.eq(true);
+            index_1.Util.objects.isEmpty([]).should.be.eq(true);
+            index_1.Util.objects.isEmpty(null).should.be.eq(true);
+            index_1.Util.objects.isEmpty('').should.be.eq(true);
+            index_1.Util.objects.isEmpty({ a: '1' }).should.be.eq(false);
         });
         it('should extend defaults deep', async () => {
             index_1.Util.objects.defaultsDeep({ 'a': { 'b': 2 } }, { 'a': { 'b': 1, 'c': 3 } }).should.deep.equals({

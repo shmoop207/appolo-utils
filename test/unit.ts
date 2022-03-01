@@ -874,6 +874,10 @@ describe("Utils", function () {
 
         it('should isDrained', async () => {
             Util.objects.isEmpty({}).should.be.eq(true);
+            Util.objects.isEmpty([]).should.be.eq(true);
+            Util.objects.isEmpty(null).should.be.eq(true);
+            Util.objects.isEmpty('' as  any).should.be.eq(true);
+            Util.objects.isEmpty({a: '1'}).should.be.eq(false);
 
         });
 

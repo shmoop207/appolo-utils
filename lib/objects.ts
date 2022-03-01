@@ -26,7 +26,7 @@ export class Objects {
         return val != null && typeof val === 'object' && Object.prototype.toString.call(val) === '[object Object]';
     }
 
-    public static isEmpty(obj: { [index: string]: any }): boolean {
+    public static isEmpty(obj: { [index: string]: any } | any[]): boolean {
         return Object.keys(obj || {}).length === 0
     }
 
