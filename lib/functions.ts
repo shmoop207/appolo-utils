@@ -72,7 +72,7 @@ export class Functions {
 
     }
 
-    public static to<T, K>(fn: Function): [K, T?] {
+    public static to<T, K = any>(fn: Function): [K, T?] {
         try {
             return [null, fn()]
         } catch (e) {
@@ -80,7 +80,15 @@ export class Functions {
         }
     }
 
-    public static emptyFn(){
+    public static toNull<T>(fn: Function): T {
+        try {
+            return fn()
+        } catch (e) {
+            return null
+        }
+    }
+
+    public static emptyFn() {
 
     }
 

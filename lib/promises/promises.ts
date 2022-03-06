@@ -63,6 +63,16 @@ export class Promises {
         }
     }
 
+    public static async toNull<T>(promise: Promise<T>): Promise<T> {
+
+        try {
+            let result = await promise;
+            return result
+        } catch (e) {
+            return null;
+        }
+    }
+
 
     public static allSettled<T>(promises: Promise<T>[]): Promise<({ status: "fulfilled"; value: T; } | { status: "rejected"; reason: any; })[]> {
 
