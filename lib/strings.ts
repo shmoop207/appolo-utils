@@ -1,5 +1,4 @@
 import {Functions, Objects} from "../index";
-import {isNull} from "util";
 
 const Charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=-"
 
@@ -20,6 +19,9 @@ export class Strings {
     }
 
     public static removeNewLine(str: string): string {
+        if (!str) {
+            return ""
+        }
         return str.replace(/(\r\n|\n|\r)/gm, "");
     }
 
@@ -74,6 +76,11 @@ export class Strings {
 
 
     public static sanitizeString(str: string): string {
+
+        if (!str) {
+            return "";
+        }
+
         // u200B is the hex equivalent of unicode 8203 and it will fuck with our encoding function in the ad server
         // https://stackoverflow.com/questions/24205193/javascript-remove-zero-width-space-unicode-8203-from-string
         str = str.replace(/\u200B/g, '');
@@ -82,6 +89,11 @@ export class Strings {
     }
 
     public static removeNonAsciiChars(fromString: string): string {
+
+        if (!fromString) {
+            return "";
+        }
+
         if (typeof (fromString) === "string") {
             return fromString.replace(/[^\x00-\x7F]/g, "").replace(/\s\s+/g, ' ');
         }
@@ -90,6 +102,11 @@ export class Strings {
     }
 
     public static slugify(text: string): string {
+
+        if (!text) {
+            return "";
+        }
+
         text = (text || "").toString()
             .toLowerCase()
             .replace(/\s+/g, "-") // Replace spaces with -
@@ -107,6 +124,10 @@ export class Strings {
     }
 
     public static tryDecodeURIComponent(str): string {
+
+        if (!str) {
+            return "";
+        }
 
         let [err, output] = Functions.to(() => decodeURIComponent(str || ""));
 
@@ -152,7 +173,10 @@ export class Strings {
         return retVal;
     }
 
-    public static truncate(input:string,n:number):string {
+    public static truncate(input: string, n: number): string {
+        if (!input) {
+            return "";
+        }
         if (input.length > n) {
             return input.substring(0, n) + '...';
         }
