@@ -723,6 +723,10 @@ describe("Utils", function () {
 
         });
 
+        it('should sanitizeRegex', async () => {
+            Util.strings.sanitizeRegex("^a[A-Z]").should.be.eq("\\^a\\[A\\-Z\\]");
+        });
+
         it('should truncate', async () => {
             Util.strings.truncate("qwertyuiop", 5).should.be.eq("qwert...");
             Util.strings.truncate("qwertyuiop", 10).should.be.eq("qwertyuiop");

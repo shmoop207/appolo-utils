@@ -510,6 +510,9 @@ describe("Utils", function () {
         it('should stringifyObjectValues', async () => {
             index_1.Util.strings.stringifyObjectValues({ a: 1, b: true, c: "a" }).should.be.eq("1truea");
         });
+        it('should sanitizeRegex', async () => {
+            index_1.Util.strings.sanitizeRegex("^a[A-Z]").should.be.eq("\\^a\\[A\\-Z\\]");
+        });
         it('should truncate', async () => {
             index_1.Util.strings.truncate("qwertyuiop", 5).should.be.eq("qwert...");
             index_1.Util.strings.truncate("qwertyuiop", 10).should.be.eq("qwertyuiop");

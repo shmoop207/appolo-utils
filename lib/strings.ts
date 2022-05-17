@@ -81,9 +81,19 @@ export class Strings {
             return "";
         }
 
-        // u200B is the hex equivalent of unicode 8203 and it will fuck with our encoding function in the ad server
         // https://stackoverflow.com/questions/24205193/javascript-remove-zero-width-space-unicode-8203-from-string
         str = str.replace(/\u200B/g, '');
+
+        return str;
+    }
+
+    public static sanitizeRegex(str: string): string {
+
+        if (!str) {
+            return "";
+        }
+        //https://stackoverflow.com/questions/6300183/sanitize-string-of-regex-characters-before-regexp-build
+        str = str.replace(/[#-.]|[[-^]|[?|{}]/g, '\\$&');
 
         return str;
     }
