@@ -767,6 +767,11 @@ describe("Utils", function () {
                 dd: undefined
             }).should.be.eq("aa1bbb20");
 
+            Util.strings.replaceFormat("aa${b}${c-d}${x}", {b: 1, "c-d": 3}, {
+                empty: true,
+                regex: /\$\{([\w\.\_\-]*)\}/gm
+            }).should.be.eq("aa13");
+
         });
 
         it('should replaceFormatJson', async () => {
@@ -880,7 +885,7 @@ describe("Utils", function () {
             Util.objects.isEmpty({}).should.be.eq(true);
             Util.objects.isEmpty([]).should.be.eq(true);
             Util.objects.isEmpty(null).should.be.eq(true);
-            Util.objects.isEmpty('' as  any).should.be.eq(true);
+            Util.objects.isEmpty('' as any).should.be.eq(true);
             Util.objects.isEmpty({a: '1'}).should.be.eq(false);
 
         });

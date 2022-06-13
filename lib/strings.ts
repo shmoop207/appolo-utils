@@ -25,11 +25,11 @@ export class Strings {
         return str.replace(/(\r\n|\n|\r)/gm, "");
     }
 
-    public static replaceFormat(str: string, data: any): string {
-        return str.replace(/\$\{([\w\.\_]*)\}/gm, (m, key) => {
+    public static replaceFormat(str: string, data: any, options: { regex?: RegExp, empty?: boolean } = {}): string {
+        return str.replace(options.regex || /\$\{([\w\.\_]*)\}/gm, (m, key) => {
 
             if (!data.hasOwnProperty(key)) {
-                return m;
+                return options.empty ? "" : m;
             }
 
             let value = data[key];
@@ -42,8 +42,8 @@ export class Strings {
         })
     }
 
-    public static replaceFormatJson(str: string, data: any): string {
-        str = (str || "").replace(/\"\$\{([\w\.\_\:]*)\}\"/gm, (_m, key) => {
+    public static replaceFormatJson(str: string, data: any, options: { regex?: RegExp, empty?: boolean } = {}): string {
+        str = (str || "").replace(options.regex || /\"\$\{([\w\.\_\:]*)\}\"/gm, (_m, key) => {
 
             let spread = key.split(":"),
                 type = spread[1] || "";
@@ -51,7 +51,7 @@ export class Strings {
             key = spread[0];
 
             if (!data.hasOwnProperty(key)) {
-                return _m
+                return options.empty ? "" : _m
             }
 
             let value = data[key];

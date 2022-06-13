@@ -541,6 +541,10 @@ describe("Utils", function () {
                 cc: 0,
                 dd: undefined
             }).should.be.eq("aa1bbb20");
+            index_1.Util.strings.replaceFormat("aa${b}${c-d}${x}", { b: 1, "c-d": 3 }, {
+                empty: true,
+                regex: /\$\{([\w\.\_\-]*)\}/gm
+            }).should.be.eq("aa13");
         });
         it('should replaceFormatJson', async () => {
             let obj = { a: "${aa:number}", b: "${bb:boolean}", d: "${kk}", c: ["${dd:integer}", "${ff}", "${gg}"] };
