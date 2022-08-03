@@ -1,9 +1,19 @@
-export class Url{
+export class Url {
     public static isValidDomain(domain: string): boolean {
 
         let regex = new RegExp(/^(?!\-)(?:[a-zA-Z\d\-]{0,62}[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/);
 
         return (regex.test(domain))
+    }
+
+    public static parse(url: string): URL {
+        try {
+            let parsed = new URL(url);
+            return parsed;
+        } catch (e) {
+            let url = new URL("invalid:");
+            return url
+        }
     }
 
     public static isValidUrl(url: string): boolean {

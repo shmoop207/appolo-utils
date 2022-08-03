@@ -767,6 +767,10 @@ describe("Utils", function () {
             index_1.Util.url.isValidDomain("aaaaaa..com").should.be.not.ok;
             index_1.Util.url.isValidDomain("aaaaaa.com").should.be.ok;
         });
+        it('should parse url', async () => {
+            // Util.url.parse("https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash").host.should.be.eq("sub.example.com:8080");
+            index_1.Util.url.parse(undefined).host.should.be.eq("");
+        });
         it('should validate domain', async () => {
             index_1.Util.url.isValidUrl("aaaaaa").should.be.not.ok;
             index_1.Util.url.isValidUrl("aaaaaa..com").should.be.not.ok;

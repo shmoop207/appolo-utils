@@ -1096,6 +1096,15 @@ describe("Utils", function () {
 
         });
 
+        it('should parse url', async () => {
+
+           // Util.url.parse("https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash").host.should.be.eq("sub.example.com:8080");
+
+            Util.url.parse(undefined).host.should.be.eq("");
+
+
+        });
+
         it('should validate domain', async () => {
 
             Util.url.isValidUrl("aaaaaa").should.be.not.ok;
