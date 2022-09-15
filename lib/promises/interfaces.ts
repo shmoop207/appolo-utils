@@ -18,6 +18,7 @@ export interface IRetry {
     max?: number,
     random?: number,
     min?: number,
+    fixed?: number,
     linear?: number,
     exponential?: number
 }

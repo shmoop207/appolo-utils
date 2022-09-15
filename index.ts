@@ -17,6 +17,7 @@ import {Reflector} from "./lib/reflector"
 import {Crypto} from "./lib/crypto/crypto"
 import {Ip} from "./lib/ip"
 import {Url} from "./lib/url"
+import {Booleans} from "./lib/booleans"
 import {_} from "./lib/chain"
 import {date} from "./lib/dateJs"
 
@@ -38,6 +39,7 @@ export {
     Time,
     Util,
     Files,
+    Booleans,
     Enums,
     Deferred,
     Reflector, Functions, Errors, Crypto, Ip, Url

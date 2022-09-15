@@ -89,13 +89,19 @@ export class Time {
             delay += Numbers.random(0, params.random)
         }
 
-        delay += (params.min || 0);
+        if (params.fixed) {
+            delay += params.fixed
+        }
+
+        if (params.min) {
+            delay = Math.max(params.min, delay)
+        }
 
         if (params.max) {
             delay = Math.min(params.max, delay)
         }
 
-        return Math.fround(delay);
+        return Math.round(delay);
     }
 
 

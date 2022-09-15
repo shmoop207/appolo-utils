@@ -15,6 +15,7 @@ import {Errors} from "./errors";
 import {Crypto} from "./crypto/crypto";
 import {Url} from "./url";
 import {Ip} from "./ip";
+import {Booleans} from "./booleans";
 
 export class Util {
     public static get numbers(): typeof Numbers {
@@ -57,7 +58,7 @@ export class Util {
         return Files
     }
 
-    public static get enums(): typeof Enums{
+    public static get enums(): typeof Enums {
         return Enums
     }
 
@@ -65,22 +66,27 @@ export class Util {
         return Functions
     }
 
-    public static get Reflector(): typeof Reflector{
+    public static get Reflector(): typeof Reflector {
         return Reflector
     }
-    public static get errors(): typeof Errors{
+
+    public static get errors(): typeof Errors {
         return Errors
     }
 
-    public static get crypto(): typeof Crypto{
+    public static get crypto(): typeof Crypto {
         return Crypto
     }
 
-    public static get url(): typeof Url{
+    public static get url(): typeof Url {
         return Url
     }
 
-    public static get ip(): typeof Ip{
+    public static get booleans(): typeof Booleans {
+        return Booleans
+    }
+
+    public static get ip(): typeof Ip {
         return Ip
     }
 }

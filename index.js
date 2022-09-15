@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Url = exports.Ip = exports.Crypto = exports.Errors = exports.Functions = exports.Reflector = exports.Deferred = exports.Enums = exports.Files = exports.Util = exports.Time = exports.Promises = exports.Guid = exports.Classes = exports.Arrays = exports.Objects = exports.Hash = exports.Strings = exports.Numbers = exports._ = exports.date = void 0;
+exports.Url = exports.Ip = exports.Crypto = exports.Errors = exports.Functions = exports.Reflector = exports.Deferred = exports.Enums = exports.Booleans = exports.Files = exports.Util = exports.Time = exports.Promises = exports.Guid = exports.Classes = exports.Arrays = exports.Objects = exports.Hash = exports.Strings = exports.Numbers = exports._ = exports.date = void 0;
 const tslib_1 = require("tslib");
 const numbers_1 = require("./lib/numbers");
 Object.defineProperty(exports, "Numbers", { enumerable: true, get: function () { return numbers_1.Numbers; } });
@@ -40,6 +40,8 @@ const ip_1 = require("./lib/ip");
 Object.defineProperty(exports, "Ip", { enumerable: true, get: function () { return ip_1.Ip; } });
 const url_1 = require("./lib/url");
 Object.defineProperty(exports, "Url", { enumerable: true, get: function () { return url_1.Url; } });
+const booleans_1 = require("./lib/booleans");
+Object.defineProperty(exports, "Booleans", { enumerable: true, get: function () { return booleans_1.Booleans; } });
 const chain_1 = require("./lib/chain");
 Object.defineProperty(exports, "_", { enumerable: true, get: function () { return chain_1._; } });
 const dateJs_1 = require("./lib/dateJs");

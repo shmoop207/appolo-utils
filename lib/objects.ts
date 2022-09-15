@@ -1,5 +1,6 @@
 import {Arrays} from "./arrays";
 import {Functions, Strings} from "../index";
+import {Booleans} from "./booleans";
 
 export class Objects {
     public static isPlain(obj: any): boolean {
@@ -35,7 +36,7 @@ export class Objects {
     }
 
     public static isBoolean(obj: any): obj is boolean {
-        return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
+        return Booleans.isBoolean(obj);
     }
 
     public static isNullish(obj: any): boolean {
