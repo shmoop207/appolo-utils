@@ -331,4 +331,26 @@ export class Arrays {
 
         return out;
     }
+
+    public static countBy<T>(arr: T[], criteria: (value: T, i?: number) => string | number): { [index: string]: number } {
+
+        if (!arr || !arr.length) {
+            return {};
+        }
+
+        let dto = {};
+
+        for (let i = 0; i < arr.length; i++) {
+            let item = arr[i],
+                key = criteria(item, i);
+
+            if (dto[key] !== undefined) {
+                dto[key]++;
+            } else {
+                dto[key] = 1;
+            }
+        }
+
+        return dto;
+    }
 }

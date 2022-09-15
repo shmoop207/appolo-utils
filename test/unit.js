@@ -124,6 +124,10 @@ describe("Utils", function () {
             index_1.Util.arrays.difference([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([1]);
             index_1.Util.arrays.difference([1, 2], [2, 1]).should.be.deep.equal([]);
         });
+        it('should array count by', async () => {
+            index_1.Arrays.countBy([6.1, 4.2, 6.3], item => Math.floor(item)).should.be.deep.equal({ '4': 1, '6': 2 });
+            index_1.Arrays.countBy(['one', 'two', 'three'], item => item.length).should.be.deep.equal({ '3': 2, '5': 1 });
+        });
         it('should flat array', async () => {
             let arr = [1, [2, [3, [4]], 5]];
             let result = index_1.Util.arrays.flat(arr);

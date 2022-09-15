@@ -1,6 +1,6 @@
 "use strict";
 import chai = require('chai');
-import {Promises, Util, Crypto, Classes, _} from "../index";
+import {Promises, Util, Crypto, Classes, _, Arrays} from "../index";
 import {date} from "../lib/dateJs";
 
 let should = chai.should();
@@ -191,6 +191,13 @@ describe("Utils", function () {
             Util.arrays.difference([1, 2], [2, 1]).should.be.deep.equal([])
 
         });
+
+        it('should array count by', async () => {
+          Arrays.countBy([6.1, 4.2, 6.3],item=>Math.floor(item)).should.be.deep.equal({ '4': 1, '6': 2 })
+
+
+           Arrays.countBy(['one', 'two', 'three'],item=>item.length).should.be.deep.equal({ '3': 2, '5': 1 })
+        })
 
         it('should flat array', async () => {
 
