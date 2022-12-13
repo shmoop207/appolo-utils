@@ -47,6 +47,14 @@ describe("Utils", function () {
                 .value();
             result.should.be.deep.equal(["cc"]);
         });
+        it('should chain concat array', async () => {
+            let result = (0, index_1._)([{ name: "aaa" }, { name: "bbb" }])
+                .map(item => item.name)
+                .concat(["ccc"])
+                .uniq()
+                .value();
+            result.should.be.deep.equal(["aaa", "bbb", "ccc"]);
+        });
         it('should chain object', async () => {
             let result = (0, index_1._)({ a: 1, b: 2 }).pick("a")
                 .keys()
@@ -556,6 +564,10 @@ describe("Utils", function () {
             let output = index_1.Util.objects.replaceFormatJson(obj, data);
             let expected = { "a": 1, "b": true, "d": "", "c": [2, "aa", "${gg}"] };
             output.should.be.deep.equals(expected);
+        });
+        it('should invert', async () => {
+            index_1.Util.objects.invert({ 'a': 1, 'b': 2, 'c': 1 }).should.be.deep.equals({ '1': 'c', '2': 'b' });
+            index_1.Util.objects.invert({ 'a': 1, 'b': 2, 'c': 3 }).should.be.deep.equals({ '1': 'a', '2': 'b', '3': 'c' });
         });
         it('should slugify', async () => {
             index_1.Util.strings.slugify("Vtest/aaa.bbb%").should.be.eq("vtestaaabbb");

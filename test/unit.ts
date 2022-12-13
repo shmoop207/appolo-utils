@@ -66,6 +66,16 @@ describe("Utils", function () {
             result.should.be.deep.equal(["cc"])
         })
 
+        it('should chain concat array', async () => {
+            let result = _([{name:"aaa"}, {name:"bbb"}])
+                .map(item=>item.name)
+                .concat(["ccc"])
+                .uniq()
+                .value();
+
+            result.should.be.deep.equal(["aaa","bbb","ccc"])
+        })
+
         it('should chain object', async () => {
             let result = _({a: 1, b: 2}).pick("a")
                 .keys()
@@ -789,6 +799,12 @@ describe("Utils", function () {
             let expected = {"a": 1, "b": true, "d": "", "c": [2, "aa", "${gg}"]}
 
             output.should.be.deep.equals(expected);
+        });
+
+        it('should invert', async () => {
+
+            Util.objects.invert({ 'a': 1, 'b': 2, 'c': 1 }).should.be.deep.equals({ '1': 'c', '2': 'b' });
+            Util.objects.invert({ 'a': 1, 'b': 2, 'c': 3 }).should.be.deep.equals({ '1': 'a', '2': 'b', '3': 'c'});
         });
 
         it('should slugify', async () => {

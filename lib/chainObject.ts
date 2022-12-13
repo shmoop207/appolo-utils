@@ -16,6 +16,11 @@ export class ChainObject<K extends object> {
         return this
     }
 
+    public invert<K extends { [index: string]: any }>(): ChainObject<K> {
+        this._value = Objects.invert(this._value);
+        return this
+    }
+
 
     public replaceFormatJson(data: { [index: string]: any }): this {
         this._value = Objects.replaceFormatJson(this._value, data);

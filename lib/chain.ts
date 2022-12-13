@@ -125,8 +125,8 @@ export class Chain<K> {
         return this._value.some(predicate);
     }
 
-    public concat(...items: (K)[]): this {
-        this._value.concat(...items);
+    public concat(...items: (K)[][]): this {
+        this._value = this._value.concat(...items);
 
         return this;
     }

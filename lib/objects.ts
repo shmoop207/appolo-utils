@@ -47,6 +47,23 @@ export class Objects {
         return JSON.parse(JSON.stringify(obj))
     }
 
+    public static invert<T extends { [index: string]: any }, K extends { [index: string]: any }>(obj: T): K {
+
+        return Objects.invertBy(obj, (value) => value)
+    }
+
+    public static invertBy<T extends { [index: string]: any }, K extends { [index: string]: any }>(obj: T, criteria: (value: T[keyof T], key: keyof T, i?: number) => string | number): K {
+
+        let output = Object.keys(obj || {}).reduce((output, key, index: number) => {
+
+            let newKey = criteria(obj[key], key, index);
+            output[newKey] = key;
+            return output;
+        }, {});
+
+        return output as K;
+    }
+
     public static defaults<T>(obj: Partial<T>, ...args: Partial<T>[]): T {
 
         for (let i = 0, len = args.length; i < len; i++) {
@@ -142,11 +159,11 @@ export class Objects {
         return output;
     }
 
-    public static tryParseJSON(jsonString: string): any {
+    public static tryParseJSON<T>(jsonString: string): T {
 
         let [err, output] = Functions.to(() => JSON.parse(jsonString));
 
-        return err ? null : output;
+        return err ? null : output as T;
     }
 
     public static tryStringifyJSON(json: any): string {
