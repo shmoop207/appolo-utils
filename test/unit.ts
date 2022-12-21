@@ -1110,9 +1110,9 @@ describe("Utils", function () {
     });
 
     describe("hash code", function () {
-        it('should create encrypt with xor', async () => {
+        it('should create hash using hashCode',  () => {
 
-            let hashed = await Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
+            let hashed =  Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
 
 
             hashed.should.be.ok;
@@ -1120,6 +1120,15 @@ describe("Utils", function () {
 
         });
 
+        it('should create hash using hash8',  () => {
+
+            let hashed =  Crypto.hash.hash8("aaaaaaaaaabbbasdasfasdfnmvdkm^435325233435^^&2312bbbbbbcccccccccccddddddd");
+
+
+            hashed.should.be.ok;
+            hashed.should.be.eq("6232e951")
+
+        });
     });
 
 

@@ -778,10 +778,15 @@ describe("Utils", function () {
         });
     });
     describe("hash code", function () {
-        it('should create encrypt with xor', async () => {
-            let hashed = await index_1.Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
+        it('should create hash using hashCode', () => {
+            let hashed = index_1.Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
             hashed.should.be.ok;
             hashed.should.be.eq("_-744904127");
+        });
+        it('should create hash using hash8', () => {
+            let hashed = index_1.Crypto.hash.hash8("aaaaaaaaaabbbasdasfasdfnmvdkm^435325233435^^&2312bbbbbbcccccccccccddddddd");
+            hashed.should.be.ok;
+            hashed.should.be.eq("6232e951");
         });
     });
     describe("url", function () {
