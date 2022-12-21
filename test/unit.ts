@@ -1109,6 +1109,19 @@ describe("Utils", function () {
 
     });
 
+    describe("hash code", function () {
+        it('should create encrypt with xor', async () => {
+
+            let hashed = await Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
+
+
+            hashed.should.be.ok;
+            hashed.should.be.eq("_-744904127")
+
+        });
+
+    });
+
 
     describe("url", function () {
         it('should validate domain', async () => {

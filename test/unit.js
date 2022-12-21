@@ -777,6 +777,13 @@ describe("Utils", function () {
             result.should.be.eq("bbbb");
         });
     });
+    describe("hash code", function () {
+        it('should create encrypt with xor', async () => {
+            let hashed = await index_1.Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
+            hashed.should.be.ok;
+            hashed.should.be.eq("_-744904127");
+        });
+    });
     describe("url", function () {
         it('should validate domain', async () => {
             index_1.Util.url.isValidDomain("aaaaaa").should.be.not.ok;
