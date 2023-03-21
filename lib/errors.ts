@@ -30,3 +30,19 @@ export class Errors {
 
 
 }
+
+export class DataError<T> extends Error {
+    private readonly _data: T;
+
+    constructor(message?: string, data?: T) {
+        super(message);
+
+        this._data = data;
+
+        Object.setPrototypeOf(this, DataError.prototype);
+    }
+
+    public get data(): T {
+        return this._data;
+    }
+}

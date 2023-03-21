@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Url = exports.Ip = exports.Crypto = exports.Errors = exports.Functions = exports.Reflector = exports.Deferred = exports.Enums = exports.Booleans = exports.Files = exports.Util = exports.Time = exports.Promises = exports.Guid = exports.Classes = exports.Arrays = exports.Objects = exports.Hash = exports.Strings = exports.Numbers = exports._ = exports.date = void 0;
+exports.Url = exports.Ip = exports.Crypto = exports.Errors = exports.Functions = exports.Reflector = exports.Deferred = exports.Enums = exports.Booleans = exports.Files = exports.Util = exports.Time = exports.Promises = exports.Guid = exports.Classes = exports.Arrays = exports.Objects = exports.Hash = exports.Strings = exports.Numbers = exports.DataError = exports._ = exports.date = void 0;
 const tslib_1 = require("tslib");
 const numbers_1 = require("./lib/numbers");
 Object.defineProperty(exports, "Numbers", { enumerable: true, get: function () { return numbers_1.Numbers; } });
@@ -30,6 +30,7 @@ const functions_1 = require("./lib/functions");
 Object.defineProperty(exports, "Functions", { enumerable: true, get: function () { return functions_1.Functions; } });
 const errors_1 = require("./lib/errors");
 Object.defineProperty(exports, "Errors", { enumerable: true, get: function () { return errors_1.Errors; } });
+Object.defineProperty(exports, "DataError", { enumerable: true, get: function () { return errors_1.DataError; } });
 const util_1 = require("./lib/util");
 Object.defineProperty(exports, "Util", { enumerable: true, get: function () { return util_1.Util; } });
 const reflector_1 = require("./lib/reflector");

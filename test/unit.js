@@ -347,6 +347,20 @@ describe("Utils", function () {
                 .runTo();
             counter2.should.be.eq(3);
         });
+        it('should run promise create2', async () => {
+            let fn = async () => {
+                await index_1.Promises.delay(1);
+                throw new Error("err");
+            };
+            let [err] = await index_1.Promises.to(index_1.Promises.create(fn)
+                .retry({
+                "retires": 1,
+                "linear": 100,
+                "random": 200
+            })
+                .run());
+            err.message.should.be.eq("err");
+        });
         it('should run with some rejected', async () => {
             let result = await index_1.Util.promises.someRejected([
                 index_1.Promises.delay(15).then(() => Promise.reject(3)),
@@ -784,7 +798,7 @@ describe("Utils", function () {
             hashed.should.be.eq("_-744904127");
         });
         it('should create hash using hash8', () => {
-            let hashed = index_1.Crypto.hash.hash8("aaaaaaaaaabbbasdasfasdfnmvdkm^435325233435^^&2312bbbbbbcccccccccccddddddd");
+            let hashed = index_1.Crypto.hash.hash8Hex("aaaaaaaaaabbbasdasfasdfnmvdkm^435325233435^^&2312bbbbbbcccccccccccddddddd");
             hashed.should.be.ok;
             hashed.should.be.eq("6232e951");
         });

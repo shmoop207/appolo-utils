@@ -11,7 +11,7 @@ import {Time} from "./lib/time"
 import {Files} from "./lib/files"
 import {Enums} from "./lib/enums"
 import {Functions} from "./lib/functions"
-import {Errors} from "./lib/errors"
+import {Errors, DataError} from "./lib/errors"
 import {Util} from "./lib/util"
 import {Reflector} from "./lib/reflector"
 import {Crypto} from "./lib/crypto/crypto"
@@ -28,6 +28,7 @@ export * from "./lib/types/types"
 export {
     date,
     _,
+    DataError,
     Numbers,
     Strings,
     Hash,

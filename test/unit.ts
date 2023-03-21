@@ -67,13 +67,13 @@ describe("Utils", function () {
         })
 
         it('should chain concat array', async () => {
-            let result = _([{name:"aaa"}, {name:"bbb"}])
-                .map(item=>item.name)
+            let result = _([{name: "aaa"}, {name: "bbb"}])
+                .map(item => item.name)
                 .concat(["ccc"])
                 .uniq()
                 .value();
 
-            result.should.be.deep.equal(["aaa","bbb","ccc"])
+            result.should.be.deep.equal(["aaa", "bbb", "ccc"])
         })
 
         it('should chain object', async () => {
@@ -203,10 +203,10 @@ describe("Utils", function () {
         });
 
         it('should array count by', async () => {
-          Arrays.countBy([6.1, 4.2, 6.3],item=>Math.floor(item)).should.be.deep.equal({ '4': 1, '6': 2 })
+            Arrays.countBy([6.1, 4.2, 6.3], item => Math.floor(item)).should.be.deep.equal({'4': 1, '6': 2})
 
 
-           Arrays.countBy(['one', 'two', 'three'],item=>item.length).should.be.deep.equal({ '3': 2, '5': 1 })
+            Arrays.countBy(['one', 'two', 'three'], item => item.length).should.be.deep.equal({'3': 2, '5': 1})
         })
 
         it('should flat array', async () => {
@@ -499,6 +499,25 @@ describe("Utils", function () {
                 .runTo();
 
             counter2.should.be.eq(3)
+
+        })
+
+        it('should run promise create2', async () => {
+            let fn = async () => {
+                await Promises.delay(1)
+
+                throw new Error("err");
+            }
+
+           let [err]  = await Promises.to(Promises.create(fn)
+                .retry({
+                    "retires": 1,
+                    "linear": 100,
+                    "random": 200
+                })
+                .run());
+
+            err.message.should.be.eq("err")
 
         })
 
@@ -803,8 +822,8 @@ describe("Utils", function () {
 
         it('should invert', async () => {
 
-            Util.objects.invert({ 'a': 1, 'b': 2, 'c': 1 }).should.be.deep.equals({ '1': 'c', '2': 'b' });
-            Util.objects.invert({ 'a': 1, 'b': 2, 'c': 3 }).should.be.deep.equals({ '1': 'a', '2': 'b', '3': 'c'});
+            Util.objects.invert({'a': 1, 'b': 2, 'c': 1}).should.be.deep.equals({'1': 'c', '2': 'b'});
+            Util.objects.invert({'a': 1, 'b': 2, 'c': 3}).should.be.deep.equals({'1': 'a', '2': 'b', '3': 'c'});
         });
 
         it('should slugify', async () => {
@@ -1110,9 +1129,9 @@ describe("Utils", function () {
     });
 
     describe("hash code", function () {
-        it('should create hash using hashCode',  () => {
+        it('should create hash using hashCode', () => {
 
-            let hashed =  Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
+            let hashed = Crypto.hash.hashCode("aaaaaabbbbbbbbbccccccccccc", "_");
 
 
             hashed.should.be.ok;
@@ -1120,9 +1139,9 @@ describe("Utils", function () {
 
         });
 
-        it('should create hash using hash8',  () => {
+        it('should create hash using hash8', () => {
 
-            let hashed =  Crypto.hash.hash8("aaaaaaaaaabbbasdasfasdfnmvdkm^435325233435^^&2312bbbbbbcccccccccccddddddd");
+            let hashed = Crypto.hash.hash8Hex("aaaaaaaaaabbbasdasfasdfnmvdkm^435325233435^^&2312bbbbbbcccccccccccddddddd");
 
 
             hashed.should.be.ok;
@@ -1143,7 +1162,7 @@ describe("Utils", function () {
 
         it('should parse url', async () => {
 
-           // Util.url.parse("https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash").host.should.be.eq("sub.example.com:8080");
+            // Util.url.parse("https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash").host.should.be.eq("sub.example.com:8080");
 
             Util.url.parse(undefined).host.should.be.eq("");
 
