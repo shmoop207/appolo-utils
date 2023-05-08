@@ -14,13 +14,13 @@ export class Classes {
         return fn.name.charAt(0).toLowerCase() + fn.name.slice(1)
     }
 
-    public static functionArgsNames(func: ((...args: any[]) => any) | (new(...args: any[]) => any)) {
+    public static functionArgsNames(func: ((...args: any[]) => any) | (new(...args: any[]) => any)): string[] {
 
         const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
         const ARGUMENT_NAMES = /([^\s,]+)/g;
 
         let fnStr = func.toString().replace(STRIP_COMMENTS, '');
-        let args:any[] = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+        let args: string[] = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
 
         if (args === null) {
             args = [];
@@ -37,7 +37,7 @@ export class Classes {
         return names;
     }
 
-    public static classToPlain<T>(klass: T ): { [P in keyof T]: T[P] } {
+    public static classToPlain<T>(klass: T): { [P in keyof T]: T[P] } {
 
         let dto = typeof klass["toJSON"] == "function" ? klass["toJSON"]() : JSON.parse(JSON.stringify(klass))
 
