@@ -16,6 +16,7 @@ import {Crypto} from "./crypto/crypto";
 import {Url} from "./url";
 import {Ip} from "./ip";
 import {Booleans} from "./booleans";
+import {Streams} from "./streams";
 
 export class Util {
     public static get numbers(): typeof Numbers {
@@ -88,5 +89,9 @@ export class Util {
 
     public static get ip(): typeof Ip {
         return Ip
+    }
+
+    public static get streams(): typeof Streams {
+        return Streams
     }
 }
