@@ -830,6 +830,11 @@ describe("Utils", function () {
             Util.strings.slugify("Vtest/aaa.bbb%").should.be.eq("vtestaaabbb");
 
         });
+
+        it('should  partial string combinations', async () => {
+            let values = Util.strings.partialCombinations({value:"abcdefghijkl",minLen:3})
+            values.should.be.deep.equal(["abc", "bcd", "cde", "def", "efg", "fgh", "ghi", "hij", "ijk", "jkl", "abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "abcde", "bcdef", "cdefg", "defgh", "efghi", "fghij", "ghijk", "hijkl", "abcdef", "bcdefg", "cdefgh", "defghi", "efghij", "fghijk", "ghijkl", "abcdefg", "bcdefgh", "cdefghi", "defghij", "efghijk", "fghijkl", "abcdefgh", "bcdefghi", "cdefghij", "defghijk", "efghijkl", "abcdefghi", "bcdefghij", "cdefghijk", "defghijkl", "abcdefghij", "bcdefghijk", "cdefghijkl", "abcdefghijk", "bcdefghijkl", "abcdefghijkl"])
+        });
     });
 
     describe("numbers", function () {

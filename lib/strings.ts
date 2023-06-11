@@ -192,4 +192,21 @@ export class Strings {
         }
         return input;
     };
+
+    public static partialCombinations(param: { value: string, minLen?: number }): string[] {
+        let {value, minLen = 3} = param, output: string[] = [];
+
+        while (value.length >= minLen) {
+            let count = 0;
+            while (value.length >= count + minLen) {
+                output.push(value.substring(count, minLen + count));
+                count++
+            }
+
+            minLen++;
+        }
+
+        return output;
+    }
+
 }
