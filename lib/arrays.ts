@@ -115,7 +115,9 @@ export class Arrays {
         )
     }
 
-    public static groupBy<T>(arr: T[], key: string | number | ((item: T) => string | number)): { [index: string]: T[] } {
+    public static groupBy<T>(arr: T[], key: string | number | ((item: T) => string | number)): {
+        [index: string]: T[]
+    } {
 
         let output: { [index: string]: T[] } = {};
 
@@ -130,7 +132,9 @@ export class Arrays {
         return output;
     }
 
-    public static keyBy<T extends any>(arr: T[], key?: string | ((item: T, index: number) => string)): { [index: string]: T } {
+    public static keyBy<T extends any>(arr: T[], key?: string | ((item: T, index: number) => string)): {
+        [index: string]: T
+    } {
 
         if (!key) {
             key = (item: T, index: number) => item.toString();
@@ -250,7 +254,9 @@ export class Arrays {
         return arr.map(criteria)
     }
 
-    public static forEach<T>(arr: T[] | { [index: string]: T }, criteria: (value: T, i?: number | string) => void): void {
+    public static forEach<T>(arr: T[] | {
+        [index: string]: T
+    }, criteria: (value: T, i?: number | string) => void): void {
         if (!arr) {
             return;
         }
@@ -305,7 +311,7 @@ export class Arrays {
     }
 
     public static differenceBy<T>(arr: T[], arr2: T[], criteria: (value: T, i?: number) => any): T[] {
-        let out = [];
+        let out: T[] = [];
         if (!arr || !arr.length) {
             return []
         }
@@ -321,6 +327,7 @@ export class Arrays {
                 let item2 = arr2[j], key2 = criteria(item2, j);
                 if (key1 === key2) {
                     found = true;
+                    break;
                 }
             }
 
@@ -332,7 +339,64 @@ export class Arrays {
         return out;
     }
 
-    public static countBy<T>(arr: T[], criteria: (value: T, i?: number) => string | number): { [index: string]: number } {
+    public static intersection<T>(arr: T[], arr2: T[]): T[] {
+        return Arrays.intersectionBy(arr, arr2, item => item);
+    }
+
+    public static intersectionBy<T>(arr: T[], arr2: T[], criteria: (value: T, i?: number) => any): T[] {
+        let out: T[] = [], index = new Set<string>
+        if (!arr || !arr.length || !arr2 || !arr2.length) {
+            return []
+        }
+
+        for (let i = 0; i < arr.length; i++) {
+            let item1 = arr[i], key1 = criteria(item1, i);
+            if (index.has(key1)) {
+                continue;
+            }
+
+            for (let j = 0; j < arr2.length; j++) {
+                let item2 = arr2[j], key2 = criteria(item2, j);
+                if (key1 === key2) {
+                    out.push(item1);
+                    index.add(key1);
+                    break;
+                }
+            }
+        }
+
+        return out;
+    }
+
+    public static union<T>(arr: T[], arr2: T[]): T[] {
+        return Arrays.unionBy(arr, arr2, item => item);
+    }
+
+    public static unionBy<T>(arr: T[], arr2: T[], criteria: (value: T, i?: number) => any): T[] {
+        let out: T[] = [], index = new Set<string>();
+
+        for (let i = 0; i < (arr || []).length; i++) {
+            let item1 = arr[i], key1 = criteria(item1, i);
+            if (!index.has(key1)) {
+                out.push(item1);
+                index.add(key1);
+            }
+        }
+
+        for (let j = 0; j < (arr2 || []).length; j++) {
+            let item2 = arr2[j], key2 = criteria(item2, j);
+            if (!index.has(key2)) {
+                out.push(item2);
+                index.add(key2);
+            }
+        }
+
+        return out;
+    }
+
+    public static countBy<T>(arr: T[], criteria: (value: T, i?: number) => string | number): {
+        [index: string]: number
+    } {
 
         if (!arr || !arr.length) {
             return {};

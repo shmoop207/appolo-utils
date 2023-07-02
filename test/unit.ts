@@ -202,6 +202,56 @@ describe("Utils", function () {
 
         });
 
+        it('should intersectionBy  array', async () => {
+
+            let arr = Util.arrays.intersectionBy([{'x': 2}, {'x': 1}, {x: 2}, {'x': 1}], [{'x': 1}], (item) => item.x);
+
+            arr.length.should.be.eq(1);
+            arr[0].x.should.be.eq(1);
+
+            arr = Util.arrays.intersectionBy([{'x': 2}, {'x': 1}, {x: 2}, {'x': 1}], [{'x': 1}, {'x': 2}], (item) => item.x);
+            arr.length.should.be.eq(2)
+
+
+            let arr2 = Util.arrays.intersectionBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+
+            arr2.length.should.be.eq(1);
+            arr2[0].should.be.eq(2.1);
+
+            let arr3 = Util.arrays.intersection([2, 1], [2, 3]);
+            arr3.length.should.be.eq(1);
+            arr3[0].should.be.eq(2);
+
+            Util.arrays.intersection([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([2,3])
+            Util.arrays.intersection([3, 5], [2, 1]).should.be.deep.equal([])
+
+        });
+
+        it('should UnionBy  array', async () => {
+
+            let arr = Util.arrays.unionBy([{'x': 2}, {'x': 1}, {x: 2}, {'x': 1}], [{'x': 1}], (item) => item.x);
+
+            arr.length.should.be.eq(2);
+            arr[0].x.should.be.eq(2);
+
+            arr = Util.arrays.unionBy([{'x': 2}, {'x': 1}, {x: 2}, {'x': 3}], [{'x': 1}, {'x': 2}], (item) => item.x);
+            arr.length.should.be.eq(3)
+
+
+            let arr2 = Util.arrays.unionBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+
+            arr2.length.should.be.eq(3);
+            arr2[0].should.be.eq(2.1);
+
+            let arr3 = Util.arrays.union([2, 1], [2, 3]);
+            arr3.length.should.be.eq(3);
+            arr3[0].should.be.eq(2);
+
+            Util.arrays.union([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([2,1,3,4])
+            Util.arrays.union([3, 5], [2, 1,2]).should.be.deep.equal([3,5,2,1])
+
+        });
+
         it('should array count by', async () => {
             Arrays.countBy([6.1, 4.2, 6.3], item => Math.floor(item)).should.be.deep.equal({'4': 1, '6': 2})
 

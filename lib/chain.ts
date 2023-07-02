@@ -86,8 +86,28 @@ export class Chain<K> {
         return this
     }
 
+    public intersection<S = K>(arr2: S[]): this {
+        this._value = Arrays.intersection(this._value, arr2);
+        return this
+    }
+
+    public union<S = K>(arr2: S[]): this {
+        this._value = Arrays.union(this._value, arr2);
+        return this
+    }
+
     public differenceBy<S = K>(arr2: S[], criteria: (value: S, i?: number) => any): this {
         this._value = Arrays.differenceBy(this._value, arr2, criteria);
+        return this
+    }
+
+    public intersectionBy<S = K>(arr2: S[], criteria: (value: S, i?: number) => any): this {
+        this._value = Arrays.intersectionBy(this._value, arr2, criteria);
+        return this
+    }
+
+    public unionBy<S = K>(arr2: S[], criteria: (value: S, i?: number) => any): this {
+        this._value = Arrays.unionBy(this._value, arr2, criteria);
         return this
     }
 
