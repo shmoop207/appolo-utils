@@ -808,6 +808,15 @@ describe("Utils", function () {
             has1.should.be.eq(has2);
         });
     });
+    describe("murmurHash", function () {
+        it('should create valid hash', async () => {
+            let has1 = index_1.Crypto.hash.murmurHash("aaaaaa");
+            let has2 = index_1.Crypto.hash.murmurHash("aaaaaa");
+            let has3 = index_1.Crypto.hash.murmurHash("aaaaaab");
+            has1.should.be.eq(has2);
+            has1.should.not.be.eq(has3);
+        });
+    });
     describe("salt", function () {
         it('should create salt password', async () => {
             let hashed = await index_1.Crypto.salt.hash("aaaaaa");

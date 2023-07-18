@@ -222,7 +222,7 @@ describe("Utils", function () {
             arr3.length.should.be.eq(1);
             arr3[0].should.be.eq(2);
 
-            Util.arrays.intersection([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([2,3])
+            Util.arrays.intersection([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([2, 3])
             Util.arrays.intersection([3, 5], [2, 1]).should.be.deep.equal([])
 
         });
@@ -247,8 +247,8 @@ describe("Utils", function () {
             arr3.length.should.be.eq(3);
             arr3[0].should.be.eq(2);
 
-            Util.arrays.union([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([2,1,3,4])
-            Util.arrays.union([3, 5], [2, 1,2]).should.be.deep.equal([3,5,2,1])
+            Util.arrays.union([2, 1, 2, 3], [3, 4, 2]).should.be.deep.equal([2, 1, 3, 4])
+            Util.arrays.union([3, 5], [2, 1, 2]).should.be.deep.equal([3, 5, 2, 1])
 
         });
 
@@ -559,7 +559,7 @@ describe("Utils", function () {
                 throw new Error("err");
             }
 
-           let [err]  = await Promises.to(Promises.create(fn)
+            let [err] = await Promises.to(Promises.create(fn)
                 .retry({
                     "retires": 1,
                     "linear": 100,
@@ -882,7 +882,7 @@ describe("Utils", function () {
         });
 
         it('should  partial string combinations', async () => {
-            let values = Util.strings.partialCombinations({value:"abcdefghijkl",minLen:3})
+            let values = Util.strings.partialCombinations({value: "abcdefghijkl", minLen: 3})
             values.should.be.deep.equal(["abc", "bcd", "cde", "def", "efg", "fgh", "ghi", "hij", "ijk", "jkl", "abcd", "bcde", "cdef", "defg", "efgh", "fghi", "ghij", "hijk", "ijkl", "abcde", "bcdef", "cdefg", "defgh", "efghi", "fghij", "ghijk", "hijkl", "abcdef", "bcdefg", "cdefgh", "defghi", "efghij", "fghijk", "ghijkl", "abcdefg", "bcdefgh", "cdefghi", "defghij", "efghijk", "fghijkl", "abcdefgh", "bcdefghi", "cdefghij", "defghijk", "efghijkl", "abcdefghi", "bcdefghij", "cdefghijk", "defghijkl", "abcdefghij", "bcdefghijk", "cdefghijkl", "abcdefghijk", "bcdefghijkl", "abcdefghijkl"])
         });
     });
@@ -1150,6 +1150,19 @@ describe("Utils", function () {
             let has2 = Crypto.hash.md5("aaaaaa");
 
             has1.should.be.eq(has2)
+
+        });
+
+    });
+    describe("murmurHash", function () {
+        it('should create valid hash', async () => {
+
+            let has1 = Crypto.hash.murmurHash("aaaaaa");
+            let has2 = Crypto.hash.murmurHash("aaaaaa");
+            let has3 = Crypto.hash.murmurHash("aaaaaab");
+
+            has1.should.be.eq(has2)
+            has1.should.not.be.eq(has3)
 
         });
 

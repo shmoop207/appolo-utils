@@ -1,6 +1,7 @@
 import {Strings} from '../strings';
 
 import {BinaryLike, createHash} from "crypto";
+import {MurmurHash} from "./murmur";
 
 export class Hash {
 
@@ -8,7 +9,9 @@ export class Hash {
         return createHash(algorithm).update(value).digest(encoding);
     }
 
-    public static hashPlainObject(obj: { [index: string]: string | number | boolean }, algorithm: string = 'sha1', encoding: 'base64' | 'hex' = 'hex'): string {
+    public static hashPlainObject(obj: {
+        [index: string]: string | number | boolean
+    }, algorithm: string = 'sha1', encoding: 'base64' | 'hex' = 'hex'): string {
         return Hash.hash(Strings.stringifyObjectValues(obj), algorithm, encoding);
     }
 
@@ -19,6 +22,9 @@ export class Hash {
 
     public static sha1(str: string): string {
         return Hash.hash(str, "sha1");
+    }
+    public static sha256(str: string): string {
+        return Hash.hash(str, "sha256");
     }
 
     public static hashCode(s: string, prefix: string = "_"): string {
@@ -39,5 +45,9 @@ export class Hash {
 
         return ("0000000" + (hval >>> 0).toString(16)).slice(-8);
 
+    }
+
+    public static murmurHash(key: string, seed: number = 0): number {
+        return MurmurHash.hash(key, seed);
     }
 }
