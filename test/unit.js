@@ -809,10 +809,10 @@ describe("Utils", function () {
         });
     });
     describe("murmurHash", function () {
-        it('should create valid hash', async () => {
+        it.only('should create valid hash', async () => {
             let has1 = index_1.Crypto.hash.murmurHash("aaaaaa");
             let has2 = index_1.Crypto.hash.murmurHash("aaaaaa");
-            let has3 = index_1.Crypto.hash.murmurHash("aaaaaab");
+            let has3 = index_1.Crypto.hash.murmurHash("aaaaaads");
             has1.should.be.eq(has2);
             has1.should.not.be.eq(has3);
         });

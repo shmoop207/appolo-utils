@@ -1,6 +1,6 @@
 export class MurmurHash {
     public static hash(key: string, seed: number = 0): number {
-        let _key: any = key, remainder = _key.length & 3, bytes = _key.length - remainder, h1 = seed, h1b,
+        let _key: any = new TextEncoder().encode(key), remainder = _key.length & 3, bytes = _key.length - remainder, h1 = seed, h1b,
             c1 = 0xcc9e2d51, c1b, c2 = 0x1b873593, c2b, k1, i = 0;
         while (i < bytes) {
             k1 =

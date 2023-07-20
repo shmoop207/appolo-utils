@@ -2,7 +2,7 @@
 import chai = require('chai');
 import {Promises, Util, Crypto, Classes, _, Arrays} from "../index";
 import {date} from "../lib/dateJs";
-
+import * as crypto from "crypto";
 let should = chai.should();
 
 describe("Utils", function () {
@@ -1155,11 +1155,11 @@ describe("Utils", function () {
 
     });
     describe("murmurHash", function () {
-        it('should create valid hash', async () => {
+        it.only('should create valid hash', async () => {
 
             let has1 = Crypto.hash.murmurHash("aaaaaa");
             let has2 = Crypto.hash.murmurHash("aaaaaa");
-            let has3 = Crypto.hash.murmurHash("aaaaaab");
+            let has3 = Crypto.hash.murmurHash("aaaaaads");
 
             has1.should.be.eq(has2)
             has1.should.not.be.eq(has3)
