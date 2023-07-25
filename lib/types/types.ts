@@ -7,3 +7,13 @@ export type RecursivePartial<T> = {
 };
 
 export type PartialExcept<T, K extends keyof T> = RecursivePartial<T> & Pick<T, K>;
+
+export interface IRetry {
+    retires: number,
+    max?: number,
+    random?: number,
+    min?: number,
+    fixed?: number,
+    linear?: number,
+    exponential?: number
+}

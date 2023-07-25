@@ -1,5 +1,5 @@
-import {IRetry} from "./interfaces";
 import {Promises} from "./promises";
+import {IRetry} from "../types/types";
 
 export class PromiseCreate<T> {
     constructor(private fn: () => Promise<T>) {

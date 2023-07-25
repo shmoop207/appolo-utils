@@ -1,5 +1,4 @@
-import {Numbers} from "../index";
-import {IRetry} from "./promises/interfaces";
+import {IRetry, Numbers} from "../index";
 
 export class Time {
 

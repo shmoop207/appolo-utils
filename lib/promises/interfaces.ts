@@ -13,12 +13,4 @@ export type PromiseSettledResult<T> = PromiseFulfilledResult<T> | PromiseRejecte
 export type Resolvable<R> = R | PromiseLike<R>
 export type IterateFunction<T, R> = (item: T, index: number | string) => Resolvable<R>;
 
-export interface IRetry {
-    retires: number,
-    max?: number,
-    random?: number,
-    min?: number,
-    fixed?: number,
-    linear?: number,
-    exponential?: number
-}
+

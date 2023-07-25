@@ -2,9 +2,10 @@ import {Deferred} from "./deferred";
 import {PromiseMap} from "./promiseMap";
 import {PromiseFilter} from "./promiseFilter";
 import {PromiseSome} from "./promiseSome";
-import {IRetry, IterateFunction, Resolvable} from "./interfaces";
+import { IterateFunction, Resolvable} from "./interfaces";
 import {Time} from "../time";
 import {PromiseCreate} from "./promiseCreate";
+import {IRetry} from "../types/types";
 
 export class Promises {
     public static delay(delay: number): Promise<void> {
