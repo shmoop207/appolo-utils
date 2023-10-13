@@ -31,7 +31,9 @@ export class Objects {
         return Object.keys(obj || {}).length === 0
     }
 
-    public static replaceFormatJson(obj: { [index: string]: any }, data: { [index: string]: any }): { [index: string]: any } {
+    public static replaceFormatJson(obj: { [index: string]: any }, data: { [index: string]: any }): {
+        [index: string]: any
+    } {
         return JSON.parse(Strings.replaceFormatJson(JSON.stringify(obj), data));
     }
 
@@ -52,7 +54,9 @@ export class Objects {
         return Objects.invertBy(obj, (value) => value)
     }
 
-    public static invertBy<T extends { [index: string]: any }, K extends { [index: string]: any }>(obj: T, criteria: (value: T[keyof T], key: keyof T, i?: number) => string | number): K {
+    public static invertBy<T extends { [index: string]: any }, K extends {
+        [index: string]: any
+    }>(obj: T, criteria: (value: T[keyof T], key: keyof T, i?: number) => string | number): K {
 
         let output = Object.keys(obj || {}).reduce((output, key, index: number) => {
 
@@ -121,6 +125,28 @@ export class Objects {
         return output as any;
     }
 
+    public static cloneJSON<T>(json: T): T {
+        if (typeof json !== 'object' || json === null) {
+            return json;
+        }
+        if (Array.isArray(json)) {
+            return json.map(value =>
+                (typeof value !== 'object' || value === null)
+                    ? value
+                    : Objects.cloneJSON(value)
+            ) as any;
+
+        }
+        const output: any = {};
+        for (const key in json) {
+            const value = json[key];
+            output[key] = (typeof value !== 'object' || value === null)
+                ? value
+                : Objects.cloneJSON(value)
+        }
+        return output;
+
+    }
 
     public static clone<T>(obj: T): T {
 

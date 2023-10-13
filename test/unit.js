@@ -746,6 +746,21 @@ describe("Utils", function () {
             (obj.d === cloned.d).should.be.not.ok;
             (obj.f === cloned.f).should.be.ok;
         });
+        it.only('should clone json', async () => {
+            let obj = { a: 1, b: { c: 2 }, d: [1, 2], f: [{ a: [1] }] };
+            let cloned = index_1.Util.objects.cloneJSON(obj);
+            (obj.a === cloned.a).should.be.ok;
+            (obj.b === cloned.b).should.be.not.ok;
+            (obj.b.c === cloned.b.c).should.be.ok;
+            (obj.d[1] === cloned.d[1]).should.be.ok;
+            (obj.d === cloned.d).should.be.not.ok;
+            cloned.d.push(3);
+            obj.d.length.should.be.eq(2);
+            cloned.b.c = 3;
+            obj.b.c.should.be.eq(2);
+            (obj.f[0].a === cloned.f[0].a).should.be.not.ok;
+            (obj.f[0].a).should.be.deep.equal(cloned.f[0].a);
+        });
         it('should clone fast', async () => {
             let obj = { a: 1, b: { c: 2 }, d: [1, 2] };
             let cloned = index_1.Util.objects.cloneFast(obj);
@@ -809,7 +824,7 @@ describe("Utils", function () {
         });
     });
     describe("murmurHash", function () {
-        it.only('should create valid hash', async () => {
+        it('should create valid hash', async () => {
             let has1 = index_1.Crypto.hash.murmurHash("aaaaaa");
             let has2 = index_1.Crypto.hash.murmurHash("aaaaaa");
             let has3 = index_1.Crypto.hash.murmurHash("aaaaaads");
