@@ -746,7 +746,7 @@ describe("Utils", function () {
             (obj.d === cloned.d).should.be.not.ok;
             (obj.f === cloned.f).should.be.ok;
         });
-        it.only('should clone json', async () => {
+        it('should clone json', async () => {
             let obj = { a: 1, b: { c: 2 }, d: [1, 2], f: [{ a: [1] }] };
             let cloned = index_1.Util.objects.cloneJSON(obj);
             (obj.a === cloned.a).should.be.ok;

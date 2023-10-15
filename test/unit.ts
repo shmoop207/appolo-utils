@@ -1062,7 +1062,7 @@ describe("Utils", function () {
 
         });
 
-        it.only('should clone json', async () => {
+        it('should clone json', async () => {
 
             let obj = {a: 1, b: {c: 2}, d: [1, 2],f:[{a:[1]}]};
             let cloned = Util.objects.cloneJSON(obj);
