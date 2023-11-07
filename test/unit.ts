@@ -3,6 +3,7 @@ import chai = require('chai');
 import {Promises, Util, Crypto, Classes, _, Arrays} from "../index";
 import {date} from "../lib/dateJs";
 import * as crypto from "crypto";
+
 let should = chai.should();
 
 describe("Utils", function () {
@@ -911,6 +912,37 @@ describe("Utils", function () {
 
             num.should.be.within(1, 4);
         });
+
+        it('should average', async () => {
+            Util.numbers.average([1, 4, 2, 3]).should.be.eq(2.5);
+        });
+
+        it('should median', async () => {
+            Util.numbers.median([1, 4, 2, 3]).should.be.eq(2.5);
+            Util.numbers.median([1, 4, 2, 3, 100]).should.be.eq(3);
+            Util.numbers.median([1,2,3,4,5,7,8,98,100]).should.be.eq(5);
+            Util.numbers.median([1,2,3,4,5,100,200,300,400]).should.be.eq(5);
+        });
+
+        it('should standardDeviation', async () => {
+            Util.numbers.toFixed(Util.numbers.standardDeviation([1, 4, 2, 3])).should.be.eq(1);
+            Util.numbers.toFixed(Util.numbers.standardDeviation([1, 4, 2, 3,100,50,2,3,4,5])).should.be.eq(31);
+
+        });
+        it('should spikes', async () => {
+
+            let result = Util.numbers.spikes([1,2,3,4,5])
+                result.spikes.should.be.deep.eq([])
+                result.filtered.should.be.deep.eq([1,2,3,4,5])
+
+             result = Util.numbers.spikes([1,2,3,4,5,100])
+            result.spikes.should.be.deep.eq([100])
+            result.filtered.should.be.deep.eq([1,2,3,4,5])
+
+            result = Util.numbers.spikes([1,2,3,4,5,7,8,50,100])
+            result.spikes.should.be.deep.eq([100])
+            result.filtered.should.be.deep.eq([1, 2, 3, 4, 5, 7, 8, 50])
+        });
     });
 
     describe("Objects", function () {
@@ -1064,7 +1096,7 @@ describe("Utils", function () {
 
         it('should clone json', async () => {
 
-            let obj = {a: 1, b: {c: 2}, d: [1, 2],f:[{a:[1]}]};
+            let obj = {a: 1, b: {c: 2}, d: [1, 2], f: [{a: [1]}]};
             let cloned = Util.objects.cloneJSON(obj);
 
             (obj.a === cloned.a).should.be.ok;

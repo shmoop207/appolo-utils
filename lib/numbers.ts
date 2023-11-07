@@ -57,7 +57,83 @@ export class Numbers {
         return diff / a;
     }
 
-    public static format(num:number):string{
+    public static format(num: number): string {
         return new Intl.NumberFormat().format(num)
     }
+
+    public static sum(arr: number[]): number {
+
+        if (!arr || !arr.length) {
+            return 0
+        }
+
+        return arr.reduce((a, b) => a + b, 0);
+    }
+
+    public static average(arr: number[]) {
+        if (!arr || !arr.length) {
+            return 0
+        }
+
+        let total = Numbers.sum(arr);
+
+        return total / arr.length;
+    }
+
+    public static standardDeviation(arr: number[]): number {
+        if (!arr || !arr.length) {
+            return 0
+        }
+        let mean = Numbers.average(arr);
+
+        let squaredDevs = arr.map(num => {
+            let dev = num - mean;
+            return dev * dev;
+        });
+
+        let avgSqDev = Numbers.average(squaredDevs);
+
+        return Math.sqrt(avgSqDev);
+    }
+
+    public static median(arr: number[]): number {
+        if (!arr || !arr.length) {
+            return 0
+        }
+        arr = arr.slice(0);
+
+        arr = arr.sort((a, b) => a - b);
+
+        let half = Math.floor(arr.length / 2);
+
+        if (arr.length % 2 === 0) {
+            return (arr[half - 1] + arr[half]) / 2;
+        } else {
+            return arr[half];
+        }
+    }
+
+    public static spikes(arr: number[], stDevMultiplier = 2): { spikes: number[], filtered: number[] } {
+
+        if (!arr || !arr.length) {
+            return {spikes: [], filtered: []}
+        }
+
+        let mean = Numbers.average(arr),
+            stdev = Numbers.standardDeviation(arr),
+            spikes: number[] = [],
+            filtered: number[] = []
+
+        for (let i = 0, len = arr.length; i < len; i++) {
+            let num = arr[i];
+            (num > mean + (stDevMultiplier * stdev) || num < mean - (stDevMultiplier * stdev))
+                ? spikes.push(num)
+                : filtered.push(num)
+
+        }
+
+        return {spikes, filtered};
+
+    }
+
 }

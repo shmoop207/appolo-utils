@@ -638,6 +638,30 @@ describe("Utils", function () {
             Number.isInteger(num).should.be.ok;
             num.should.be.within(1, 4);
         });
+        it('should average', async () => {
+            index_1.Util.numbers.average([1, 4, 2, 3]).should.be.eq(2.5);
+        });
+        it('should median', async () => {
+            index_1.Util.numbers.median([1, 4, 2, 3]).should.be.eq(2.5);
+            index_1.Util.numbers.median([1, 4, 2, 3, 100]).should.be.eq(3);
+            index_1.Util.numbers.median([1, 2, 3, 4, 5, 7, 8, 98, 100]).should.be.eq(5);
+            index_1.Util.numbers.median([1, 2, 3, 4, 5, 100, 200, 300, 400]).should.be.eq(5);
+        });
+        it('should standardDeviation', async () => {
+            index_1.Util.numbers.toFixed(index_1.Util.numbers.standardDeviation([1, 4, 2, 3])).should.be.eq(1);
+            index_1.Util.numbers.toFixed(index_1.Util.numbers.standardDeviation([1, 4, 2, 3, 100, 50, 2, 3, 4, 5])).should.be.eq(31);
+        });
+        it('should spikes', async () => {
+            let result = index_1.Util.numbers.spikes([1, 2, 3, 4, 5]);
+            result.spikes.should.be.deep.eq([]);
+            result.filtered.should.be.deep.eq([1, 2, 3, 4, 5]);
+            result = index_1.Util.numbers.spikes([1, 2, 3, 4, 5, 100]);
+            result.spikes.should.be.deep.eq([100]);
+            result.filtered.should.be.deep.eq([1, 2, 3, 4, 5]);
+            result = index_1.Util.numbers.spikes([1, 2, 3, 4, 5, 7, 8, 50, 100]);
+            result.spikes.should.be.deep.eq([100]);
+            result.filtered.should.be.deep.eq([1, 2, 3, 4, 5, 7, 8, 50]);
+        });
     });
     describe("Objects", function () {
         it('should Object get', async () => {
