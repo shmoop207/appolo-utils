@@ -344,7 +344,7 @@ export class Arrays {
     }
 
     public static intersectionBy<T>(arr: T[], arr2: T[], criteria: (value: T, i?: number) => any): T[] {
-        let out: T[] = [], index = new Set<string>
+        let out: T[] = [], index = new Set<string>();
         if (!arr || !arr.length || !arr2 || !arr2.length) {
             return []
         }
