@@ -281,4 +281,35 @@ export class Objects {
         return memo;
     }
 
+    public static merge<T, S>(target: T, source: S): T & S;
+    public static merge<T, S1, S2>(target: T, source1: S1, source2: S2): T & S1 & S2;
+    public static merge<T, S1, S2, S3>(target: T, source1: S1, source2: S2, source3: S3): T & S1 & S2 & S3;
+    public static merge<T, S1, S2, S3, S4>(target: T, source1: S1, source2: S2, source3: T, source4: S4): T & S1 & S2 & S3 & S4;
+    public static merge(target: any, ...sources: any[]): any {
+        if (typeof target !== 'object' || target === null) {
+            throw new TypeError('Target must be an object');
+        }
+
+        for (const source of sources) {
+            if (typeof source !== 'object' || source === null) {
+                continue;
+            }
+
+            for (const key in source) {
+                if (Object.prototype.hasOwnProperty.call(source, key)) {
+                    if (typeof source[key] === 'object' && source[key] !== null) {
+                        if (!target.hasOwnProperty(key) || typeof target[key] !== 'object' || target[key] === null) {
+                            target[key] = {} as any;
+                        }
+                        Objects.merge(target[key], source[key]);
+                    } else {
+                        target[key] = source[key];
+                    }
+                }
+            }
+        }
+
+        return target as any;
+    }
+
 }
