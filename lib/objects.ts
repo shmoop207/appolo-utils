@@ -286,30 +286,32 @@ export class Objects {
     public static merge<T, S1, S2, S3>(target: T, source1: S1, source2: S2, source3: S3): T & S1 & S2 & S3;
     public static merge<T, S1, S2, S3, S4>(target: T, source1: S1, source2: S2, source3: T, source4: S4): T & S1 & S2 & S3 & S4;
     public static merge(target: any, ...sources: any[]): any {
-        if (typeof target !== 'object' || target === null) {
-            throw new TypeError('Target must be an object');
+        if (!sources.length) {
+            return target;
         }
 
-        for (const source of sources) {
-            if (typeof source !== 'object' || source === null) {
-                continue;
-            }
+        const source = sources.shift();
 
-            for (const key in source) {
-                if (Object.prototype.hasOwnProperty.call(source, key)) {
-                    if (typeof source[key] === 'object' && source[key] !== null) {
-                        if (!target.hasOwnProperty(key) || typeof target[key] !== 'object' || target[key] === null) {
-                            target[key] = {} as any;
-                        }
-                        Objects.merge(target[key], source[key]);
-                    } else {
-                        target[key] = source[key];
-                    }
+        if (Objects.isObject(target) && Objects.isObject(source)) {
+
+            let keys = Object.keys(source);
+
+            for (let i = 0, len = keys.length; i < len; i++) {
+                let key = keys[i],
+                    sourceItem = source[key];
+
+                if (Objects.isObject(sourceItem)) {
+                    Objects.merge(target[key] || (target[key] = {}), sourceItem);
+                } else if (Array.isArray(sourceItem)) {
+                    Arrays.merge(target[key] || (target[key] = []), sourceItem);
+                } else {
+                    target[key] = source[key];
                 }
             }
         }
 
-        return target as any;
+        //@ts-ignore
+        return Objects.merge(target, ...sources);
     }
 
 }

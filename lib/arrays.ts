@@ -1,4 +1,5 @@
 import {Classes} from "./classes";
+import {Objects} from "./objects";
 
 export class Arrays {
     public static clone<T>(arr: T[]): T[] {
@@ -416,5 +417,17 @@ export class Arrays {
         }
 
         return dto;
+    }
+
+    public static merge<T>(target: T[], source: T[]) {
+
+        for (let i = 0; i < source.length; i++) {
+            let item = source[i];
+            if (Objects.isObject(item)) {
+                Objects.merge(target[i] || (target[i] = {} as any), item);
+            } else {
+                target[i] = item;
+            }
+        }
     }
 }

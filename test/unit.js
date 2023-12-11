@@ -778,6 +778,11 @@ describe("Utils", function () {
             index_1.Util.objects.merge(object, other, { a: [{ c: 2 }] }).should.be.deep.equals({ 'a': [{ 'b': 2, 'c': 2 }, { 'd': 4, 'e': 5 }], 'c': 2 });
             index_1.Util.objects.merge({ 'a': { 'b': { 'c': 2 } } }, { 'a': { 'b': { 'd': 4 } } }).should.be.deep.equals({ 'a': { 'b': { 'c': 2, 'd': 4 } } });
             index_1.Util.objects.merge({ 'a': [{ 'b': 2 }, { 'd': 4 }] }, { 'a': [{ 'c': 3 }, { 'e': 5 }] }).should.be.deep.equals({ 'a': [{ 'b': 2, 'c': 3 }, { 'd': 4, 'e': 5 }] });
+            index_1.Util.objects.merge({ 'a': { b: { c: [2, 3] } } }, { 'a': { b: { d: [3, 4] } } }).should.be.deep.equals({ 'a': { b: { c: [2, 3], d: [3, 4] } } });
+            index_1.Util.objects.merge({ 'a': { 'b': { 'c': 1, 'd': [2, 3] }, 'e': [4, 5] }, 'f': 6 }, { 'a': { 'b': { 'c': 7, 'd': [8, 9] }, 'e': [10, 11] }, 'f': 12, 'g': { 'h': 13 } })
+                .should.be.deep.equals({ 'a': { 'b': { 'c': 7, 'd': [8, 9] }, 'e': [10, 11] }, 'f': 12, 'g': { 'h': 13 } });
+            index_1.Util.objects.merge({ 'a': { 'b': { 'c': 1 } }, 'd': [2, 3] }, { 'a': { 'b': { 'c': 4 } }, 'd': [5, 6] })
+                .should.be.deep.equals({ 'a': { 'b': { 'c': 4 } }, 'd': [5, 6] });
         });
         it('should clone json', async () => {
             let obj = { a: 1, b: { c: 2 }, d: [1, 2], f: [{ a: [1] }] };
