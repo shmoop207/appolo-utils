@@ -23,6 +23,7 @@ export class Hash {
     public static sha1(str: string): string {
         return Hash.hash(str, "sha1");
     }
+
     public static sha256(str: string): string {
         return Hash.hash(str, "sha256");
     }
@@ -35,7 +36,7 @@ export class Hash {
         return prefix + h;
     }
 
-    public static hash8Hex(str: string) {
+    public static hash8Hex(str: string): string {
         let i: number, l: number, hval: number = 0x811c9dc5;
 
         for (i = 0, l = str.length; i < l; i++) {
@@ -49,5 +50,17 @@ export class Hash {
 
     public static murmurHash(key: string, seed: number = 0): number {
         return MurmurHash.hash(key, seed);
+    }
+
+    public static strNumHash(str: string): number {
+        let hash = 5381,
+            len = (str || "").length;
+
+        for (let i = 0; i < len; i++) {
+            hash = (hash * 33) ^ str.charCodeAt(i);
+        }
+
+
+        return  Math.abs(hash >>> 0);
     }
 }

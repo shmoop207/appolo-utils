@@ -1246,6 +1246,20 @@ describe("Utils", function () {
 
     });
 
+    describe.only("strNumHash", function () {
+        it('should create valid hash', async () => {
+
+            let has1 = Crypto.hash.strNumHash("aaaaaa");
+            let has2 = Crypto.hash.strNumHash("aaaaaa");
+            let has3 = Crypto.hash.strNumHash("aaaaaads");
+
+            has1.should.be.eq(has2)
+            has1.should.not.be.eq(has3)
+
+        });
+
+    });
+
     describe("salt", function () {
         it('should create salt password', async () => {
 
