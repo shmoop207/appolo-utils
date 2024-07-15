@@ -11,15 +11,15 @@ export class Numbers {
             min = 0;
         }
 
-        let isInt = !floating && Number.isInteger(min) && Number.isInteger(min);
+        let isInt = !floating && Number.isInteger(min) && Number.isInteger(max);
 
         if (isInt) {
             return Numbers.randomInt(min, max);
         }
 
         min = Math.min(min, max);
-        max = Math.max(max, max);
-        return (Math.random() * (max - min + 1)) + min;
+        max = Math.max(min, max);
+        return (Math.random() * (max - min)) + min;
     }
 
     public static isNumber(str: any): str is Number {

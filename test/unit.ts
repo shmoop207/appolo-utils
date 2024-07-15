@@ -911,6 +911,11 @@ describe("Utils", function () {
             Number.isInteger(num).should.be.ok;
 
             num.should.be.within(1, 4);
+
+
+             num = Util.numbers.random(1, 1.5,true)
+
+            num.should.be.within(1, 1.5);
         });
 
         it('should average', async () => {

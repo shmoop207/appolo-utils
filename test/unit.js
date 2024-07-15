@@ -637,6 +637,8 @@ describe("Utils", function () {
             num = index_1.Util.numbers.random(1, 4);
             Number.isInteger(num).should.be.ok;
             num.should.be.within(1, 4);
+            num = index_1.Util.numbers.random(1, 1.5, true);
+            num.should.be.within(1, 1.5);
         });
         it('should average', async () => {
             index_1.Util.numbers.average([1, 4, 2, 3]).should.be.eq(2.5);
